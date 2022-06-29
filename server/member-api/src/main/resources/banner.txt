@@ -4,5 +4,5 @@
 |  |   |  | |  | |  | |  | `   | |  | `   | |  | |  |   .--. .--.   |  |  |  | \   --. |  |  |  | | `-' | \   --. |  |            \ '-'  | | '-' ' |  |
 `--'   `--' `--' `--' `--'  `--' `--'  `--' `--' `--'   '--' '--'   `--`--`--'  `----' `--`--`--'  `---'   `----' `--'             `--`--' |  |-'  `--'
                                                                                                                                            `--'
-${spring.application.name} ${spring.application.version}
-Powered by Spring Boot v${spring-boot.version}
+${application.title} :: ${spring.application.name}  (${application.version})
+Powered by Spring Boot ${spring-boot.formatted-version}
