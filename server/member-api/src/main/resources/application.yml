@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: member-api
+    version: v0.0.1
+
