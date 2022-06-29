@@ -1,0 +1,26 @@
+/* server 공통 build.gradle */
+dependencies {
+
+    // SpringBootStarter
+    implementation(
+            "$boot:spring-boot-starter-web",
+            "$boot:spring-boot-starter-data-jpa",
+            "$boot:spring-boot-starter-validation"
+    )
+
+    // QueryDsl
+    implementation(
+            'com.querydsl:querydsl-core',
+            'com.querydsl:querydsl-jpa'
+    )
+    annotationProcessor (
+            "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa",
+            'jakarta.persistence:jakarta.persistence-api',
+            'jakarta.annotation:jakarta.annotation-api'
+    )
+
+    //runtimeOnly 'org.postgresql:postgresql'
+    implementation 'com.h2database:h2'
+
+    developmentOnly 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
+}                
