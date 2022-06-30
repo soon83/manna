@@ -1,6 +1,8 @@
 /* server 공통 build.gradle */
 dependencies {
 
+    implementation project(":common-util")
+
     // SpringBootStarter
     implementation(
             "$boot:spring-boot-starter-web",

@@ -21,9 +21,14 @@ import java.util.stream.Stream;
 @Table(name = "manna_member")
 public class Member {
 
+    private final String TOKEN_PREFIX = "mbr_";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 31, unique = true)
+    private String token;
 
     @Column(length = 31, unique = true)
     private String loginId;
