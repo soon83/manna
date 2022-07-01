@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -18,7 +19,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public List<MemberInfo.Main> retrieveMembers() {
-        return memberQueryService.getMembers();
+        return memberQueryService.getMembers().stream()
+                .map(MemberInfo.Main::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MemberInfo.Main retrieveMember(String memberToken) {
+        var member = memberQueryService.getMember(memberToken);
+        return new MemberInfo.Main(member);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.sss.infrastructure;
 
 import com.sss.domain.Member;
-import com.sss.domain.MemberCommand;
 import com.sss.domain.MemberCommandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -27,13 +27,19 @@ public class MemberApiController {
      */
     @GetMapping
     public ResponseEntity<List<MemberDto.MainResponse>> retrieveMembers() {
-        var memberInfos = memberFacade.retrieveMembers();
-        var response = memberInfos.stream()
+        var memberInfoList = memberFacade.retrieveMembers();
+        var response = memberInfoList.stream()
                 .map(MemberDto.MainResponse::new)
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    /**
+     * 회원 단건 등록
+     * @param request
+     * @return
+     * @throws URISyntaxException
+     */
     @PostMapping
     public ResponseEntity<MemberDto.RegisterResponse> registerMembers(
             @RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
@@ -43,5 +49,17 @@ public class MemberApiController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .location(UriGenerator.getLocation(response.getMemberToken()))
                 .body(response);
+    }
+
+    /**
+     * 회원 단건 조회
+     * @param memberToken
+     * @return
+     */
+    @GetMapping("/{memberToken}")
+    public ResponseEntity<MemberDto.MainResponse> retrieveMember(@PathVariable String memberToken) {
+        var memberInfo = memberFacade.retrieveMember(memberToken);
+        var response = new MemberDto.MainResponse(memberInfo);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

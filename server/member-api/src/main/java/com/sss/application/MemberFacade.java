@@ -20,6 +20,10 @@ public class MemberFacade {
         return memberService.retrieveMembers();
     }
 
+    public MemberInfo.Main retrieveMember(String memberToken) {
+        return memberService.retrieveMember(memberToken);
+    }
+
     public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
         return memberService.registerMember(registerMemberCommand);
     }
