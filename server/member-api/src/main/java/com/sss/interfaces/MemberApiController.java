@@ -64,6 +64,12 @@ public class MemberApiController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    /**
+     * 회원 단건 수정
+     * @param memberToken
+     * @param request
+     * @return
+     */
     @PutMapping("/{memberToken}")
     public ResponseEntity<MemberDto.ChangeRequest> changeMember(
             @PathVariable String memberToken,
@@ -71,6 +77,34 @@ public class MemberApiController {
     ) {
         var changeMemberCommand = request.toChangeMemberCommand();
         memberFacade.changeMember(changeMemberCommand, memberToken);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 회원 단건 수정 - 회원 비활성화
+     * @param request
+     * @return
+     */
+    @PatchMapping("/disable")
+    public ResponseEntity<MemberDto.ChangeRequest> disableMember(
+            @RequestBody @Valid MemberDto.ChangeMemberStatusRequest request
+    ) {
+        var memberToken = request.getMemberToken();
+        memberFacade.disableMember(memberToken);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 회원 단건 수정 - 회원 활성화
+     * @param request
+     * @return
+     */
+    @PatchMapping("/enable")
+    public ResponseEntity<MemberDto.ChangeRequest> enableMember(
+            @RequestBody @Valid MemberDto.ChangeMemberStatusRequest request
+    ) {
+        var memberToken = request.getMemberToken();
+        memberFacade.enableMember(memberToken);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -50,4 +50,18 @@ public class MemberServiceImpl implements MemberService {
                 changeMemberCommand.getEmail()
         );
     }
+
+    @Override
+    @Transactional
+    public void enableMember(String memberToken) {
+        var member = memberQueryService.getMember(memberToken);
+        member.enable();
+    }
+
+    @Override
+    @Transactional
+    public void disableMember(String memberToken) {
+        var member = memberQueryService.getMember(memberToken);
+        member.disable();
+    }
 }

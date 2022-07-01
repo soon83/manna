@@ -31,4 +31,12 @@ public class MemberFacade {
     public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
         memberService.changeMember(changeMemberCommand, memberToken);
     }
+
+    public void enableMember(String memberToken) {
+        memberService.enableMember(memberToken);
+    }
+
+    public void disableMember(String memberToken) {
+        memberService.disableMember(memberToken);
+    }
 }

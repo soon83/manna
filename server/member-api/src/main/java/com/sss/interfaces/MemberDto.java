@@ -3,10 +3,7 @@ package com.sss.interfaces;
 import com.sss.domain.Member;
 import com.sss.domain.MemberCommand;
 import com.sss.domain.MemberInfo;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
@@ -17,6 +14,8 @@ public class MemberDto {
      */
     @Data
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class RegisterRequest {
 
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
@@ -44,6 +43,8 @@ public class MemberDto {
 
     @Data
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ChangeRequest {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
@@ -65,6 +66,16 @@ public class MemberDto {
                     .email(memberEmail)
                     .build();
         }
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ChangeMemberStatusRequest {
+
+        @NotBlank(message = "memberToken 는 필수값입니다.")
+        private String memberToken;
     }
 
     /**

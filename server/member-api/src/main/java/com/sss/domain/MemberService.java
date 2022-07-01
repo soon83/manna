@@ -11,4 +11,8 @@ public interface MemberService {
     String registerMember(MemberCommand.RegisterMember registerMemberCommand);
 
     void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken);
+
+    void enableMember(String memberToken);
+
+    void disableMember(String memberToken);
 }

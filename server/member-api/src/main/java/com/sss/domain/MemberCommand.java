@@ -35,4 +35,11 @@ public class MemberCommand {
         private String name;
         private String email;
     }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class ChangeMemberStatus {
+        private Member.Status status;
+    }
 }
