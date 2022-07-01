@@ -25,18 +25,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public MemberInfo.Main retrieveMember(String memberToken) {
-        var member = memberQueryService.getMember(memberToken);
-        return new MemberInfo.Main(member);
-    }
-
-    @Override
     @Transactional
     public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
         var member = registerMemberCommand.toEntity();
         var createdMember = memberCommandService.saveMember(member);
         return createdMember.getToken();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MemberInfo.Main retrieveMember(String memberToken) {
+        var member = memberQueryService.getMember(memberToken);
+        return new MemberInfo.Main(member);
     }
 
     @Override
