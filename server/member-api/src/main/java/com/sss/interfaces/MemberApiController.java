@@ -71,7 +71,7 @@ public class MemberApiController {
      * @return
      */
     @PutMapping("/{memberToken}")
-    public ResponseEntity<MemberDto.ChangeRequest> changeMember(
+    public ResponseEntity changeMember(
             @PathVariable String memberToken,
             @RequestBody @Valid MemberDto.ChangeRequest request
     ) {
@@ -86,7 +86,7 @@ public class MemberApiController {
      * @return
      */
     @PatchMapping("/disable")
-    public ResponseEntity<MemberDto.ChangeRequest> disableMember(
+    public ResponseEntity disableMember(
             @RequestBody @Valid MemberDto.ChangeMemberStatusRequest request
     ) {
         var memberToken = request.getMemberToken();
@@ -100,11 +100,22 @@ public class MemberApiController {
      * @return
      */
     @PatchMapping("/enable")
-    public ResponseEntity<MemberDto.ChangeRequest> enableMember(
+    public ResponseEntity enableMember(
             @RequestBody @Valid MemberDto.ChangeMemberStatusRequest request
     ) {
         var memberToken = request.getMemberToken();
         memberFacade.enableMember(memberToken);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 회원 단건 삭제
+     * @param memberToken
+     * @return
+     */
+    @DeleteMapping("/{memberToken}")
+    public ResponseEntity deleteMember(@PathVariable String memberToken) {
+        memberFacade.deleteMember(memberToken);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

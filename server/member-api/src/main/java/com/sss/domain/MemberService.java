@@ -15,4 +15,6 @@ public interface MemberService {
     void enableMember(String memberToken);
 
     void disableMember(String memberToken);
+
+    void deleteMember(String memberToken);
 }

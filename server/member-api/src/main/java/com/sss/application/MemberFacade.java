@@ -39,4 +39,8 @@ public class MemberFacade {
     public void disableMember(String memberToken) {
         memberService.disableMember(memberToken);
     }
+
+    public void deleteMember(String memberToken) {
+        memberService.deleteMember(memberToken);
+    }
 }

@@ -64,4 +64,11 @@ public class MemberServiceImpl implements MemberService {
         var member = memberQueryService.getMember(memberToken);
         member.disable();
     }
+
+    @Override
+    @Transactional
+    public void deleteMember(String memberToken) {
+        var member = memberQueryService.getMember(memberToken);
+        memberCommandService.deleteMember(member);
+    }
 }

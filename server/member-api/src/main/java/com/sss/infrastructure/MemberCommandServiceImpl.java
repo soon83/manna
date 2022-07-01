@@ -17,4 +17,9 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     public Member saveMember(Member member) {
         return memberRepository.save(member);
     }
+
+    @Override
+    public void deleteMember(Member member) {
+        memberRepository.delete(member);
+    }
 }
