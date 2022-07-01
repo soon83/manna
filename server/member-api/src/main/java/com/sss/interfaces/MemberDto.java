@@ -31,8 +31,34 @@ public class MemberDto {
         @NotBlank(message = "memberEmail 는 필수값입니다.")
         private String memberEmail;
 
+
         public MemberCommand.RegisterMember toRegisterMemberCommand() {
             return MemberCommand.RegisterMember.builder()
+                    .loginId(memberLoginId)
+                    .loginPassword(memberLoginPassword)
+                    .name(memberName)
+                    .email(memberEmail)
+                    .build();
+        }
+    }
+
+    @Data
+    @Builder
+    public static class ChangeRequest {
+        @NotBlank(message = "memberLoginId 는 필수값입니다.")
+        private String memberLoginId;
+
+        @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
+        private String memberLoginPassword;
+
+        @NotBlank(message = "memberName 는 필수값입니다.")
+        private String memberName;
+
+        @NotBlank(message = "memberEmail 는 필수값입니다.")
+        private String memberEmail;
+
+        public MemberCommand.ChangeMember toChangeMemberCommand() {
+            return MemberCommand.ChangeMember.builder()
                     .loginId(memberLoginId)
                     .loginPassword(memberLoginPassword)
                     .name(memberName)
@@ -47,7 +73,7 @@ public class MemberDto {
     @Getter
     @ToString
     public static class MainResponse {
-        private final Long memberId;
+
         private final String memberToken;
         private final String memberLoginId;
         private final String memberLoginPassword;
@@ -56,7 +82,6 @@ public class MemberDto {
         private final Member.Status memberStatus;
 
         public MainResponse(MemberInfo.Main memberInfo) {
-            this.memberId = memberInfo.getId();
             this.memberToken = memberInfo.getToken();
             this.memberLoginId = memberInfo.getLoginId();
             this.memberLoginPassword = memberInfo.getLoginPassword();
@@ -70,10 +95,11 @@ public class MemberDto {
     @Builder
     @ToString
     public static class RegisterResponse {
-        private final String memberToken;
 
+        private final String memberToken;
         public RegisterResponse(String memberToken) {
             this.memberToken = memberToken;
         }
+
     }
 }

@@ -27,4 +27,8 @@ public class MemberFacade {
     public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
         return memberService.registerMember(registerMemberCommand);
     }
+
+    public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
+        memberService.changeMember(changeMemberCommand, memberToken);
+    }
 }

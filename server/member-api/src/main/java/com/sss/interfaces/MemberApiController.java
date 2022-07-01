@@ -42,7 +42,8 @@ public class MemberApiController {
      */
     @PostMapping
     public ResponseEntity<MemberDto.RegisterResponse> registerMembers(
-            @RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
+            @RequestBody @Valid MemberDto.RegisterRequest request
+    ) throws URISyntaxException {
         var registerMemberCommand = request.toRegisterMemberCommand();
         var memberToken = memberFacade.registerMember(registerMemberCommand);
         var response = new MemberDto.RegisterResponse(memberToken);
@@ -61,5 +62,15 @@ public class MemberApiController {
         var memberInfo = memberFacade.retrieveMember(memberToken);
         var response = new MemberDto.MainResponse(memberInfo);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("/{memberToken}")
+    public ResponseEntity<MemberDto.ChangeRequest> changeMember(
+            @PathVariable String memberToken,
+            @RequestBody @Valid MemberDto.ChangeRequest request
+    ) {
+        var changeMemberCommand = request.toChangeMemberCommand();
+        memberFacade.changeMember(changeMemberCommand, memberToken);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

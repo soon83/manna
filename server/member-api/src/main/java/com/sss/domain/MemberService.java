@@ -9,4 +9,6 @@ public interface MemberService {
     MemberInfo.Main retrieveMember(String memberToken);
 
     String registerMember(MemberCommand.RegisterMember registerMemberCommand);
+
+    void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken);
 }

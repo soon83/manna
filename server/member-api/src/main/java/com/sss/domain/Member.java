@@ -80,6 +80,18 @@ public class Member {
         this.status = Status.ENABLE;
     }
 
+    public void updateMember(
+            String loginId,
+            String loginPassword,
+            String name,
+            String email
+    ) {
+        this.loginId = loginId;
+        this.loginPassword = loginPassword;
+        this.name = name;
+        this.email = email;
+    }
+
     public void enable() {
         this.status = Status.ENABLE;
     }

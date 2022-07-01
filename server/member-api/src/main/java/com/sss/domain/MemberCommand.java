@@ -26,4 +26,13 @@ public class MemberCommand {
         }
     }
 
+    @Getter
+    @Builder
+    @ToString
+    public static class ChangeMember {
+        private String loginId;
+        private String loginPassword;
+        private String name;
+        private String email;
+    }
 }

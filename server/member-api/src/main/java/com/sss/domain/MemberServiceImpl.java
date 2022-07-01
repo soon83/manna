@@ -38,4 +38,16 @@ public class MemberServiceImpl implements MemberService {
         var createdMember = memberCommandService.saveMember(member);
         return createdMember.getToken();
     }
+
+    @Override
+    @Transactional
+    public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
+        var member = memberQueryService.getMember(memberToken);
+        member.updateMember(
+                changeMemberCommand.getLoginId(),
+                changeMemberCommand.getLoginPassword(),
+                changeMemberCommand.getName(),
+                changeMemberCommand.getEmail()
+        );
+    }
 }
