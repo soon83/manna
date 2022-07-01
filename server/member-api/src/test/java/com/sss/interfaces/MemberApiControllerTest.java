@@ -34,8 +34,8 @@ class MemberApiControllerTest {
     @DisplayName("1. 회원 목록 조회")
     void retrieveMembers() throws Exception {
         // given
-        List<MemberInfo> response = Arrays.asList(
-                MemberInfo.builder()
+        List<MemberInfo.Main> response = Arrays.asList(
+                MemberInfo.Main.builder()
                         .id(1L)
                         .loginId("admin")
                         .loginPassword("1234")

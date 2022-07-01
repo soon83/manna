@@ -1,5 +1,6 @@
 package com.sss.domain;
 
+import com.sss.TokenGenerator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 @Table(name = "manna_member")
 public class Member {
 
-    private final String TOKEN_PREFIX = "mbr_";
+    private static final String TOKEN_PREFIX = "mbr_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,7 +66,15 @@ public class Member {
     }
 
     @Builder
-    public Member(String name, String email) {
+    public Member(
+            String loginId,
+            String loginPassword,
+            String name,
+            String email
+    ) {
+        this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
+        this.loginId = loginId;
+        this.loginPassword = loginPassword;
         this.name = name;
         this.email = email;
         this.status = Status.ENABLE;

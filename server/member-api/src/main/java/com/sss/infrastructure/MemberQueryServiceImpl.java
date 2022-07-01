@@ -18,10 +18,10 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     private final MemberRepository memberRepository;
 
     @Override
-    public List<MemberInfo> getMembers() {
-        List<Member> memberList = memberRepository.findAll();
-        return memberList.stream()
-                .map(MemberInfo::new)
+    public List<MemberInfo.Main> getMembers() {
+        List<Member> members = memberRepository.findAll();
+        return members.stream()
+                .map(MemberInfo.Main::new)
                 .collect(Collectors.toList());
     }
 }

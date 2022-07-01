@@ -4,5 +4,7 @@ import java.util.List;
 
 public interface MemberService {
 
-    List<MemberInfo> retrieveMembers();
+    List<MemberInfo.Main> retrieveMembers();
+
+    String registerMember(MemberCommand.RegisterMember registerMemberCommand);
 }

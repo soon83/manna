@@ -1,6 +1,7 @@
 package com.sss.interfaces;
 
 import com.sss.domain.Member;
+import com.sss.domain.MemberCommand;
 import com.sss.domain.MemberInfo;
 import lombok.Builder;
 import lombok.Data;
@@ -29,13 +30,21 @@ public class MemberDto {
 
         @NotBlank(message = "memberEmail 는 필수값입니다.")
         private String memberEmail;
+
+        public MemberCommand.RegisterMember toRegisterMemberCommand() {
+            return MemberCommand.RegisterMember.builder()
+                    .loginId(memberLoginId)
+                    .loginPassword(memberLoginPassword)
+                    .name(memberName)
+                    .email(memberEmail)
+                    .build();
+        }
     }
 
     /**
      * response
      */
     @Getter
-    @Builder
     @ToString
     public static class MainResponse {
         private final Long memberId;
@@ -46,14 +55,25 @@ public class MemberDto {
         private final String memberEmail;
         private final Member.Status memberStatus;
 
-        public MainResponse(MemberInfo info) {
-            this.memberId = info.getId();
-            this.memberToken = info.getToken();
-            this.memberLoginId = info.getLoginId();
-            this.memberLoginPassword = info.getLoginPassword();
-            this.memberName = info.getName();
-            this.memberEmail = info.getEmail();
-            this.memberStatus = info.getStatus();
+        public MainResponse(MemberInfo.Main memberInfo) {
+            this.memberId = memberInfo.getId();
+            this.memberToken = memberInfo.getToken();
+            this.memberLoginId = memberInfo.getLoginId();
+            this.memberLoginPassword = memberInfo.getLoginPassword();
+            this.memberName = memberInfo.getName();
+            this.memberEmail = memberInfo.getEmail();
+            this.memberStatus = memberInfo.getStatus();
+        }
+    }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class RegisterResponse {
+        private final String memberToken;
+
+        public RegisterResponse(String memberToken) {
+            this.memberToken = memberToken;
         }
     }
 }

@@ -13,10 +13,19 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberQueryService memberQueryService;
+    private final MemberCommandService memberCommandService;
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberInfo> retrieveMembers() {
+    public List<MemberInfo.Main> retrieveMembers() {
         return memberQueryService.getMembers();
+    }
+
+    @Override
+    @Transactional
+    public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
+        var member = registerMemberCommand.toEntity();
+        var createdMember = memberCommandService.saveMember(member);
+        return createdMember.getToken();
     }
 }

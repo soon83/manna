@@ -1,5 +1,6 @@
 package com.sss.application;
 
+import com.sss.domain.MemberCommand;
 import com.sss.domain.MemberInfo;
 import com.sss.domain.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,11 @@ public class MemberFacade {
 
     private final MemberService memberService;
 
-    public List<MemberInfo> retrieveMembers() {
+    public List<MemberInfo.Main> retrieveMembers() {
         return memberService.retrieveMembers();
+    }
+
+    public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
+        return memberService.registerMember(registerMemberCommand);
     }
 }
