@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,8 +26,8 @@ public class BaseControllerAdvice {
     private static final List<ErrorCode> SPECIFIC_ALERT_TARGET_ERROR_CODE_LIST = new ArrayList<>();
 
     /**
-     * http status: 500 AND result: FAILURE
-     * 시스템 예외 상황. 집중 모니터링 대상
+     * HttpStatus 500: FAILURE
+     * 시스템 예외 상황, 집중 모니터링 대상
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Res> onException(Exception e) {
@@ -37,8 +38,8 @@ public class BaseControllerAdvice {
     }
 
     /**
-     * http status: 200 AND result: FAILURE
-     * 시스템은 이슈 없고, 비즈니스 로직 처리에서 에러가 발생함
+     * HttpStatus 200: FAILURE
+     * 시스템은 문제가 없지만, 비즈니스로직에서 에러가 발생
      */
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<Res> onBaseException(BaseException e) {
@@ -90,7 +91,7 @@ public class BaseControllerAdvice {
     }
 
     /**
-     * HttpStatus 400: enum type 일치하지 않을 때
+     * HttpStatus 400: enum type 불일치
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
@@ -109,5 +110,16 @@ public class BaseControllerAdvice {
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER, e.getBindingResult());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
+    }
+
+    /**
+     * HttpStatus 405: 존재하지 않는 url mapping
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    protected ResponseEntity httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_METHOD_NOT_ALLOWED);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(Res.fail(errorResponse));
     }
 }

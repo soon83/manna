@@ -6,11 +6,7 @@ server:
   port: 9001
   shutdown: graceful
 
-logging:
-  level:
-    com:
-      sss: debug
-
+spring.profiles.active: dev
 spring:
   sql:
     init:
@@ -41,3 +37,38 @@ spring:
       settings:
         web-allow-others: true
       path: /h2-console
+
+logging:
+  file.path: ${file-path.root}/logs
+  file.name: ${spring.application.name}-${spring.config.activate.on-profile}
+  config: classpath:logback-${spring.config.activate.on-profile}.xml
+
+---
+# DEV
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+file-path:
+  root: /Users/ds/Downloads/springboot/${application.title}/${spring.application.name}
+
+---
+# TEST
+spring:
+  config:
+    activate:
+      on-profile: test
+
+file-path:
+  root: /Users/ds/Downloads/springboot/${application.title}/${spring.application.name}
+
+---
+# PROD
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+file-path:
+  root: /Users/ds/Downloads/springboot/${application.title}/${spring.application.name}
