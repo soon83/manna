@@ -1,6 +1,7 @@
 /* server 공통 build.gradle */
 dependencies {
 
+    implementation project(":common-config")
     implementation project(":common-util")
 
     // SpringBootStarter

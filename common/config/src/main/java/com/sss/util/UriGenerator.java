@@ -1,4 +1,4 @@
-package com.sss;
+package com.sss.util;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

@@ -1,7 +1,8 @@
 package com.sss.interfaces;
 
-import com.sss.UriGenerator;
+import com.sss.util.UriGenerator;
 import com.sss.application.MemberFacade;
+import com.sss.common.response.Res;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,12 +26,12 @@ public class MemberApiController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<List<MemberDto.MainResponse>> retrieveMembers() {
+    public ResponseEntity<Res> retrieveMembers() {
         var memberInfoList = memberFacade.retrieveMembers();
         var response = memberInfoList.stream()
                 .map(MemberDto.MainResponse::new)
                 .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
     /**
@@ -41,15 +41,13 @@ public class MemberApiController {
      * @throws URISyntaxException
      */
     @PostMapping
-    public ResponseEntity<MemberDto.RegisterResponse> registerMembers(
-            @RequestBody @Valid MemberDto.RegisterRequest request
-    ) throws URISyntaxException {
+    public ResponseEntity<Res> registerMembers(@RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
         var registerMemberCommand = request.toRegisterMemberCommand();
         var memberToken = memberFacade.registerMember(registerMemberCommand);
         var response = new MemberDto.RegisterResponse(memberToken);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .location(UriGenerator.getLocation(response.getMemberToken()))
-                .body(response);
+                .body(Res.success(response));
     }
 
     /**
@@ -58,10 +56,10 @@ public class MemberApiController {
      * @return
      */
     @GetMapping("/{memberToken}")
-    public ResponseEntity<MemberDto.MainResponse> retrieveMember(@PathVariable String memberToken) {
+    public ResponseEntity<Res> retrieveMember(@PathVariable String memberToken) {
         var memberInfo = memberFacade.retrieveMember(memberToken);
         var response = new MemberDto.MainResponse(memberInfo);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
     /**
@@ -71,13 +69,10 @@ public class MemberApiController {
      * @return
      */
     @PutMapping("/{memberToken}")
-    public ResponseEntity changeMember(
-            @PathVariable String memberToken,
-            @RequestBody @Valid MemberDto.ChangeRequest request
-    ) {
+    public ResponseEntity<Res> changeMember(@PathVariable String memberToken, @RequestBody @Valid MemberDto.ChangeRequest request) {
         var changeMemberCommand = request.toChangeMemberCommand();
         memberFacade.changeMember(changeMemberCommand, memberToken);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
     }
 
     /**
@@ -86,12 +81,10 @@ public class MemberApiController {
      * @return
      */
     @PatchMapping("/disable")
-    public ResponseEntity disableMember(
-            @RequestBody @Valid MemberDto.ChangeMemberStatusRequest request
-    ) {
+    public ResponseEntity<Res> disableMember(@RequestBody @Valid MemberDto.ChangeMemberStatusRequest request) {
         var memberToken = request.getMemberToken();
         memberFacade.disableMember(memberToken);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
     }
 
     /**
@@ -100,12 +93,10 @@ public class MemberApiController {
      * @return
      */
     @PatchMapping("/enable")
-    public ResponseEntity enableMember(
-            @RequestBody @Valid MemberDto.ChangeMemberStatusRequest request
-    ) {
+    public ResponseEntity<Res> enableMember(@RequestBody @Valid MemberDto.ChangeMemberStatusRequest request) {
         var memberToken = request.getMemberToken();
         memberFacade.enableMember(memberToken);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
     }
 
     /**
@@ -114,8 +105,8 @@ public class MemberApiController {
      * @return
      */
     @DeleteMapping("/{memberToken}")
-    public ResponseEntity deleteMember(@PathVariable String memberToken) {
+    public ResponseEntity<Res> deleteMember(@PathVariable String memberToken) {
         memberFacade.deleteMember(memberToken);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
     }
 }

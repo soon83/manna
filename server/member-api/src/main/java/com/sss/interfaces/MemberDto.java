@@ -108,9 +108,9 @@ public class MemberDto {
     public static class RegisterResponse {
 
         private final String memberToken;
+
         public RegisterResponse(String memberToken) {
             this.memberToken = memberToken;
         }
-
     }
 }
