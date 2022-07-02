@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-public class BaseHttpRequestInterceptor implements HandlerInterceptor {
+public class HttpRequestInterceptor implements HandlerInterceptor {
 
     public static final String HEADER_REQUEST_UUID_KEY = "x-request-id";
 

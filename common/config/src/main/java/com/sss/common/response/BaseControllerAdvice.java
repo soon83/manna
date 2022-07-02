@@ -1,7 +1,7 @@
 package com.sss.common.response;
 
 import com.sss.common.exception.BaseException;
-import com.sss.common.interceptor.BaseHttpRequestInterceptor;
+import com.sss.common.interceptor.HttpRequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.connector.ClientAbortException;
 import org.slf4j.MDC;
@@ -25,27 +25,23 @@ public class BaseControllerAdvice {
     private static final List<ErrorCode> SPECIFIC_ALERT_TARGET_ERROR_CODE_LIST = new ArrayList<>();
 
     /**
-     * http status: 500 AND result: FAIL
+     * http status: 500 AND result: FAILURE
      * 시스템 예외 상황. 집중 모니터링 대상
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Res> onException(Exception e) {
-        String eventId = MDC.get(BaseHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.error("eventId = {} ", eventId, e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Res.fail(ErrorCode.COMMON_SYSTEM_ERROR));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Res.fail(ErrorCode.COMMON_SYSTEM_ERROR));
     }
 
     /**
-     * http status: 200 AND result: FAIL
+     * http status: 200 AND result: FAILURE
      * 시스템은 이슈 없고, 비즈니스 로직 처리에서 에러가 발생함
      */
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<Res> onBaseException(BaseException e) {
-        String eventId = MDC.get(BaseHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         if (SPECIFIC_ALERT_TARGET_ERROR_CODE_LIST.contains(e.getErrorCode())) {
             log.error("[BaseException] eventId = {}, cause = {}, errorMsg = {}",
                     eventId, NestedExceptionUtils.getMostSpecificCause(e),
@@ -55,8 +51,7 @@ public class BaseControllerAdvice {
                     eventId, NestedExceptionUtils.getMostSpecificCause(e),
                     NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         }
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(Res.fail(e.getMessage(), e.getErrorCode().getCode()));
+        return ResponseEntity.status(HttpStatus.OK).body(Res.fail(e.getMessage(), e.getErrorCode().getCode()));
     }
 
     /**
@@ -65,7 +60,7 @@ public class BaseControllerAdvice {
      */
     @ExceptionHandler(ClientAbortException.class)
     public ResponseEntity<Res> skipException(Exception e) {
-        String eventId = MDC.get(BaseHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[SkipException] eventId = {}, cause = {}, errorMsg = {}",
                 eventId, NestedExceptionUtils.getMostSpecificCause(e), NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         return ResponseEntity.status(HttpStatus.OK).body(Res.fail(ErrorCode.COMMON_SYSTEM_ERROR));
@@ -76,7 +71,7 @@ public class BaseControllerAdvice {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Res> methodArgumentNotValidException(MethodArgumentNotValidException e) {
-        String eventId = MDC.get(BaseHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER, e.getBindingResult());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
@@ -87,7 +82,7 @@ public class BaseControllerAdvice {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity httpMessageNotReadableException(HttpMessageNotReadableException e) {
-        String eventId = MDC.get(BaseHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
@@ -98,7 +93,7 @@ public class BaseControllerAdvice {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        String eventId = MDC.get(BaseHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
@@ -109,7 +104,7 @@ public class BaseControllerAdvice {
      */
     @ExceptionHandler(BindException.class)
     protected ResponseEntity bindException(BindException e) {
-        String eventId = MDC.get(BaseHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER, e.getBindingResult());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));

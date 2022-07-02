@@ -2,6 +2,7 @@ package com.sss.infrastructure;
 
 import com.sss.domain.Member;
 import com.sss.domain.MemberQueryService;
+import com.sss.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,6 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     @Override
     public Member getMember(String memberToken) {
         return memberRepository.findByToken(memberToken)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(MemberNotFoundException::new);
     }
 }
