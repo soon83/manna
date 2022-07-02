@@ -26,4 +26,4 @@ dependencies {
     implementation 'com.h2database:h2'
 
     developmentOnly 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
-}                
+}

@@ -9,6 +9,7 @@ import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Slf4j
 @RestControllerAdvice
-public class CommonControllerAdvice {
+public class ExceptionHandlerAdvice {
 
     private static final List<ErrorCode> SPECIFIC_ALERT_TARGET_ERROR_CODE_LIST = new ArrayList<>();
 
@@ -83,7 +84,7 @@ public class CommonControllerAdvice {
      * HttpStatus 400: JSON parse error
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    protected ResponseEntity httpMessageNotReadableException(HttpMessageNotReadableException e) {
+    protected ResponseEntity<Res> httpMessageNotReadableException(HttpMessageNotReadableException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER);
@@ -94,7 +95,7 @@ public class CommonControllerAdvice {
      * HttpStatus 400: enum type 불일치
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    protected ResponseEntity methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+    protected ResponseEntity<Res> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER);
@@ -105,7 +106,7 @@ public class CommonControllerAdvice {
      * HttpStatus 400: request parameter bind error
      */
     @ExceptionHandler(BindException.class)
-    protected ResponseEntity bindException(BindException e) {
+    protected ResponseEntity<Res> bindException(BindException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER, e.getBindingResult());
@@ -113,10 +114,21 @@ public class CommonControllerAdvice {
     }
 
     /**
+     * HttpStatus 401: 권한 없음
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<Res> accessDeniedException(AccessDeniedException e) {
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_UNAUTHORIZED);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Res.fail(errorResponse));
+    }
+
+    /**
      * HttpStatus 405: 존재하지 않는 url mapping
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    protected ResponseEntity httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    protected ResponseEntity<Res> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_METHOD_NOT_ALLOWED);

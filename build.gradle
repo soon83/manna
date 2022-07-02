@@ -1,7 +1,6 @@
 buildscript {
     ext {
         springBootVersion = '2.7.1'
-        springCloudVersion = '2021.0.1'
         boot = 'org.springframework.boot'
         lombok = 'org.projectlombok:lombok'
     }
