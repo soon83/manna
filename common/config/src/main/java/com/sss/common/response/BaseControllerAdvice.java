@@ -31,8 +31,9 @@ public class BaseControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Res> onException(Exception e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.error("eventId = {} ", eventId, e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Res.fail(ErrorCode.COMMON_SYSTEM_ERROR));
+        log.error("[Exception] eventId = {}, error = {}", eventId, e);
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_SYSTEM_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Res.fail(errorResponse));
     }
 
     /**
@@ -44,14 +45,13 @@ public class BaseControllerAdvice {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         if (SPECIFIC_ALERT_TARGET_ERROR_CODE_LIST.contains(e.getErrorCode())) {
             log.error("[BaseException] eventId = {}, cause = {}, errorMsg = {}",
-                    eventId, NestedExceptionUtils.getMostSpecificCause(e),
-                    NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+                    eventId, NestedExceptionUtils.getMostSpecificCause(e), NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         } else {
             log.warn("[BaseException] eventId = {}, cause = {}, errorMsg = {}",
-                    eventId, NestedExceptionUtils.getMostSpecificCause(e),
-                    NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+                    eventId, NestedExceptionUtils.getMostSpecificCause(e), NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         }
-        return ResponseEntity.status(HttpStatus.OK).body(Res.fail(e.getMessage(), e.getErrorCode().getCode()));
+        ErrorRes errorResponse = ErrorRes.of(e.getErrorCode());
+        return ResponseEntity.status(HttpStatus.OK).body(Res.fail(errorResponse));
     }
 
     /**
@@ -63,7 +63,8 @@ public class BaseControllerAdvice {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[SkipException] eventId = {}, cause = {}, errorMsg = {}",
                 eventId, NestedExceptionUtils.getMostSpecificCause(e), NestedExceptionUtils.getMostSpecificCause(e).getMessage());
-        return ResponseEntity.status(HttpStatus.OK).body(Res.fail(ErrorCode.COMMON_SYSTEM_ERROR));
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_SYSTEM_ERROR);
+        return ResponseEntity.status(HttpStatus.OK).body(Res.fail(errorResponse));
     }
 
     /**
