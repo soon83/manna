@@ -21,7 +21,7 @@ import java.util.List;
 
 @Slf4j
 @RestControllerAdvice
-public class BaseControllerAdvice {
+public class CommonControllerAdvice {
 
     private static final List<ErrorCode> SPECIFIC_ALERT_TARGET_ERROR_CODE_LIST = new ArrayList<>();
 

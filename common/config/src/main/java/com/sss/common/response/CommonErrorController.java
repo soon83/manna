@@ -1,4 +1,4 @@
-package com.sss.common.exception;
+package com.sss.common.response;
 
 import com.sss.common.interceptor.HttpRequestInterceptor;
 import com.sss.common.response.ErrorCode;
@@ -7,7 +7,6 @@ import com.sss.common.response.Res;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
-public class CustomErrorController implements ErrorController {
+public class CommonErrorController implements ErrorController {
 
     @RequestMapping("/error")
     public ResponseEntity<Res> handleError(HttpServletRequest req) {
