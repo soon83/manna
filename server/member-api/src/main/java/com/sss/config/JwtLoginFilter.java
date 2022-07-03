@@ -38,8 +38,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @SneakyThrows
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
         MemberAuth.Main user = objectMapper.readValue(request.getInputStream(), MemberAuth.Main.class);
-        log.debug("### user: {}", user);
-
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 user.getUsername(), user.getPassword(), null
         );
@@ -56,6 +54,8 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             Authentication authResult
     ) throws IOException {
         MemberAuth.Main user = (MemberAuth.Main) authResult.getPrincipal();
+        // TODO MemberAuth.Main -> MemberDto 로 변환해서 응답하든지 아님 MemberAdapter 만들자 OK?
+
         response.setHeader(HttpHeaders.AUTHORIZATION, JwtUtil.BEARER_TOKEN_PREFIX + JwtUtil.makeAuthToken(user));
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         response.getOutputStream().write(objectMapper.writeValueAsBytes(user));
