@@ -16,15 +16,21 @@ public class ErrorRes {
     private String message;
     private List<FieldError> errors;
 
-    private ErrorRes(ErrorCode error, List<FieldError> errors) {
-        this.errorCode = error.getCode();
-        this.message = error.getMessage();
+    private ErrorRes(ErrorCode code, List<FieldError> errors) {
+        this.errorCode = code.getCode();
+        this.message = code.getMessage();
         this.errors = errors;
     }
 
-    private ErrorRes(ErrorCode error, String errorMessage) {
-        this.errorCode = error.getCode();
+    private ErrorRes(ErrorCode code, String errorMessage) {
+        this.errorCode = code.getCode();
         this.message = errorMessage;
+        this.errors = new ArrayList<>();
+    }
+
+    private ErrorRes(ErrorCode code) {
+        this.errorCode = code.getCode();
+        this.message = code.getMessage();
         this.errors = new ArrayList<>();
     }
 

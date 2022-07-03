@@ -1,9 +1,15 @@
 package com.sss.domain;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import java.util.List;
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
+    @Override
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
     List<MemberInfo.Main> retrieveMembers();
     String registerMember(MemberCommand.RegisterMember registerMemberCommand);
     MemberInfo.Main retrieveMember(String memberToken);

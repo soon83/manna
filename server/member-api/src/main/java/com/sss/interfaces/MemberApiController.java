@@ -1,12 +1,13 @@
 package com.sss.interfaces;
 
-import com.sss.util.UriGenerator;
 import com.sss.application.MemberFacade;
 import com.sss.common.response.Res;
+import com.sss.util.UriGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
 public class MemberApiController {

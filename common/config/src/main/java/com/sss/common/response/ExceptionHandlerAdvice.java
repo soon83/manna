@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,14 +115,25 @@ public class ExceptionHandlerAdvice {
     }
 
     /**
-     * HttpStatus 401: 권한 없음
+     * HttpStatus 401: 인증 오류
+     */
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<Res> authenticationException(AuthenticationException e) {
+        String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_UNAUTHORIZED);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Res.fail(errorResponse));
+    }
+
+    /**
+     * HttpStatus 403: 권한 없음
      */
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<Res> accessDeniedException(AccessDeniedException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
         log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
-        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_UNAUTHORIZED);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Res.fail(errorResponse));
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_FORBIDDEN);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Res.fail(errorResponse));
     }
 
     /**

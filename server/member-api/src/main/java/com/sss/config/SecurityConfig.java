@@ -1,5 +1,6 @@
 package com.sss.config;
 
+import com.sss.domain.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,10 +16,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final LoginService loginService;
+    public static final String LOGIN = "/login";
+    private final MemberService memberService;
 
-    public SecurityConfig(LoginService loginService) {
-        this.loginService = loginService;
+    public SecurityConfig(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     @Bean
@@ -28,10 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        JWTLoginFilter loginFilter = new JWTLoginFilter(authenticationManager());
-        JWTCheckFilter checkFilter = new JWTCheckFilter(authenticationManager(), loginService);
+        JwtLoginFilter loginFilter = new JwtLoginFilter(authenticationManager());
+        JwtCheckFilter checkFilter = new JwtCheckFilter(authenticationManager(), memberService);
+
         http
                 .csrf().disable()
+                /*.authorizeRequests(auth -> auth
+                        .mvcMatchers(HttpMethod.POST,LOGIN).permitAll()
+                        .anyRequest().authenticated()
+                )*/
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class)

@@ -22,15 +22,20 @@ public class ExceptionHandlerController implements ErrorController {
         log.info("### HttpStatus: {}", status);
 
         if (status != null) {
-            Integer httpStatus = Integer.valueOf(status.toString());
-            if (httpStatus == HttpStatus.FORBIDDEN.value()) {
-
-            } else if (httpStatus == HttpStatus.NOT_FOUND.value()) {
-                String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-                log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, ErrorCode.COMMON_NOT_FOUND.getMessage());
-                ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_NOT_FOUND);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Res.fail(errorResponse));
+            ErrorRes errorResponse = null;
+            String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
+            HttpStatus httpStatus = HttpStatus.valueOf(Integer.parseInt(status.toString()));
+            switch (httpStatus) {
+                case UNAUTHORIZED:
+                    errorResponse = ErrorRes.of(ErrorCode.COMMON_UNAUTHORIZED);
+                    log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, errorResponse.getMessage());
+                    break;
+                case NOT_FOUND:
+                    errorResponse = ErrorRes.of(ErrorCode.COMMON_NOT_FOUND);
+                    log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, errorResponse.getMessage());
+                    break;
             }
+            return ResponseEntity.status(httpStatus).body(Res.fail(errorResponse));
         }
         return null;
     }
