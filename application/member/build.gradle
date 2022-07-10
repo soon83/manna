@@ -1,0 +1,9 @@
+
+dependencies {
+    implementation project(":domain-member")
+
+    implementation(
+            "$boot:spring-boot-starter-web",
+            "$boot:spring-boot-starter-security"
+    )
+}
