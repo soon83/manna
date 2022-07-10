@@ -1,5 +1,5 @@
 apply from: '../application-build.gradle'
 
 dependencies {
-    implementation project(":domain-member")
+    implementation project(":domain-category")
 }

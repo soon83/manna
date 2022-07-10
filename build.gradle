@@ -62,7 +62,7 @@ subprojects {
     }
 }
 
-["interfaces"].each {
+["server"].each {
     def subProjectDir = new File(projectDir, it)
     subProjectDir.eachDir { dir ->
         def projectName = ":${it}-${dir.name}"
