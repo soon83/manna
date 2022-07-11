@@ -1,12 +1,6 @@
 rootProject.name = 'manna'
 
-[
-        "server",
-        "common",
-        "application",
-        "domain",
-        "exception"
-].each {
+["manna", "common"].each {
     def compDir = new File(rootDir, it)
     if (!compDir.exists()) {
         compDir.mkdirs()

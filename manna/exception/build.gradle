@@ -1,0 +1,8 @@
+
+dependencies {
+    implementation project(":common-config")
+
+    implementation(
+            "$boot:spring-boot-starter-web",
+    )
+}

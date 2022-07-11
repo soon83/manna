@@ -1,5 +1,0 @@
-apply from: '../application-build.gradle'
-
-dependencies {
-    implementation project(":domain-category")
-}

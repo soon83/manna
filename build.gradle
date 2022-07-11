@@ -46,12 +46,7 @@ subprojects {
     }
 }
 
-[
-        'common',
-        "application",
-        "domain",
-        "exception"
-].each {
+['common'].each {
     def subProjectDir = new File(projectDir, it)
     subProjectDir.eachDir { dir ->
         def projectName = ":${it}-${dir.name}"
@@ -62,7 +57,7 @@ subprojects {
     }
 }
 
-["server"].each {
+["manna"].each {
     def subProjectDir = new File(projectDir, it)
     subProjectDir.eachDir { dir ->
         def projectName = ":${it}-${dir.name}"

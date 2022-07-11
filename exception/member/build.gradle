@@ -1,5 +1,0 @@
-apply from: '../exception-build.gradle'
-
-dependencies {
-
-}

@@ -1,5 +1,0 @@
-apply from: '../domain-build.gradle'
-
-dependencies {
-    implementation project(":exception-category")
-}
