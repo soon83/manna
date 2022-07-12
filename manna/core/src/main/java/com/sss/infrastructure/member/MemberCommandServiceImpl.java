@@ -14,12 +14,12 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Member saveMember(Member member) {
+    public Member save(Member member) {
         return memberRepository.save(member);
     }
 
     @Override
-    public void deleteMember(Member member) {
+    public void delete(Member member) {
         memberRepository.delete(member);
     }
 }

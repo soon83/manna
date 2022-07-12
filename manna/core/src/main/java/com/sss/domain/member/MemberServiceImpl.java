@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
         var member = registerMemberCommand.toEntity();
-        var createdMember = memberCommandService.saveMember(member);
+        var createdMember = memberCommandService.save(member);
         return createdMember.getToken();
     }
 
@@ -77,6 +77,6 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void deleteMember(String memberToken) {
         var member = memberQueryService.getMember(memberToken);
-        memberCommandService.deleteMember(member);
+        memberCommandService.delete(member);
     }
 }

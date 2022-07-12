@@ -10,8 +10,8 @@ spring.profiles.active: dev
 spring:
   sql:
     init:
-      mode: always
-#      mode: never
+#      mode: always
+      mode: never
   application:
     name: manna-api-service
   jackson:
