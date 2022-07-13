@@ -6,7 +6,7 @@ import com.sss.common.response.ErrorCode;
 import com.sss.common.response.ErrorRes;
 import com.sss.common.response.Res;
 import com.sss.domain.member.MemberAuth;
-import com.sss.member.MemberNotFoundException;
+import com.sss.exception.member.MemberNotFoundException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

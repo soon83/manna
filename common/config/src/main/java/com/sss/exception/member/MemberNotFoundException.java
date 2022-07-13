@@ -1,4 +1,4 @@
-package com.sss.member;
+package com.sss.exception.member;
 
 import com.sss.common.exception.BaseException;
 import com.sss.common.response.ErrorCode;

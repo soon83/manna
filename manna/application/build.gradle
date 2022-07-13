@@ -1,9 +1,5 @@
+apply from: '../manna-build.gradle'
 
 dependencies {
     implementation project(":manna-core")
-
-    implementation(
-            "$boot:spring-boot-starter-web",
-            "$boot:spring-boot-starter-security"
-    )
 }

@@ -2,7 +2,7 @@ package com.sss.infrastructure.member;
 
 import com.sss.domain.member.Member;
 import com.sss.domain.member.MemberQueryService;
-import com.sss.member.MemberNotFoundException;
+import com.sss.exception.member.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

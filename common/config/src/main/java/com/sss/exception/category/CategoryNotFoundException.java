@@ -1,4 +1,4 @@
-package com.sss.category;
+package com.sss.exception.category;
 
 import com.sss.common.exception.BaseException;
 import com.sss.common.response.ErrorCode;

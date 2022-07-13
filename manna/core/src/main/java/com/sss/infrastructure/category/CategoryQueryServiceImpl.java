@@ -1,6 +1,6 @@
 package com.sss.infrastructure.category;
 
-import com.sss.category.CategoryNotFoundException;
+import com.sss.exception.category.CategoryNotFoundException;
 import com.sss.domain.category.Category;
 import com.sss.domain.category.CategoryQueryService;
 import lombok.RequiredArgsConstructor;

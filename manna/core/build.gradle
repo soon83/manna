@@ -1,14 +1,11 @@
+apply from: '../manna-build.gradle'
 
 dependencies {
-    implementation project(":common-config")
     implementation project(":common-util")
-    implementation project(":manna-exception")
+    implementation project(":common-config")
 
     implementation(
-            "$boot:spring-boot-starter-web",
-            "$boot:spring-boot-starter-data-jpa",
-            "$boot:spring-boot-starter-validation",
-            "$boot:spring-boot-starter-security"
+            "$boot:spring-boot-starter-data-jpa"
     )
 
     implementation(
