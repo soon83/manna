@@ -1,4 +1,4 @@
-package com.sss.config;
+package com.sss.security;
 
 import com.sss.domain.member.MemberAuth;
 import com.sss.domain.member.MemberService;

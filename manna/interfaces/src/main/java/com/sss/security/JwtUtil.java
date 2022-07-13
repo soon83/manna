@@ -1,4 +1,4 @@
-package com.sss.config;
+package com.sss.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
