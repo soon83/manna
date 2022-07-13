@@ -2,19 +2,23 @@ package com.sss.security;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sss.login.LoginDto;
 import com.sss.response.ErrorCode;
 import com.sss.response.ErrorRes;
 import com.sss.response.Res;
-import com.sss.domain.member.MemberAuth;
+import com.sss.domain.login.LoginInfo;
 import com.sss.exception.member.MemberNotFoundException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -27,22 +31,22 @@ import static com.sss.security.SecurityConfig.LOGIN;
 @Slf4j
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     public JwtLoginFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
         setFilterProcessesUrl(LOGIN);
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
     }
 
     @Override
     @SneakyThrows
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        MemberAuth.Main user = objectMapper.readValue(request.getInputStream(), MemberAuth.Main.class);
+        LoginDto.AuthRequest authRequest = objectMapper.readValue(request.getInputStream(), LoginDto.AuthRequest.class);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                user.getUsername(), user.getPassword(), null
+                authRequest.getMemberLoginId(), authRequest.getMemberLoginPassword(), null
         );
-
-        // user details...
         return getAuthenticationManager().authenticate(token);
     }
 
@@ -53,12 +57,13 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             FilterChain chain,
             Authentication authResult
     ) throws IOException {
-        MemberAuth.Main user = (MemberAuth.Main) authResult.getPrincipal();
-        // TODO MemberAuth.Main -> MemberDto 로 변환해서 응답하든지 아님 MemberAdapter 만들자 OK?
-
-        response.setHeader(HttpHeaders.AUTHORIZATION, JwtUtil.BEARER_TOKEN_PREFIX + JwtUtil.makeAuthToken(user));
+        var accountAdaptor = (LoginInfo.AccountAdaptor) authResult.getPrincipal();
+        var memberLoginInfo = accountAdaptor.getMemberLoginInfo();
+        response.setHeader(HttpHeaders.AUTHORIZATION, JwtUtil.BEARER_TOKEN_PREFIX + JwtUtil.makeAuthToken(memberLoginInfo));
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(user));
+
+        var authResponse = new LoginDto.MainResponse(memberLoginInfo);
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.success(authResponse)));
     }
 
     @Override
@@ -73,7 +78,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         if (failed.getCause() instanceof MemberNotFoundException) {
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             ErrorRes errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
-            objectMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
             response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
         }
     }

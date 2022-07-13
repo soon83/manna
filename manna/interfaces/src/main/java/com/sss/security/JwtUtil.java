@@ -3,7 +3,7 @@ package com.sss.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.sss.domain.member.MemberAuth;
+import com.sss.domain.login.LoginInfo;
 
 import java.time.Instant;
 
@@ -14,16 +14,16 @@ public class JwtUtil {
     private static final long AUTH_TIME = 20 * 60;
     private static final long REFRESH_TIME = 60 * 60 * 24 * 7;
 
-    public static String makeAuthToken(MemberAuth.Main user) {
+    public static String makeAuthToken(LoginInfo.Main user) {
         return JWT.create()
-                .withSubject(user.getUsername())
+                .withSubject(user.getMemberLoginId())
                 .withClaim("exp", Instant.now().getEpochSecond() + AUTH_TIME)
                 .sign(ALGORITHM);
     }
 
-    public static String makeRefreshToken(MemberAuth.Main user) {
+    public static String makeRefreshToken(LoginInfo.Main user) {
         return JWT.create()
-                .withSubject(user.getUsername())
+                .withSubject(user.getMemberLoginPassword())
                 .withClaim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
                 .sign(ALGORITHM);
     }

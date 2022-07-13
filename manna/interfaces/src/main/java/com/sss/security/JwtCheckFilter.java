@@ -1,7 +1,7 @@
 package com.sss.security;
 
-import com.sss.domain.member.MemberAuth;
-import com.sss.domain.member.MemberService;
+import com.sss.domain.login.LoginInfo;
+import com.sss.domain.login.LoginService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,11 +17,11 @@ import java.io.IOException;
 
 public class JwtCheckFilter extends BasicAuthenticationFilter {
 
-    private final MemberService memberService;
+    private final LoginService loginService;
 
-    public JwtCheckFilter(AuthenticationManager authenticationManager, MemberService memberService) {
+    public JwtCheckFilter(AuthenticationManager authenticationManager, LoginService loginService) {
         super(authenticationManager);
-        this.memberService = memberService;
+        this.loginService = loginService;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
         String token = bearer.substring(JwtUtil.BEARER_TOKEN_PREFIX.length());
         JwtVerifyResult result = JwtUtil.verify(token);
         if (result.isSuccess()) {
-            MemberAuth.Main user = (MemberAuth.Main) memberService.loadUserByUsername(result.getUsername());
+            LoginInfo.AccountAdaptor user = (LoginInfo.AccountAdaptor) loginService.loadUserByUsername(result.getUsername());
             UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(
                     user.getUsername(), null, user.getAuthorities()
             );

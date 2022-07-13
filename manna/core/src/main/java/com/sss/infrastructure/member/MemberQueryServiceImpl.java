@@ -17,8 +17,8 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Member authMember(String username) {
-        return memberRepository.findByLoginId(username)
+    public Member authMember(String loginId) {
+        return memberRepository.findByLoginId(loginId)
                 .orElseThrow(MemberNotFoundException::new);
     }
 

@@ -15,6 +15,7 @@ public class MemberInfo {
         private final String loginPassword;
         private final String name;
         private final String email;
+        private final Member.Role role;
         private final Member.Status status;
 
         @Builder
@@ -25,6 +26,7 @@ public class MemberInfo {
                 String loginPassword,
                 String name,
                 String email,
+                Member.Role role,
                 Member.Status status
         ) {
             this.id = id;
@@ -33,6 +35,7 @@ public class MemberInfo {
             this.loginPassword = loginPassword;
             this.name = name;
             this.email = email;
+            this.role = role;
             this.status = status;
         }
 
@@ -43,6 +46,7 @@ public class MemberInfo {
             this.loginPassword = entity.getLoginPassword();
             this.name = entity.getName();
             this.email = entity.getEmail();
+            this.role = entity.getRole();
             this.status = entity.getStatus();
         }
     }

@@ -48,7 +48,29 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 15)
     private Status status;
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Role {
+
+        ADMIN("관리자"),
+        MANAGER("운영자"),
+        MEMBER("회원");
+
+        private final String title;
+
+        private static final Map<String, Role> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
+                .collect(Collectors.toMap(Role::getTitle, Function.identity())));
+
+        public static Optional<Role> of(String description) {
+            return Optional.ofNullable(descriptionMap.get(description));
+        }
+    }
 
     @Getter
     @RequiredArgsConstructor
@@ -59,8 +81,7 @@ public class Member {
 
         private final String title;
 
-        private static final Map<String, Status> descriptionMap = Collections
-                .unmodifiableMap(Stream.of(values())
+        private static final Map<String, Status> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
                 .collect(Collectors.toMap(Status::getTitle, Function.identity())));
 
         public static Optional<Status> of(String description) {
