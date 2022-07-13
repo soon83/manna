@@ -1,6 +1,6 @@
 package com.sss.member;
 
-import com.sss.common.response.Res;
+import com.sss.response.Res;
 import com.sss.util.UriGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.sss.exception.category;
 
-import com.sss.common.exception.BaseException;
-import com.sss.common.response.ErrorCode;
+import com.sss.exception.common.BaseException;
+import com.sss.response.ErrorCode;
 
 public class CategoryNotFoundException extends BaseException {
 

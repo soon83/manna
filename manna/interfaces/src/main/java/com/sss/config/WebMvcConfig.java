@@ -1,6 +1,6 @@
 package com.sss.config;
 
-import com.sss.common.interceptor.HttpRequestInterceptor;
+import com.sss.interceptor.HttpRequestInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

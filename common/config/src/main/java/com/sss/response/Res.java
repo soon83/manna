@@ -1,4 +1,4 @@
-package com.sss.common.response;
+package com.sss.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

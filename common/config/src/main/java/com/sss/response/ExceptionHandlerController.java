@@ -1,6 +1,6 @@
-package com.sss.common.response;
+package com.sss.response;
 
-import com.sss.common.interceptor.HttpRequestInterceptor;
+import com.sss.interceptor.HttpRequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.boot.web.servlet.error.ErrorController;

@@ -2,9 +2,9 @@ package com.sss.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sss.common.response.ErrorCode;
-import com.sss.common.response.ErrorRes;
-import com.sss.common.response.Res;
+import com.sss.response.ErrorCode;
+import com.sss.response.ErrorRes;
+import com.sss.response.Res;
 import com.sss.domain.member.MemberAuth;
 import com.sss.exception.member.MemberNotFoundException;
 import lombok.SneakyThrows;

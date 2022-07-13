@@ -1,6 +1,6 @@
-package com.sss.common.exception;
+package com.sss.exception.common;
 
-import com.sss.common.response.ErrorCode;
+import com.sss.response.ErrorCode;
 
 public class IllegalStatusException extends BaseException {
 

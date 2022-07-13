@@ -1,7 +1,7 @@
-package com.sss.common.response;
+package com.sss.response;
 
-import com.sss.common.exception.BaseException;
-import com.sss.common.interceptor.HttpRequestInterceptor;
+import com.sss.exception.common.BaseException;
+import com.sss.interceptor.HttpRequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.connector.ClientAbortException;
 import org.slf4j.MDC;
