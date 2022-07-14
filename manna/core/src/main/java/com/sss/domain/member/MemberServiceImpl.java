@@ -47,7 +47,8 @@ public class MemberServiceImpl implements MemberService {
                 changeMemberCommand.getLoginId(),
                 changeMemberCommand.getLoginPassword(),
                 changeMemberCommand.getName(),
-                changeMemberCommand.getEmail()
+                changeMemberCommand.getEmail(),
+                changeMemberCommand.getRole()
         );
     }
 

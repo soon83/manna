@@ -101,6 +101,7 @@ public class Member {
         this.loginPassword = loginPassword;
         this.name = name;
         this.email = email;
+        this.role = Role.MEMBER;
         this.status = Status.ENABLE;
     }
 
@@ -108,12 +109,14 @@ public class Member {
             String loginId,
             String loginPassword,
             String name,
-            String email
+            String email,
+            Member.Role role
     ) {
         this.loginId = loginId;
         this.loginPassword = loginPassword;
         this.name = name;
         this.email = email;
+        this.role = role;
     }
 
     public void enable() {

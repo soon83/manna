@@ -34,5 +34,6 @@ public class MemberCommand {
         private String loginPassword;
         private String name;
         private String email;
+        private Member.Role role;
     }
 }
