@@ -8,10 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotBlank;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 public class LoginInfo {
@@ -32,7 +33,7 @@ public class LoginInfo {
         }
 
         public LoginInfo.Main getLoginUser() {
-            memberLoginInfo.setMemberLoginPassword("[PROTECTED]");
+            memberLoginInfo.setMemberLoginPassword(null);
             return this.memberLoginInfo;
         }
 
@@ -66,23 +67,17 @@ public class LoginInfo {
 
     @Getter
     @ToString
-    public static class Main implements UserDetails {
+    public static class Main {
 
-        private String memberToken;
-
-        @NotBlank(message = "memberLoginId 는 필수값입니다.")
-        private String memberLoginId;
+        private final String memberToken;
+        private final String memberLoginId;
 
         @Setter
-        @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
         private String memberLoginPassword;
-
-        private String memberName;
-
-        private String memberEmail;
-        private Member.Role memberRole;
-
-        private Member.Status memberStatus;
+        private final String memberName;
+        private final String memberEmail;
+        private final Member.Role memberRole;
+        private final Member.Status memberStatus;
 
         public Main(Member member) {
             this.memberToken = member.getToken();
@@ -92,43 +87,6 @@ public class LoginInfo {
             this.memberEmail = member.getEmail();
             this.memberRole = member.getRole();
             this.memberStatus = member.getStatus();
-        }
-
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            Set<GrantedAuthority> authoritySet = new HashSet<>();
-            authoritySet.add(new SimpleGrantedAuthority(this.memberRole.name()));
-            return authoritySet;
-        }
-
-        @Override
-        public String getPassword() {
-            return this.memberLoginPassword;
-        }
-
-        @Override
-        public String getUsername() {
-            return this.memberLoginId;
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return true;
         }
     }
 }

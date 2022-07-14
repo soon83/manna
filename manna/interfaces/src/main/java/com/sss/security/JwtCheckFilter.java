@@ -36,7 +36,7 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
         if (result.isSuccess()) {
             LoginInfo.AccountAdaptor user = (LoginInfo.AccountAdaptor) loginService.loadUserByUsername(result.getUsername());
             UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(
-                    user.getUsername(), null, user.getAuthorities()
+                    user.getLoginUser(), null, user.getAuthorities()
             );
             SecurityContextHolder.getContext().setAuthentication(userToken);
             chain.doFilter(request, response);
@@ -44,4 +44,6 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
             throw new AuthenticationException("유효하지 않은 토큰입니다.");
         }
     }
+
+
 }
