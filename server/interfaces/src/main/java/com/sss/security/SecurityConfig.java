@@ -1,22 +1,26 @@
 package com.sss.security;
 
 import com.sss.domain.login.LoginService;
-import com.sss.domain.member.MemberService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+@Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     public static final String LOGIN = "/login";
     private final LoginService loginService;
@@ -27,15 +31,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        JwtLoginFilter loginFilter = new JwtLoginFilter(authenticationManager());
-        JwtCheckFilter checkFilter = new JwtCheckFilter(authenticationManager(), loginService);
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(loginService).passwordEncoder(passwordEncoder());
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
+        JwtLoginFilter loginFilter = new JwtLoginFilter(authenticationManager);
+        JwtCheckFilter checkFilter = new JwtCheckFilter(authenticationManager, loginService);
         http
+                .authenticationManager(authenticationManager)
                 .headers(AbstractHttpConfigurer::disable)
                 .csrf().disable()
                 /*.authorizeRequests(auth -> auth
@@ -46,5 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class)
         ;
+        return http.build();
     }
 }
