@@ -6,6 +6,9 @@ import com.sss.domain.member.MemberInfo;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 public class MemberDto {
 
@@ -30,6 +33,21 @@ public class MemberDto {
         @NotBlank(message = "memberEmail 는 필수값입니다.")
         private String memberEmail;
 
+        private String memberAvatar;
+
+        @NotBlank(message = "memberNickName 는 필수값입니다.")
+        private String memberNickName;
+
+        @NotBlank(message = "memberSelfIntroduction 는 필수값입니다.")
+        private String memberSelfIntroduction;
+
+        @NotNull(message = "memberCategories 는 필수값입니다.")
+        @Size(min = 1, message = "memberCategories 는 최소 1개 이상이어야 합니다.")
+        private List<Integer> memberCategories;
+
+        @NotNull(message = "memberCategoryItems 는 필수값입니다.")
+        @Size(min = 1, message = "memberCategoryItems 는 최소 1개 이상이어야 합니다.")
+        private List<Integer> memberCategoryItems;
 
         public MemberCommand.RegisterMember toRegisterMemberCommand() {
             return MemberCommand.RegisterMember.builder()
@@ -37,6 +55,11 @@ public class MemberDto {
                     .loginPassword(memberLoginPassword)
                     .name(memberName)
                     .email(memberEmail)
+                    .avatar(memberAvatar)
+                    .nickName(memberNickName)
+                    .selfIntroduction(memberSelfIntroduction)
+                    .categories(memberCategories)
+                    .categoryItems(memberCategoryItems)
                     .build();
         }
     }
@@ -49,7 +72,6 @@ public class MemberDto {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
 
-        @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
         private String memberLoginPassword;
 
         @NotBlank(message = "memberName 는 필수값입니다.")
@@ -58,12 +80,31 @@ public class MemberDto {
         @NotBlank(message = "memberEmail 는 필수값입니다.")
         private String memberEmail;
 
+        private String memberAvatar;
+
+        @NotBlank(message = "memberNickName 는 필수값입니다.")
+        private String memberNickName;
+
+        @NotBlank(message = "memberSelfIntroduction 는 필수값입니다.")
+        private String memberSelfIntroduction;
+
+        @NotNull(message = "memberCategories 는 필수값입니다.")
+        private List<Integer> memberCategories;
+
+        @NotNull(message = "memberCategoryItems 는 필수값입니다.")
+        private List<Integer> memberCategoryItems;
+
         public MemberCommand.ChangeMember toChangeMemberCommand() {
             return MemberCommand.ChangeMember.builder()
                     .loginId(memberLoginId)
                     .loginPassword(memberLoginPassword)
                     .name(memberName)
                     .email(memberEmail)
+                    .avatar(memberAvatar)
+                    .nickName(memberNickName)
+                    .selfIntroduction(memberSelfIntroduction)
+                    .categories(memberCategories)
+                    .categoryItems(memberCategoryItems)
                     .build();
         }
     }
@@ -89,6 +130,12 @@ public class MemberDto {
         private final String memberLoginId;
         private final String memberName;
         private final String memberEmail;
+        private final String memberAvatar;
+        private final String memberNickName;
+        private final String memberSelfIntroduction;
+        private final String memberCategories;
+        private final String memberCategoryItems;
+        private final Member.Role memberRole;
         private final Member.Status memberStatus;
 
         public MainResponse(MemberInfo.Main memberInfo) {
@@ -96,6 +143,12 @@ public class MemberDto {
             this.memberLoginId = memberInfo.getLoginId();
             this.memberName = memberInfo.getName();
             this.memberEmail = memberInfo.getEmail();
+            this.memberAvatar = memberInfo.getAvatar();
+            this.memberNickName = memberInfo.getNickName();
+            this.memberSelfIntroduction = memberInfo.getSelfIntroduction();
+            this.memberCategories = memberInfo.getCategories();
+            this.memberCategoryItems = memberInfo.getCategoryItems();
+            this.memberRole = memberInfo.getRole();
             this.memberStatus = memberInfo.getStatus();
         }
     }

@@ -76,7 +76,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Res> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        log.warn("[MethodArgumentNotValidException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER, e.getBindingResult());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
     }
@@ -87,7 +87,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<Res> httpMessageNotReadableException(HttpMessageNotReadableException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        log.warn("[HttpMessageNotReadableException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
     }
@@ -98,7 +98,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Res> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        log.warn("[MethodArgumentTypeMismatchException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
     }
@@ -109,7 +109,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(BindException.class)
     protected ResponseEntity<Res> bindException(BindException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        log.warn("[BindException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_PARAMETER, e.getBindingResult());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Res.fail(errorResponse));
     }
@@ -120,7 +120,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(AuthenticationException.class)
     protected ResponseEntity<Res> authenticationException(AuthenticationException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        log.warn("[AuthenticationException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_UNAUTHORIZED);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Res.fail(errorResponse));
     }
@@ -131,7 +131,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<Res> accessDeniedException(AccessDeniedException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        log.warn("[AccessDeniedException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_FORBIDDEN);
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Res.fail(errorResponse));
     }
@@ -142,7 +142,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<Res> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         String eventId = MDC.get(HttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[BaseException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+        log.warn("[HttpRequestMethodNotSupportedException] eventId = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_METHOD_NOT_ALLOWED);
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(Res.fail(errorResponse));
     }

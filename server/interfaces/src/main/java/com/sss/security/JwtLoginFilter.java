@@ -2,24 +2,21 @@ package com.sss.security;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sss.domain.login.LoginInfo;
+import com.sss.exception.member.MemberNotFoundException;
 import com.sss.login.LoginDto;
 import com.sss.response.ErrorCode;
 import com.sss.response.ErrorRes;
 import com.sss.response.Res;
-import com.sss.domain.login.LoginInfo;
-import com.sss.exception.member.MemberNotFoundException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -37,17 +34,14 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     public JwtLoginFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
         setFilterProcessesUrl(LOGIN);
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+        this.objectMapper = new ObjectMapper().setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
     }
 
     @Override
     @SneakyThrows
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        LoginDto.AuthRequest authRequest = objectMapper.readValue(request.getInputStream(), LoginDto.AuthRequest.class);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                authRequest.getMemberLoginId(), authRequest.getMemberLoginPassword(), null
-        );
+        var authRequest = objectMapper.readValue(request.getInputStream(), LoginDto.AuthRequest.class);
+        var token = new UsernamePasswordAuthenticationToken(authRequest.getMemberLoginId(), authRequest.getMemberLoginPassword(), null);
         return getAuthenticationManager().authenticate(token);
     }
 
@@ -72,13 +66,13 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletResponse response,
             AuthenticationException failed
     ) throws IOException {
-        /**
-         * MEMBER_NOT_FOUND
-         */
+        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_SYSTEM_ERROR);
+
         if (failed.getCause() instanceof MemberNotFoundException || failed instanceof BadCredentialsException) {
-            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            ErrorRes errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
-            response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
+            errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
         }
+
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
     }
 }

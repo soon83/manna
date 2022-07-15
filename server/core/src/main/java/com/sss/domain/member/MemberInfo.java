@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.List;
+
 public class MemberInfo {
 
     @Getter
@@ -15,6 +17,11 @@ public class MemberInfo {
         private final String loginPassword;
         private final String name;
         private final String email;
+        private final String avatar;
+        private final String nickName;
+        private final String selfIntroduction;
+        private final String categories;
+        private String categoryItems;
         private final Member.Role role;
         private final Member.Status status;
 
@@ -26,6 +33,11 @@ public class MemberInfo {
                 String loginPassword,
                 String name,
                 String email,
+                String avatar,
+                String nickName,
+                String selfIntroduction,
+                String categories,
+                String categoryItems,
                 Member.Role role,
                 Member.Status status
         ) {
@@ -35,6 +47,11 @@ public class MemberInfo {
             this.loginPassword = loginPassword;
             this.name = name;
             this.email = email;
+            this.avatar = avatar;
+            this.nickName = nickName;
+            this.selfIntroduction = selfIntroduction;
+            this.categories = categories;
+            this.categoryItems = categoryItems;
             this.role = role;
             this.status = status;
         }
@@ -46,6 +63,11 @@ public class MemberInfo {
             this.loginPassword = entity.getLoginPassword();
             this.name = entity.getName();
             this.email = entity.getEmail();
+            this.avatar = entity.getAvatar();
+            this.nickName = entity.getNickName();
+            this.selfIntroduction = entity.getSelfIntroduction();
+            this.categories = entity.getCategories();
+            this.categoryItems = entity.getCategoryItems();
             this.role = entity.getRole();
             this.status = entity.getStatus();
         }

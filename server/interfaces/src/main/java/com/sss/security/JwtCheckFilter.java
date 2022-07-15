@@ -28,8 +28,7 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
     public JwtCheckFilter(AuthenticationManager authenticationManager, LoginService loginService) {
         super(authenticationManager);
         this.loginService = loginService;
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+        this.objectMapper = new ObjectMapper().setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
     }
 
     @Override
@@ -40,12 +39,10 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
             return;
         }
         String token = bearer.substring(JwtUtil.BEARER_TOKEN_PREFIX.length());
-        JwtVerifyResult result = JwtUtil.verify(token);
+        var result = JwtUtil.verify(token);
         if (result.isSuccess()) {
-            LoginInfo.AccountAdaptor user = (LoginInfo.AccountAdaptor) loginService.loadUserByUsername(result.getUsername());
-            UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(
-                    user.getLoginUser(), null, user.getAuthorities()
-            );
+            var member = (LoginInfo.AccountAdaptor) loginService.loadUserByUsername(result.getUsername());
+            var userToken = new UsernamePasswordAuthenticationToken(member.getLoginUser(), null, member.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(userToken);
             chain.doFilter(request, response);
         } else {

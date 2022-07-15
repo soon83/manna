@@ -42,7 +42,7 @@ public class MemberApiController {
      * @throws URISyntaxException
      */
     @PostMapping
-    public ResponseEntity<Res> registerMembers(@RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
+    public ResponseEntity<Res> registerMember(@RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
         var registerMemberCommand = request.toRegisterMemberCommand();
         var memberToken = memberFacade.registerMember(registerMemberCommand);
         var response = new MemberDto.RegisterResponse(memberToken);

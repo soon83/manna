@@ -25,15 +25,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional
-    public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
-        var member = registerMemberCommand.toEntity();
-
-        var createdMember = memberCommandService.save(member);
-        return createdMember.getToken();
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public MemberInfo.Main retrieveMember(String memberToken) {
         var member = memberQueryService.getMember(memberToken);
@@ -49,6 +40,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
+    public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
+        var member = registerMemberCommand.toEntity();
+        var createdMember = memberCommandService.save(member);
+        return createdMember.getToken();
+    }
+
+    @Override
+    @Transactional
     public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
         var member = memberQueryService.getMember(memberToken);
         member.updateMember(
@@ -56,6 +55,11 @@ public class MemberServiceImpl implements MemberService {
                 changeMemberCommand.getLoginPassword(),
                 changeMemberCommand.getName(),
                 changeMemberCommand.getEmail(),
+                changeMemberCommand.getAvatar(),
+                changeMemberCommand.getNickName(),
+                changeMemberCommand.getSelfIntroduction(),
+                changeMemberCommand.getCategories(),
+                changeMemberCommand.getCategoryItems(),
                 changeMemberCommand.getRole()
         );
     }

@@ -3,6 +3,7 @@ package com.sss.security;
 import com.sss.domain.login.LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -36,20 +37,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        var authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(loginService).passwordEncoder(passwordEncoder());
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+        var authenticationManager = authenticationManagerBuilder.build();
 
-        JwtLoginFilter loginFilter = new JwtLoginFilter(authenticationManager);
-        JwtCheckFilter checkFilter = new JwtCheckFilter(authenticationManager, loginService);
+        var loginFilter = new JwtLoginFilter(authenticationManager);
+        var checkFilter = new JwtCheckFilter(authenticationManager, loginService);
         http
                 .authenticationManager(authenticationManager)
                 .headers(AbstractHttpConfigurer::disable)
                 .csrf().disable()
-                /*.authorizeRequests(auth -> auth
-                        .mvcMatchers(HttpMethod.POST,LOGIN).permitAll()
+                .authorizeRequests(auth -> auth
+                        .mvcMatchers(HttpMethod.POST, LOGIN).permitAll()
                         .anyRequest().authenticated()
-                )*/
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class)

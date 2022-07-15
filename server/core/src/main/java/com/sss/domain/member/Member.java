@@ -7,11 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,6 +45,21 @@ public class Member extends BaseEntity {
 
     @Column(length = 31)
     private String email;
+
+    @Column(length = 255)
+    private String avatar;
+
+    @Column(length = 31)
+    private String nickName;
+
+    @Column(length = 1023)
+    private String selfIntroduction;
+
+    @Column(length = 255)
+    private String categories;
+
+    @Column(length = 255)
+    private String categoryItems;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
@@ -95,13 +109,23 @@ public class Member extends BaseEntity {
             String loginId,
             String loginPassword,
             String name,
-            String email
+            String email,
+            String avatar,
+            String nickName,
+            String selfIntroduction,
+            List<Integer> categories,
+            List<Integer> categoryItems
     ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.loginId = loginId;
         this.loginPassword = loginPassword;
         this.name = name;
         this.email = email;
+        this.avatar = avatar;
+        this.nickName = nickName;
+        this.selfIntroduction = selfIntroduction;
+        this.categories = categories.toString();
+        this.categoryItems = categoryItems.toString();
         this.role = Role.MEMBER;
         this.status = Status.ENABLE;
     }
@@ -111,13 +135,23 @@ public class Member extends BaseEntity {
             String loginPassword,
             String name,
             String email,
-            Member.Role role
+            String avatar,
+            String nickName,
+            String selfIntroduction,
+            List<Integer> categories,
+            List<Integer> categoryItems,
+            Role role
     ) {
         this.loginId = loginId;
-        this.loginPassword = loginPassword;
+        if (!ObjectUtils.isEmpty(loginPassword)) this.loginPassword = loginPassword;
         this.name = name;
         this.email = email;
-        this.role = role;
+        this.avatar = avatar;
+        this.nickName = nickName;
+        this.selfIntroduction = selfIntroduction;
+        this.categories = categories.toString();
+        this.categoryItems = categoryItems.toString();
+        if (!ObjectUtils.isEmpty(role)) this.role = role;
     }
 
     public void enable() {
