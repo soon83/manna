@@ -2,6 +2,7 @@ package com.sss.domain.member;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 public class MemberCommand {
@@ -12,8 +13,12 @@ public class MemberCommand {
     public static class RegisterMember {
 
         private String loginId;
+
+        @Setter
         private String loginPassword;
+
         private String name;
+
         private String email;
 
         public Member toEntity() {
@@ -30,10 +35,16 @@ public class MemberCommand {
     @Builder
     @ToString
     public static class ChangeMember {
+
         private String loginId;
+
+        @Setter
         private String loginPassword;
+        
         private String name;
+
         private String email;
+
         private Member.Role role;
     }
 }

@@ -28,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
         var member = registerMemberCommand.toEntity();
+
         var createdMember = memberCommandService.save(member);
         return createdMember.getToken();
     }
