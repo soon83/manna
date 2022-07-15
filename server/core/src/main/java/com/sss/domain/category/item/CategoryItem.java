@@ -1,6 +1,7 @@
 package com.sss.domain.category.item;
 
 import com.sss.TokenGenerator;
+import com.sss.domain.BaseEntity;
 import com.sss.domain.category.Category;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import javax.persistence.*;
         @UniqueConstraint(name = "UK_categoryItem_token", columnNames = {"token"}),
         @UniqueConstraint(name = "UK_categoryItem_title", columnNames = {"title"})
 })
-public class CategoryItem {
+public class CategoryItem extends BaseEntity {
 
     private static final String TOKEN_PREFIX = "ctgItm_";
 

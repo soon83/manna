@@ -1,6 +1,7 @@
 package com.sss.domain.member;
 
 import com.sss.TokenGenerator;
+import com.sss.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ import java.util.stream.Stream;
         @UniqueConstraint(name = "UK_member_token", columnNames = {"token"}),
         @UniqueConstraint(name = "UK_member_loginId", columnNames = {"loginId"})
 })
-public class Member {
+public class Member extends BaseEntity {
 
     private static final String TOKEN_PREFIX = "mbr_";
 
