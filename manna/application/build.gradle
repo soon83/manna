@@ -1,5 +1,0 @@
-apply from: '../manna-build.gradle'
-
-dependencies {
-    implementation project(":manna-core")
-}

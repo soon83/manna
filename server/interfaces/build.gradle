@@ -1,9 +1,9 @@
-apply from: '../manna-build.gradle'
+apply from: '../server-build.gradle'
 
 dependencies {
     implementation project(":common-config")
-    implementation project(":manna-application")
-    implementation project(":manna-core")
+    implementation project(":server-application")
+    implementation project(":server-core")
 
     implementation 'com.auth0:java-jwt:3.19.2'
 

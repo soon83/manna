@@ -1,4 +1,4 @@
-apply from: '../manna-build.gradle'
+apply from: '../server-build.gradle'
 
 dependencies {
     implementation project(":common-util")
