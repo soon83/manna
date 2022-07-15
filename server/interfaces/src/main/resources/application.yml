@@ -8,25 +8,31 @@ server:
 
 spring.profiles.active: dev
 spring:
-  sql:
-    init:
+#  sql:
+#    init:
 #      mode: always
-      mode: never
+#      mode: never
   application:
     name: manna-api-service
   jackson:
     default-property-inclusion: non_null
   datasource:
     hikari:
-      driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:~/Study/h2/manna/test;mode=mysql
-      username: sa
-      password:
+      driver-class-name: org.mariadb.jdbc.Driver
+      jdbc-url: jdbc:mariadb://soon83.com:3307/manna
+      username: manna
+      password: manna!@34
+#      driver-class-name: org.h2.Driver
+#      jdbc-url: jdbc:h2:~/Study/h2/manna/test;mode=mysql
+#      username: sa
+#      password:
+
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     hibernate:
       ddl-auto: update
+#      ddl-auto: create
     properties:
       hibernate:
         default_batch_fetch_size: 100

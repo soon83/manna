@@ -40,6 +40,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public MemberInfo.Main retrieveLoginMember(String memberLoginId) {
+        var member = memberQueryService.getLoginMember(memberLoginId);
+        return new MemberInfo.Main(member);
+    }
+
+    @Override
     @Transactional
     public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
         var member = memberQueryService.getMember(memberToken);

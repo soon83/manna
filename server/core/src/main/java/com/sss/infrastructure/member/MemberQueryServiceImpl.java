@@ -32,4 +32,10 @@ public class MemberQueryServiceImpl implements MemberQueryService {
         return memberRepository.findByToken(memberToken)
                 .orElseThrow(MemberNotFoundException::new);
     }
+
+    @Override
+    public Member getLoginMember(String memberLoginId) {
+        return memberRepository.findByLoginId(memberLoginId)
+                .orElseThrow(MemberNotFoundException::new);
+    }
 }
