@@ -19,9 +19,6 @@ spring:
   datasource:
     hikari:
       driver-class-name: org.mariadb.jdbc.Driver
-      jdbc-url: jdbc:mariadb://soon83.com:3307/manna
-      username: manna
-      password: manna!@34
 #      driver-class-name: org.h2.Driver
 #      jdbc-url: jdbc:h2:~/Study/h2/manna/test;mode=mysql
 #      username: sa

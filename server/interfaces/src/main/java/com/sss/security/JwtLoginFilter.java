@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -59,10 +60,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     ) throws IOException {
         var accountAdaptor = (LoginInfo.AccountAdaptor) authResult.getPrincipal();
         var memberLoginInfo = accountAdaptor.getMemberLoginInfo();
+        var authResponse = new LoginDto.MainResponse(memberLoginInfo);
         response.setHeader(HttpHeaders.AUTHORIZATION, JwtUtil.BEARER_TOKEN_PREFIX + JwtUtil.makeAuthToken(memberLoginInfo));
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-
-        var authResponse = new LoginDto.MainResponse(memberLoginInfo);
         response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.success(authResponse)));
     }
 
@@ -75,7 +75,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         /**
          * MEMBER_NOT_FOUND
          */
-        if (failed.getCause() instanceof MemberNotFoundException) {
+        if (failed.getCause() instanceof MemberNotFoundException || failed instanceof BadCredentialsException) {
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             ErrorRes errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
             response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
