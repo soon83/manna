@@ -29,64 +29,44 @@ import java.util.stream.Stream;
         @UniqueConstraint(name = "UK_meeting_token", columnNames = {"token"}),
 })
 public class Meeting extends BaseEntity {
-
     private static final String TOKEN_PREFIX = "met_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 31)
     private String token;
-
     @Column(length = 31)
     private String categoryItemName;
-
     @Column(length = 63)
     private String title;
-
     @Column(length = 255)
     private String introductionImage;
-
     @Column(length = 1023)
     private String introductionContent;
-
     private ZonedDateTime meetDateTime;
-
     private Boolean offline;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
     private RecruitmentMethod recruitmentMethod;
-
     @Embedded
     private MeetLocation meetLocation;
-
     @Column(length = 511)
     private String approvalSystemQuestion;
-
     private Integer participantsNumber;
-
     private Boolean free;
-
     private Integer entryFee;
-
     @Column(length = 511)
     private String entryFeeDescription;
-
     private Boolean opened;
-
     @Column(length = 511)
     private String pageLink;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "makeMemberId", nullable = false, foreignKey = @ForeignKey(name = "FK_meeting_makeMember"))
     private Member makeMember;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId", nullable = false, foreignKey = @ForeignKey(name = "FK_meeting_category"))
     private Category category;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryItemId", foreignKey = @ForeignKey(name = "FK_meeting_categoryItem"))
     private CategoryItem categoryItem;
@@ -102,7 +82,6 @@ public class Meeting extends BaseEntity {
 
         private static final Map<String, RecruitmentMethod> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
                 .collect(Collectors.toMap(RecruitmentMethod::getTitle, Function.identity())));
-
         public static Optional<RecruitmentMethod> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }

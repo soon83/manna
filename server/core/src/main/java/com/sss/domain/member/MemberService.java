@@ -3,7 +3,6 @@ package com.sss.domain.member;
 import java.util.List;
 
 public interface MemberService {
-
     List<MemberInfo.Main> retrieveMemberList();
     MemberInfo.Main retrieveMember(String memberToken);
     MemberInfo.Main retrieveLoginMember(String memberLoginId);

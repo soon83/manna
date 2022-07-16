@@ -21,21 +21,16 @@ import java.util.List;
         @UniqueConstraint(name = "UK_category_title", columnNames = {"title"})
 })
 public class Category extends BaseEntity {
-
     private static final String TOKEN_PREFIX = "ctg_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 31)
     private String token;
-
     @Column(length = 15)
     private String title;
-
     private Integer ordering;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.PERSIST)
     private List<CategoryItem> categoryItemList = new ArrayList<>();
 

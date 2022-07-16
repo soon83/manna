@@ -13,24 +13,15 @@ public class MemberCommand {
     @Builder
     @ToString
     public static class RegisterMember {
-
         private String loginId;
-
         @Setter
         private String loginPassword;
-
         private String name;
-
         private String email;
-
         private String avatar;
-
         private String nickName;
-
         private String selfIntroduction;
-
         private List<Integer> categoryList;
-
         private List<Integer> categoryItemList;
 
         public Member toEntity() {
@@ -52,26 +43,16 @@ public class MemberCommand {
     @Builder
     @ToString
     public static class ChangeMember {
-
         private String loginId;
-
         @Setter
         private String loginPassword;
-        
         private String name;
-
         private String email;
-
         private String avatar;
-
         private String nickName;
-
         private String selfIntroduction;
-
         private List<Integer> categoryList;
-
         private List<Integer> categoryItemList;
-
         private Member.Role role;
     }
 
@@ -79,7 +60,6 @@ public class MemberCommand {
     @Builder
     @ToString
     public static class ChangeMemberPassword {
-
         @Setter
         private String loginPassword;
     }

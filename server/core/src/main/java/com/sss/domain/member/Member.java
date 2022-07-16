@@ -24,47 +24,34 @@ import java.util.stream.Stream;
         @UniqueConstraint(name = "UK_member_loginId", columnNames = {"loginId"})
 })
 public class Member extends BaseEntity {
-
     private static final String TOKEN_PREFIX = "mbr_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 31)
     private String token;
-
     @Column(length = 31)
     private String loginId;
-
     @Column(length = 127)
     private String loginPassword;
-
     @Column(length = 31)
     private String name;
-
     @Column(length = 31)
     private String email;
-
     @Column(length = 255)
     private String avatar;
-
     @Column(length = 31)
     private String nickName;
-
     @Column(length = 1023)
     private String selfIntroduction;
-
     @Column(length = 255)
     private String categoryList;
-
     @Column(length = 255)
     private String categoryItemList;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
     private Role role;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
     private Status status;
@@ -81,7 +68,6 @@ public class Member extends BaseEntity {
 
         private static final Map<String, Role> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
                 .collect(Collectors.toMap(Role::getTitle, Function.identity())));
-
         public static Optional<Role> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }
@@ -98,7 +84,6 @@ public class Member extends BaseEntity {
 
         private static final Map<String, Status> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
                 .collect(Collectors.toMap(Status::getTitle, Function.identity())));
-
         public static Optional<Status> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }

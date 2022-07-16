@@ -33,7 +33,6 @@ public class LoginInfo {
         }
 
         public LoginInfo.Main getLoginUser() {
-            memberLoginInfo.setMemberLoginPassword(null);
             return this.memberLoginInfo;
         }
 
@@ -68,12 +67,9 @@ public class LoginInfo {
     @Getter
     @ToString
     public static class Main {
-
         private final String memberToken;
         private final String memberLoginId;
-
-        @Setter
-        private String memberLoginPassword;
+        private final String memberLoginPassword;
         private final String memberName;
         private final String memberEmail;
         private final String memberAvatar;

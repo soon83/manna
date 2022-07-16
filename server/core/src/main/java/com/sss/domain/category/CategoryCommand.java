@@ -10,7 +10,6 @@ public class CategoryCommand {
     @Builder
     @ToString
     public static class RegisterCategory {
-
         private String title;
         private Integer ordering;
 
@@ -26,7 +25,6 @@ public class CategoryCommand {
     @Builder
     @ToString
     public static class ChangeCategory {
-
         private String title;
         private Integer ordering;
     }

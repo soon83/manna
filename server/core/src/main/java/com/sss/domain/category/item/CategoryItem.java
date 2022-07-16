@@ -19,21 +19,16 @@ import javax.persistence.*;
         @UniqueConstraint(name = "UK_categoryItem_title", columnNames = {"title"})
 })
 public class CategoryItem extends BaseEntity {
-
     private static final String TOKEN_PREFIX = "ctgItm_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 31)
     private String token;
-
     @Column(length = 15)
     private String title;
-
     private Integer ordering;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "FK_categoryItem_category"))
     private Category category;

@@ -3,7 +3,6 @@ package com.sss.domain.category;
 import java.util.List;
 
 public interface CategoryService {
-
     List<CategoryInfo.Main> retrieveCategoryList();
     String registerCategory(CategoryCommand.RegisterCategory registerCategoryCommand);
     CategoryInfo.Main retrieveCategory(String categoryToken);

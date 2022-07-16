@@ -16,10 +16,8 @@ public class MeetLocation {
 
     @Column(length = 6)
     private String zipcode;
-
     @Column(length = 255)
     private String address1;
-
     @Column(length = 255)
     private String address2;
 
