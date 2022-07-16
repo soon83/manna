@@ -13,7 +13,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class MemberQueryServiceImpl implements MemberQueryService {
-
     private final MemberRepository memberRepository;
 
     @Override

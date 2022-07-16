@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/member-list")
 @RequiredArgsConstructor
 public class MemberApiController {
-
     private final MemberFacade memberFacade;
 
     /**

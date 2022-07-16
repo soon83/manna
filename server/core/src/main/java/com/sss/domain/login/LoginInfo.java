@@ -20,7 +20,6 @@ public class LoginInfo {
     @Getter
     @ToString
     public static class AccountAdaptor extends User {
-
         private LoginInfo.Main memberLoginInfo;
 
         public AccountAdaptor(LoginInfo.Main memberLoginInfo) {

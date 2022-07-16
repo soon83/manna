@@ -28,7 +28,6 @@ import static com.sss.security.SecurityConfig.LOGIN;
 
 @Slf4j
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
-
     private final ObjectMapper objectMapper;
 
     public JwtLoginFilter(AuthenticationManager authenticationManager) {

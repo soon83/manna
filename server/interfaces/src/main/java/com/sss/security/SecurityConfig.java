@@ -22,7 +22,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
     public static final String LOGIN = "/login";
     private final LoginService loginService;
 

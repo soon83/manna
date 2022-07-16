@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtCheckFilter extends BasicAuthenticationFilter {
-
     private final LoginService loginService;
     private final ObjectMapper objectMapper;
 

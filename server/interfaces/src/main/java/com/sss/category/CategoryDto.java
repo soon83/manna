@@ -56,7 +56,6 @@ public class CategoryDto {
     @Getter
     @ToString
     public static class MainResponse {
-
         private final String categoryToken;
         private final String categoryTitle;
         private final Integer categoryOrdering;
@@ -76,7 +75,6 @@ public class CategoryDto {
     @Builder
     @ToString
     public static class RegisterResponse {
-
         private final String categoryToken;
 
         public RegisterResponse(String categoryToken) {

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CategoryCommandServiceImpl implements CategoryCommandService {
-
     private final CategoryRepository categoryRepository;
     private final CategoryItemRepository categoryItemRepository;
 

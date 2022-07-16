@@ -16,10 +16,8 @@ public class LoginDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class AuthRequest {
-
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
-
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
         private String memberLoginPassword;
     }
@@ -30,7 +28,6 @@ public class LoginDto {
     @Getter
     @ToString
     public static class MainResponse {
-
         private final String memberToken;
         private final String memberLoginId;
         private final String memberName;

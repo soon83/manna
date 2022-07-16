@@ -13,7 +13,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CategoryQueryServiceImpl implements CategoryQueryService {
-
     private final CategoryRepository categoryRepository;
 
     @Override

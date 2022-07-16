@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-
     private final CategoryQueryService categoryQueryService;
     private final CategoryCommandService categoryCommandService;
 

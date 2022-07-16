@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/category-list")
 @RequiredArgsConstructor
 public class CategoryApiController {
-
     private final CategoryFacade categoryFacade;
 
     /**

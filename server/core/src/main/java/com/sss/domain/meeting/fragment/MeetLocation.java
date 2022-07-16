@@ -13,7 +13,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 @NoArgsConstructor
 public class MeetLocation {
-
     @Column(length = 6)
     private String zipcode;
     @Column(length = 255)

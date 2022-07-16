@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MemberCommandServiceImpl implements MemberCommandService {
-
     private final MemberRepository memberRepository;
 
     @Override

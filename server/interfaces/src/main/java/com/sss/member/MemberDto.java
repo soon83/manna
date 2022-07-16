@@ -111,10 +111,8 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ChangeMemberPasswordRequest {
-
         @NotBlank(message = "memberToken 는 필수값입니다.")
         private String memberToken;
-
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
         private String memberLoginPassword;
 
@@ -130,7 +128,6 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ChangeMemberStatusRequest {
-
         @NotBlank(message = "memberToken 는 필수값입니다.")
         private String memberToken;
     }
@@ -141,7 +138,6 @@ public class MemberDto {
     @Getter
     @ToString
     public static class MainResponse {
-
         private final String memberToken;
         private final String memberLoginId;
         private final String memberName;
@@ -173,7 +169,6 @@ public class MemberDto {
     @Builder
     @ToString
     public static class RegisterResponse {
-
         private final String memberToken;
 
         public RegisterResponse(String memberToken) {

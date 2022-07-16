@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-
     private final MemberQueryService memberQueryService;
     private final MemberCommandService memberCommandService;
     private final PasswordEncoder passwordEncoder;

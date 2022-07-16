@@ -15,16 +15,12 @@ import java.time.ZonedDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
-
     @CreationTimestamp
     private ZonedDateTime createdAt;
-
     @UpdateTimestamp
     private ZonedDateTime modifiedAt;
-
     @CreatedBy
     private String createdBy;
-
     @LastModifiedBy
     private String modifiedBy;
 }

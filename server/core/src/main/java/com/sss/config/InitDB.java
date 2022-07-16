@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Configuration
 @RequiredArgsConstructor
 public class InitDB implements InitializingBean {
-
     private final MemberService memberService;
     private final CategoryRepository categoryRepository;
 

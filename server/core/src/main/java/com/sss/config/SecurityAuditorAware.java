@@ -13,7 +13,7 @@ public class SecurityAuditorAware implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.debug("### authentication: {}", authentication);
+        //log.debug("### authentication: {}", authentication);
 
         if (authentication == null
                 || authentication.getPrincipal().equals("anonymousUser")
