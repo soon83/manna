@@ -31,7 +31,7 @@ public class CategoryApiController {
         var categoryInfoList = categoryFacade.retrieveCategoryList();
         var response = categoryInfoList.stream()
                 .map(CategoryDto.MainResponse::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 

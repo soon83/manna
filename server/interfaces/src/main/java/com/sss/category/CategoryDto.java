@@ -68,7 +68,7 @@ public class CategoryDto {
             this.categoryOrdering = categoryInfo.getOrdering();
             this.categoryItemList = categoryInfo.getCategoryItemInfoList().stream()
                     .map(CategoryItemResponse::new)
-                    .collect(Collectors.toList()); // TODO 이거 밖으로 빼야하나,,
+                    .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
         }
     }
 

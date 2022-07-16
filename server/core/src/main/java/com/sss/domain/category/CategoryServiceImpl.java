@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
         var categoryList = categoryQueryService.getCategoryList();
         return categoryList.stream()
                 .map(CategoryInfo.Main::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,,
+                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
     }
 
     @Override

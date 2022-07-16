@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberInfo.Main> retrieveMemberList() {
         return memberQueryService.getMemberList().stream()
                 .map(MemberInfo.Main::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,,
+                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
     }
 
     @Override
