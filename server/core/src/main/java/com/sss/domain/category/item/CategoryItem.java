@@ -32,13 +32,24 @@ public class CategoryItem extends BaseEntity {
     @Column(length = 15)
     private String title;
 
+    private Integer ordering;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "FK_categoryItem_category"))
     private Category category;
 
     @Builder
-    public CategoryItem(String title) {
+    public CategoryItem(String title, Integer ordering, Category category) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.title = title;
+        this.ordering = ordering;
+        this.category = category;
+    }
+
+    @Builder
+    public CategoryItem(String title, Integer ordering) {
+        this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
+        this.title = title;
+        this.ordering = ordering;
     }
 }

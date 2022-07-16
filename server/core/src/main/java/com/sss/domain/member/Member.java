@@ -85,8 +85,8 @@ public class Member extends BaseEntity {
         public static Optional<Role> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }
-
     }
+
     @Getter
     @RequiredArgsConstructor
     public enum Status {
@@ -102,8 +102,8 @@ public class Member extends BaseEntity {
         public static Optional<Status> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }
-
     }
+
     @Builder
     public Member(
             String loginId,

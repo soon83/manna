@@ -12,10 +12,12 @@ public class CategoryCommand {
     public static class RegisterCategory {
 
         private String title;
+        private Integer ordering;
 
         public Category toEntity() {
             return Category.builder()
                     .title(title)
+                    .ordering(ordering)
                     .build();
         }
     }
@@ -25,5 +27,6 @@ public class CategoryCommand {
     @ToString
     public static class ChangeCategory {
         private String title;
+        private String ordering;
     }
 }
