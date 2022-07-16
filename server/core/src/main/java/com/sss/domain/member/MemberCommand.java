@@ -74,4 +74,13 @@ public class MemberCommand {
 
         private Member.Role role;
     }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class ChangeMemberPassword {
+
+        @Setter
+        private String loginPassword;
+    }
 }

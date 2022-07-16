@@ -72,8 +72,6 @@ public class MemberDto {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
 
-        private String memberLoginPassword;
-
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
 
@@ -97,7 +95,6 @@ public class MemberDto {
         public MemberCommand.ChangeMember toChangeMemberCommand() {
             return MemberCommand.ChangeMember.builder()
                     .loginId(memberLoginId)
-                    .loginPassword(memberLoginPassword)
                     .name(memberName)
                     .email(memberEmail)
                     .avatar(memberAvatar)
@@ -105,6 +102,25 @@ public class MemberDto {
                     .selfIntroduction(memberSelfIntroduction)
                     .categories(memberCategories)
                     .categoryItems(memberCategoryItems)
+                    .build();
+        }
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ChangeMemberPasswordRequest {
+
+        @NotBlank(message = "memberToken 는 필수값입니다.")
+        private String memberToken;
+
+        @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
+        private String memberLoginPassword;
+
+        public MemberCommand.ChangeMemberPassword toChangeMemberPasswordCommand() {
+            return MemberCommand.ChangeMemberPassword.builder()
+                    .loginPassword(memberLoginPassword)
                     .build();
         }
     }

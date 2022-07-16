@@ -85,8 +85,8 @@ public class Member extends BaseEntity {
         public static Optional<Role> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }
-    }
 
+    }
     @Getter
     @RequiredArgsConstructor
     public enum Status {
@@ -102,8 +102,8 @@ public class Member extends BaseEntity {
         public static Optional<Status> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }
-    }
 
+    }
     @Builder
     public Member(
             String loginId,
@@ -132,18 +132,15 @@ public class Member extends BaseEntity {
 
     public void updateMember(
             String loginId,
-            String loginPassword,
             String name,
             String email,
             String avatar,
             String nickName,
             String selfIntroduction,
             List<Integer> categories,
-            List<Integer> categoryItems,
-            Role role
+            List<Integer> categoryItems
     ) {
         this.loginId = loginId;
-        if (!ObjectUtils.isEmpty(loginPassword)) this.loginPassword = loginPassword;
         this.name = name;
         this.email = email;
         this.avatar = avatar;
@@ -151,7 +148,10 @@ public class Member extends BaseEntity {
         this.selfIntroduction = selfIntroduction;
         this.categories = categories.toString();
         this.categoryItems = categoryItems.toString();
-        if (!ObjectUtils.isEmpty(role)) this.role = role;
+    }
+
+    public void updateMemberPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 
     public void enable() {

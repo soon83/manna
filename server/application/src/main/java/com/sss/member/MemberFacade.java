@@ -5,9 +5,7 @@ import com.sss.domain.member.MemberInfo;
 import com.sss.domain.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -16,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberFacade {
 
-    private final PasswordEncoder passwordEncoder;
     private final MemberService memberService;
 
     public List<MemberInfo.Main> retrieveMembers() {
@@ -32,13 +29,15 @@ public class MemberFacade {
     }
 
     public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
-        registerMemberCommand.setLoginPassword(encodePassword(registerMemberCommand.getLoginPassword()));
         return memberService.registerMember(registerMemberCommand);
     }
 
     public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
-        changeMemberCommand.setLoginPassword(encodePassword(changeMemberCommand.getLoginPassword()));
         memberService.changeMember(changeMemberCommand, memberToken);
+    }
+
+    public void changeMemberPassword(MemberCommand.ChangeMemberPassword changeMemberPasswordCommand, String memberToken) {
+        memberService.changeMemberPassword(changeMemberPasswordCommand, memberToken);
     }
 
     public void enableMember(String memberToken) {
@@ -51,12 +50,5 @@ public class MemberFacade {
 
     public void deleteMember(String memberToken) {
         memberService.deleteMember(memberToken);
-    }
-
-    private String encodePassword(String password) {
-        if (!ObjectUtils.isEmpty(password)) {
-            return passwordEncoder.encode(password);
-        }
-        return null;
     }
 }

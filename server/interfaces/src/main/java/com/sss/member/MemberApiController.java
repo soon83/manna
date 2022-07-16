@@ -77,6 +77,19 @@ public class MemberApiController {
     }
 
     /**
+     * 회원 단건 수정 - 회원 비밀번호
+     * @param request
+     * @return
+     */
+    @PatchMapping("/password")
+    public ResponseEntity<Res> changeMemberPassword(@RequestBody @Valid MemberDto.ChangeMemberPasswordRequest request) {
+        var memberToken = request.getMemberToken();
+        var changeMemberPasswordCommand = request.toChangeMemberPasswordCommand();
+        memberFacade.changeMemberPassword(changeMemberPasswordCommand, memberToken);
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+    }
+
+    /**
      * 회원 단건 수정 - 회원 비활성화
      * @param request
      * @return

@@ -2,8 +2,10 @@ package com.sss.domain.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberQueryService memberQueryService;
     private final MemberCommandService memberCommandService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -41,6 +44,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
+        String encodePassword = encodePassword(registerMemberCommand.getLoginPassword());
+        registerMemberCommand.setLoginPassword(encodePassword);
+
         var member = registerMemberCommand.toEntity();
         var createdMember = memberCommandService.save(member);
         return createdMember.getToken();
@@ -52,16 +58,23 @@ public class MemberServiceImpl implements MemberService {
         var member = memberQueryService.getMember(memberToken);
         member.updateMember(
                 changeMemberCommand.getLoginId(),
-                changeMemberCommand.getLoginPassword(),
                 changeMemberCommand.getName(),
                 changeMemberCommand.getEmail(),
                 changeMemberCommand.getAvatar(),
                 changeMemberCommand.getNickName(),
                 changeMemberCommand.getSelfIntroduction(),
                 changeMemberCommand.getCategories(),
-                changeMemberCommand.getCategoryItems(),
-                changeMemberCommand.getRole()
+                changeMemberCommand.getCategoryItems()
         );
+    }
+
+    @Override
+    @Transactional
+    public void changeMemberPassword(MemberCommand.ChangeMemberPassword changeMemberPasswordCommand, String memberToken) {
+        var member = memberQueryService.getMember(memberToken);
+        String encodePassword = encodePassword(changeMemberPasswordCommand.getLoginPassword());
+        changeMemberPasswordCommand.setLoginPassword(encodePassword);
+        member.updateMemberPassword(changeMemberPasswordCommand.getLoginPassword());
     }
 
     @Override
@@ -83,5 +96,12 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMember(String memberToken) {
         var member = memberQueryService.getMember(memberToken);
         memberCommandService.delete(member);
+    }
+
+    private String encodePassword(String password) {
+        if (!ObjectUtils.isEmpty(password)) {
+            return passwordEncoder.encode(password);
+        }
+        return null;
     }
 }
