@@ -18,18 +18,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CategoryInfo.Main> retrieveCategories() {
-        return categoryQueryService.getCategories().stream()
+    public List<CategoryInfo.Main> retrieveCategoryList() {
+        var categoryList = categoryQueryService.getCategoryList();
+        return categoryList.stream()
                 .map(CategoryInfo.Main::new)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional
-    public String registerCategory(CategoryCommand.RegisterCategory registerCategoryCommand) {
-        var member = registerCategoryCommand.toEntity();
-        var createdCategory = categoryCommandService.save(member);
-        return createdCategory.getToken();
     }
 
     @Override
@@ -41,10 +34,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
+    public String registerCategory(CategoryCommand.RegisterCategory registerCategoryCommand) {
+        var member = registerCategoryCommand.toEntity();
+        var createdCategory = categoryCommandService.save(member);
+        return createdCategory.getToken();
+    }
+
+    @Override
+    @Transactional
     public void changeCategory(CategoryCommand.ChangeCategory changeCategoryCommand, String memberToken) {
         var member = categoryQueryService.getCategory(memberToken);
         member.updateCategory(
-                changeCategoryCommand.getTitle()
+                changeCategoryCommand.getTitle(),
+                changeCategoryCommand.getOrdering()
         );
     }
 

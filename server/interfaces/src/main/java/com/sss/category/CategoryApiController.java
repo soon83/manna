@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @PreAuthorize("isAuthenticated()")
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/v1/category-list")
 @RequiredArgsConstructor
 public class CategoryApiController {
 
@@ -27,8 +27,8 @@ public class CategoryApiController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<Res> retrieveCategories() {
-        var categoryInfoList = categoryFacade.retrieveCategories();
+    public ResponseEntity<Res> retrieveCategoryList() {
+        var categoryInfoList = categoryFacade.retrieveCategoryList();
         var response = categoryInfoList.stream()
                 .map(CategoryDto.MainResponse::new)
                 .collect(Collectors.toList());

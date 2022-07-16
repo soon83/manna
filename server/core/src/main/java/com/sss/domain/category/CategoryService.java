@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CategoryService {
 
-    List<CategoryInfo.Main> retrieveCategories();
+    List<CategoryInfo.Main> retrieveCategoryList();
     String registerCategory(CategoryCommand.RegisterCategory registerCategoryCommand);
     CategoryInfo.Main retrieveCategory(String categoryToken);
     void changeCategory(CategoryCommand.ChangeCategory changeCategoryCommand, String categoryToken);

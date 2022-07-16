@@ -39,7 +39,11 @@ public class CategoryItem extends BaseEntity {
     private Category category;
 
     @Builder
-    public CategoryItem(String title, Integer ordering, Category category) {
+    public CategoryItem(
+            String title,
+            Integer ordering,
+            Category category
+    ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.title = title;
         this.ordering = ordering;
@@ -47,7 +51,10 @@ public class CategoryItem extends BaseEntity {
     }
 
     @Builder
-    public CategoryItem(String title, Integer ordering) {
+    public CategoryItem(
+            String title,
+            Integer ordering
+    ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.title = title;
         this.ordering = ordering;

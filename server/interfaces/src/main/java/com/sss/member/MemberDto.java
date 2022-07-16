@@ -41,13 +41,13 @@ public class MemberDto {
         @NotBlank(message = "memberSelfIntroduction 는 필수값입니다.")
         private String memberSelfIntroduction;
 
-        @NotNull(message = "memberCategories 는 필수값입니다.")
-        @Size(min = 1, message = "memberCategories 는 최소 1개 이상이어야 합니다.")
-        private List<Integer> memberCategories;
+        @NotNull(message = "memberCategoryList 는 필수값입니다.")
+        @Size(min = 1, message = "memberCategoryList 는 최소 1개 이상이어야 합니다.")
+        private List<Integer> memberCategoryList;
 
-        @NotNull(message = "memberCategoryItems 는 필수값입니다.")
-        @Size(min = 1, message = "memberCategoryItems 는 최소 1개 이상이어야 합니다.")
-        private List<Integer> memberCategoryItems;
+        @NotNull(message = "memberCategoryItemList 는 필수값입니다.")
+        @Size(min = 1, message = "memberCategoryItemList 는 최소 1개 이상이어야 합니다.")
+        private List<Integer> memberCategoryItemList;
 
         public MemberCommand.RegisterMember toRegisterMemberCommand() {
             return MemberCommand.RegisterMember.builder()
@@ -58,8 +58,8 @@ public class MemberDto {
                     .avatar(memberAvatar)
                     .nickName(memberNickName)
                     .selfIntroduction(memberSelfIntroduction)
-                    .categories(memberCategories)
-                    .categoryItems(memberCategoryItems)
+                    .categoryList(memberCategoryList)
+                    .categoryItemList(memberCategoryItemList)
                     .build();
         }
     }
@@ -86,11 +86,11 @@ public class MemberDto {
         @NotBlank(message = "memberSelfIntroduction 는 필수값입니다.")
         private String memberSelfIntroduction;
 
-        @NotNull(message = "memberCategories 는 필수값입니다.")
-        private List<Integer> memberCategories;
+        @NotNull(message = "memberCategoryList 는 필수값입니다.")
+        private List<Integer> memberCategoryList;
 
-        @NotNull(message = "memberCategoryItems 는 필수값입니다.")
-        private List<Integer> memberCategoryItems;
+        @NotNull(message = "memberCategoryItemList 는 필수값입니다.")
+        private List<Integer> memberCategoryItemList;
 
         public MemberCommand.ChangeMember toChangeMemberCommand() {
             return MemberCommand.ChangeMember.builder()
@@ -100,8 +100,8 @@ public class MemberDto {
                     .avatar(memberAvatar)
                     .nickName(memberNickName)
                     .selfIntroduction(memberSelfIntroduction)
-                    .categories(memberCategories)
-                    .categoryItems(memberCategoryItems)
+                    .categoryList(memberCategoryList)
+                    .categoryItemList(memberCategoryItemList)
                     .build();
         }
     }
@@ -149,8 +149,8 @@ public class MemberDto {
         private final String memberAvatar;
         private final String memberNickName;
         private final String memberSelfIntroduction;
-        private final String memberCategories;
-        private final String memberCategoryItems;
+        private final String memberCategoryList;
+        private final String memberCategoryItemList;
         private final Member.Role memberRole;
         private final Member.Status memberStatus;
 
@@ -162,8 +162,8 @@ public class MemberDto {
             this.memberAvatar = memberInfo.getAvatar();
             this.memberNickName = memberInfo.getNickName();
             this.memberSelfIntroduction = memberInfo.getSelfIntroduction();
-            this.memberCategories = memberInfo.getCategories();
-            this.memberCategoryItems = memberInfo.getCategoryItems();
+            this.memberCategoryList = memberInfo.getCategoryList();
+            this.memberCategoryItemList = memberInfo.getCategoryItemList();
             this.memberRole = memberInfo.getRole();
             this.memberStatus = memberInfo.getStatus();
         }

@@ -5,7 +5,7 @@ import java.util.List;
 public interface MemberQueryService {
 
     Member authMember(String username);
-    List<Member> getMembers();
+    List<Member> getMemberList();
     Member getMember(String memberToken);
     Member getLoginMember(String memberLoginId);
 }

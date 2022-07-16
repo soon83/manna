@@ -26,7 +26,8 @@ public class CategoryCommand {
     @Builder
     @ToString
     public static class ChangeCategory {
+
         private String title;
-        private String ordering;
+        private Integer ordering;
     }
 }

@@ -29,9 +29,9 @@ public class MemberCommand {
 
         private String selfIntroduction;
 
-        private List<Integer> categories;
+        private List<Integer> categoryList;
 
-        private List<Integer> categoryItems;
+        private List<Integer> categoryItemList;
 
         public Member toEntity() {
             return Member.builder()
@@ -42,8 +42,8 @@ public class MemberCommand {
                     .avatar(avatar)
                     .nickName(nickName)
                     .selfIntroduction(selfIntroduction)
-                    .categories(categories)
-                    .categoryItems(categoryItems)
+                    .categoryList(categoryList)
+                    .categoryItemList(categoryItemList)
                     .build();
         }
     }
@@ -68,9 +68,9 @@ public class MemberCommand {
 
         private String selfIntroduction;
 
-        private List<Integer> categories;
+        private List<Integer> categoryList;
 
-        private List<Integer> categoryItems;
+        private List<Integer> categoryItemList;
 
         private Member.Role role;
     }

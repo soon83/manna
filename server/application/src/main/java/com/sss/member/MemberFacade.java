@@ -16,8 +16,8 @@ public class MemberFacade {
 
     private final MemberService memberService;
 
-    public List<MemberInfo.Main> retrieveMembers() {
-        return memberService.retrieveMembers();
+    public List<MemberInfo.Main> retrieveMemberList() {
+        return memberService.retrieveMemberList();
     }
 
     public MemberInfo.Main retrieveMember(String memberToken) {

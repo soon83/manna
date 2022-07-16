@@ -37,16 +37,20 @@ public class Category extends BaseEntity {
     private Integer ordering;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.PERSIST)
-    private List<CategoryItem> categoryItems = new ArrayList<>();
+    private List<CategoryItem> categoryItemList = new ArrayList<>();
 
     @Builder
-    public Category(String title, Integer ordering) {
+    public Category(
+            String title,
+            Integer ordering
+    ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.title = title;
         this.ordering = ordering;
     }
 
-    public void updateCategory(String title) {
+    public void updateCategory(String title, Integer ordering) {
         this.title = title;
+        this.ordering = ordering;
     }
 }

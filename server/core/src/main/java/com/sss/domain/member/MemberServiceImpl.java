@@ -21,8 +21,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberInfo.Main> retrieveMembers() {
-        return memberQueryService.getMembers().stream()
+    public List<MemberInfo.Main> retrieveMemberList() {
+        return memberQueryService.getMemberList().stream()
                 .map(MemberInfo.Main::new)
                 .collect(Collectors.toList());
     }
@@ -63,8 +63,8 @@ public class MemberServiceImpl implements MemberService {
                 changeMemberCommand.getAvatar(),
                 changeMemberCommand.getNickName(),
                 changeMemberCommand.getSelfIntroduction(),
-                changeMemberCommand.getCategories(),
-                changeMemberCommand.getCategoryItems()
+                changeMemberCommand.getCategoryList(),
+                changeMemberCommand.getCategoryItemList()
         );
     }
 

@@ -56,10 +56,10 @@ public class Member extends BaseEntity {
     private String selfIntroduction;
 
     @Column(length = 255)
-    private String categories;
+    private String categoryList;
 
     @Column(length = 255)
-    private String categoryItems;
+    private String categoryItemList;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
@@ -113,8 +113,8 @@ public class Member extends BaseEntity {
             String avatar,
             String nickName,
             String selfIntroduction,
-            List<Integer> categories,
-            List<Integer> categoryItems
+            List<Integer> categoryList,
+            List<Integer> categoryItemList
     ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.loginId = loginId;
@@ -124,8 +124,8 @@ public class Member extends BaseEntity {
         this.avatar = avatar;
         this.nickName = nickName;
         this.selfIntroduction = selfIntroduction;
-        this.categories = categories.toString();
-        this.categoryItems = categoryItems.toString();
+        this.categoryList = categoryList.toString();
+        this.categoryItemList = categoryItemList.toString();
         this.role = Role.MEMBER;
         this.status = Status.ENABLE;
     }
@@ -137,8 +137,8 @@ public class Member extends BaseEntity {
             String avatar,
             String nickName,
             String selfIntroduction,
-            List<Integer> categories,
-            List<Integer> categoryItems
+            List<Integer> categoryList,
+            List<Integer> categoryItemList
     ) {
         this.loginId = loginId;
         this.name = name;
@@ -146,8 +146,8 @@ public class Member extends BaseEntity {
         this.avatar = avatar;
         this.nickName = nickName;
         this.selfIntroduction = selfIntroduction;
-        this.categories = categories.toString();
-        this.categoryItems = categoryItems.toString();
+        this.categoryList = categoryList.toString();
+        this.categoryItemList = categoryItemList.toString();
     }
 
     public void updateMemberPassword(String loginPassword) {

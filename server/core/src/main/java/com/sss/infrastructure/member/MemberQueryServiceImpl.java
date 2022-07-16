@@ -23,7 +23,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     }
 
     @Override
-    public List<Member> getMembers() {
+    public List<Member> getMemberList() {
         return memberRepository.findAll();
     }
 

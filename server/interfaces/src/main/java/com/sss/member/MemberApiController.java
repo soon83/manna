@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @PreAuthorize("isAuthenticated()")
-@RequestMapping("/api/v1/members")
+@RequestMapping("/api/v1/member-list")
 @RequiredArgsConstructor
 public class MemberApiController {
 
@@ -27,8 +27,8 @@ public class MemberApiController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<Res> retrieveMembers() {
-        var memberInfoList = memberFacade.retrieveMembers();
+    public ResponseEntity<Res> retrieveMemberList() {
+        var memberInfoList = memberFacade.retrieveMemberList();
         var response = memberInfoList.stream()
                 .map(MemberDto.MainResponse::new)
                 .collect(Collectors.toList());

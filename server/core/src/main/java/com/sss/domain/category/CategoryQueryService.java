@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CategoryQueryService {
 
-    List<Category> getCategories();
+    List<Category> getCategoryList();
     Category getCategory(String memberToken);
 
 }

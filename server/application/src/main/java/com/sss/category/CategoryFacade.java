@@ -16,8 +16,8 @@ public class CategoryFacade {
 
     private final CategoryService categoryService;
 
-    public List<CategoryInfo.Main> retrieveCategories() {
-        return categoryService.retrieveCategories();
+    public List<CategoryInfo.Main> retrieveCategoryList() {
+        return categoryService.retrieveCategoryList();
     }
 
     public CategoryInfo.Main retrieveCategory(String categoryToken) {
