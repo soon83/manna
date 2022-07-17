@@ -1,4 +1,4 @@
-package com.sss.security;
+package com.sss.jwt;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.sss.security.SecurityConfig.LOGIN;
+import static com.sss.config.SecurityConfig.LOGIN;
 
 @Slf4j
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {

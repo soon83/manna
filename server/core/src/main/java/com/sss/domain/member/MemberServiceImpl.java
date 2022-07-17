@@ -54,7 +54,6 @@ public class MemberServiceImpl implements MemberService {
     public void modifyMember(MemberCommand.UpdateMember updateMemberCommand, String memberToken) {
         var member = memberQueryService.readMember(memberToken);
         member.updateMember(
-                updateMemberCommand.getLoginId(),
                 updateMemberCommand.getName(),
                 updateMemberCommand.getEmail(),
                 updateMemberCommand.getAvatar(),

@@ -1,4 +1,4 @@
-package com.sss.security;
+package com.sss.jwt;
 
 import lombok.Builder;
 import lombok.Data;

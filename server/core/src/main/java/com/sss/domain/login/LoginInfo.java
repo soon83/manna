@@ -1,9 +1,7 @@
 package com.sss.domain.login;
 
 import com.sss.domain.member.Member;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -64,7 +62,9 @@ public class LoginInfo {
     }
 
     @Getter
+    @Builder
     @ToString
+    @AllArgsConstructor
     public static class Main {
         private final String memberToken;
         private final String memberLoginId;

@@ -1,12 +1,14 @@
 package com.sss.domain.member;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 public class MemberQuery {
 
     @Getter
+    @Builder
     @ToString
     @AllArgsConstructor
     public static class Main {

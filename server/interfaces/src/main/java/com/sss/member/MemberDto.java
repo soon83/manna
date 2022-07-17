@@ -60,8 +60,6 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ModifyRequest {
-        @NotBlank(message = "memberLoginId 는 필수값입니다.")
-        private String memberLoginId;
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
         @NotBlank(message = "memberEmail 는 필수값입니다.")
@@ -78,7 +76,6 @@ public class MemberDto {
 
         public MemberCommand.UpdateMember toUpdateMemberCommand() {
             return MemberCommand.UpdateMember.builder()
-                    .loginId(memberLoginId)
                     .name(memberName)
                     .email(memberEmail)
                     .avatar(memberAvatar)

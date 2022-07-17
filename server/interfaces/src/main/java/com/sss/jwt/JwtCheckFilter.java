@@ -1,4 +1,4 @@
-package com.sss.security;
+package com.sss.jwt;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

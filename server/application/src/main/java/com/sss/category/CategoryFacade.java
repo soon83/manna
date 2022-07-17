@@ -23,12 +23,12 @@ public class CategoryFacade {
         return categoryService.fetchCategory(categoryToken);
     }
 
-    public String registerCategory(CategoryCommand.CreateCategory createCategoryCommand) {
-        return categoryService.registerCategory(createCategoryCommand);
+    public String registerCategory(CategoryCommand.CreateCategory command) {
+        return categoryService.registerCategory(command);
     }
 
-    public void modifyCategory(CategoryCommand.UpdateCategory updateCategoryCommand, String categoryToken) {
-        categoryService.modifyCategory(updateCategoryCommand, categoryToken);
+    public void modifyCategory(CategoryCommand.UpdateCategory command, String categoryToken) {
+        categoryService.modifyCategory(command, categoryToken);
     }
 
     public void removeCategory(String categoryToken) {

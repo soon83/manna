@@ -24,16 +24,16 @@ public class MemberFacade {
         return memberService.fetchMember(memberToken);
     }
 
-    public String registerMember(MemberCommand.CreateMember createMemberCommand) {
-        return memberService.registerMember(createMemberCommand);
+    public String registerMember(MemberCommand.CreateMember command) {
+        return memberService.registerMember(command);
     }
 
-    public void modifyMember(MemberCommand.UpdateMember updateMemberCommand, String memberToken) {
-        memberService.modifyMember(updateMemberCommand, memberToken);
+    public void modifyMember(MemberCommand.UpdateMember command, String memberToken) {
+        memberService.modifyMember(command, memberToken);
     }
 
-    public void modifyMemberPassword(MemberCommand.UpdateMemberPassword updateMemberPasswordCommand, String memberToken) {
-        memberService.modifyMemberPassword(updateMemberPasswordCommand, memberToken);
+    public void modifyMemberPassword(MemberCommand.UpdateMemberPassword command, String memberToken) {
+        memberService.modifyMemberPassword(command, memberToken);
     }
 
     public void enableMember(String memberToken) {

@@ -116,7 +116,6 @@ public class Member extends BaseEntity {
     }
 
     public void updateMember(
-            String loginId,
             String name,
             String email,
             String avatar,
@@ -125,7 +124,6 @@ public class Member extends BaseEntity {
             List<Integer> categoryList,
             List<Integer> categoryItemList
     ) {
-        this.loginId = loginId;
         this.name = name;
         this.email = email;
         this.avatar = avatar;

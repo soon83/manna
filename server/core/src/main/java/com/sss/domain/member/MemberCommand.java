@@ -43,9 +43,6 @@ public class MemberCommand {
     @Builder
     @ToString
     public static class UpdateMember {
-        private String loginId;
-        @Setter
-        private String loginPassword;
         private String name;
         private String email;
         private String avatar;

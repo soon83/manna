@@ -119,32 +119,92 @@ API 에 관계없이 아래 사항을 지켜주세요.
 === 목록 조회
 Example
 include::{snippets}/fetch-member-list/curl-request.adoc[]
-//include::{snippets}/fetch-member-list/httpie-request.adoc[]
+include::{snippets}/fetch-member-list/httpie-request.adoc[]
 요청
 include::{snippets}/fetch-member-list/http-request.adoc[]
 응답
 include::{snippets}/fetch-member-list/response-fields.adoc[]
 include::{snippets}/fetch-member-list/http-response.adoc[]
 
-[[fetch-member-by-token]]
-=== 단건 조회 (토큰으로 조회)
+[[fetch-member]]
+=== 단건 조회
 Example
-include::{snippets}/fetch-member-by-token/curl-request.adoc[]
-//include::{snippets}/fetch-member-by-token/httpie-request.adoc[]
+include::{snippets}/fetch-member/curl-request.adoc[]
+include::{snippets}/fetch-member/httpie-request.adoc[]
 요청
-include::{snippets}/fetch-member-by-token/http-request.adoc[]
+include::{snippets}/fetch-member/http-request.adoc[]
 응답
-include::{snippets}/fetch-member-by-token/response-fields.adoc[]
-include::{snippets}/fetch-member-by-token/http-response.adoc[]
+include::{snippets}/fetch-member/response-fields.adoc[]
+include::{snippets}/fetch-member/http-response.adoc[]
 
-[[create-member]]
+[[register-member]]
 === 단건 등록
 Example
-include::{snippets}/create-member/curl-request.adoc[]
-//include::{snippets}/create-member/httpie-request.adoc[]
+include::{snippets}/register-member/curl-request.adoc[]
+include::{snippets}/register-member/httpie-request.adoc[]
 요청
-include::{snippets}/create-member/request-fields.adoc[]
-include::{snippets}/create-member/http-request.adoc[]
+include::{snippets}/register-member/request-fields.adoc[]
+include::{snippets}/register-member/http-request.adoc[]
 응답
-include::{snippets}/create-member/response-fields.adoc[]
-include::{snippets}/create-member/http-response.adoc[]
+include::{snippets}/register-member/response-fields.adoc[]
+include::{snippets}/register-member/http-response.adoc[]
+
+[[modify-member]]
+=== 단건 수정
+Example
+include::{snippets}/modify-member/curl-request.adoc[]
+include::{snippets}/modify-member/httpie-request.adoc[]
+요청
+include::{snippets}/modify-member/request-fields.adoc[]
+include::{snippets}/modify-member/http-request.adoc[]
+응답
+include::{snippets}/modify-member/response-fields.adoc[]
+include::{snippets}/modify-member/http-response.adoc[]
+
+[[modify-member-password]]
+=== 단건 수정 - 회원 비밀번호
+Example
+include::{snippets}/modify-member-password/curl-request.adoc[]
+include::{snippets}/modify-member-password/httpie-request.adoc[]
+요청
+include::{snippets}/modify-member-password/request-fields.adoc[]
+include::{snippets}/modify-member-password/http-request.adoc[]
+응답
+include::{snippets}/modify-member-password/response-fields.adoc[]
+include::{snippets}/modify-member-password/http-response.adoc[]
+
+[[modify-member-disable]]
+=== 단건 수정 - 회원 비활성화
+Example
+include::{snippets}/modify-member-disable/curl-request.adoc[]
+include::{snippets}/modify-member-disable/httpie-request.adoc[]
+요청
+include::{snippets}/modify-member-disable/request-fields.adoc[]
+include::{snippets}/modify-member-disable/http-request.adoc[]
+응답
+include::{snippets}/modify-member-disable/response-fields.adoc[]
+include::{snippets}/modify-member-disable/http-response.adoc[]
+
+[[modify-member-enable]]
+=== 단건 수정 - 회원 활성화
+Example
+include::{snippets}/modify-member-enable/curl-request.adoc[]
+include::{snippets}/modify-member-enable/httpie-request.adoc[]
+요청
+include::{snippets}/modify-member-enable/request-fields.adoc[]
+include::{snippets}/modify-member-enable/http-request.adoc[]
+응답
+include::{snippets}/modify-member-enable/response-fields.adoc[]
+include::{snippets}/modify-member-enable/http-response.adoc[]
+
+[[remove-member]]
+=== 단건 삭제
+Example
+include::{snippets}/remove-member/curl-request.adoc[]
+include::{snippets}/remove-member/httpie-request.adoc[]
+요청
+include::{snippets}/remove-member/request-fields.adoc[]
+include::{snippets}/remove-member/http-request.adoc[]
+응답
+include::{snippets}/remove-member/response-fields.adoc[]
+include::{snippets}/remove-member/http-response.adoc[]
