@@ -20,31 +20,22 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RegisterRequest {
-
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
-
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
         private String memberLoginPassword;
-
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
-
         @NotBlank(message = "memberEmail 는 필수값입니다.")
         private String memberEmail;
-
         private String memberAvatar;
-
         @NotBlank(message = "memberNickName 는 필수값입니다.")
         private String memberNickName;
-
         @NotBlank(message = "memberSelfIntroduction 는 필수값입니다.")
         private String memberSelfIntroduction;
-
         @NotNull(message = "memberCategoryList 는 필수값입니다.")
         @Size(min = 1, message = "memberCategoryList 는 최소 1개 이상이어야 합니다.")
         private List<Integer> memberCategoryList;
-
         @NotNull(message = "memberCategoryItemList 는 필수값입니다.")
         @Size(min = 1, message = "memberCategoryItemList 는 최소 1개 이상이어야 합니다.")
         private List<Integer> memberCategoryItemList;
@@ -71,24 +62,17 @@ public class MemberDto {
     public static class ChangeRequest {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
-
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
-
         @NotBlank(message = "memberEmail 는 필수값입니다.")
         private String memberEmail;
-
         private String memberAvatar;
-
         @NotBlank(message = "memberNickName 는 필수값입니다.")
         private String memberNickName;
-
         @NotBlank(message = "memberSelfIntroduction 는 필수값입니다.")
         private String memberSelfIntroduction;
-
         @NotNull(message = "memberCategoryList 는 필수값입니다.")
         private List<Integer> memberCategoryList;
-
         @NotNull(message = "memberCategoryItemList 는 필수값입니다.")
         private List<Integer> memberCategoryItemList;
 

@@ -20,7 +20,6 @@ public class CategoryDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RegisterRequest {
-
         @NotBlank(message = "categoryTitle 는 필수값입니다.")
         private String categoryTitle;
 
@@ -38,7 +37,6 @@ public class CategoryDto {
     public static class ChangeRequest {
         @NotBlank(message = "categoryTitle 는 필수값입니다.")
         private String categoryTitle;
-
         @NotNull(message = "categoryOrdering 는 필수값입니다.")
         private Integer categoryOrdering;
 
