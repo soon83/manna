@@ -17,32 +17,32 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CategoryInfo.Main> fetchCategoryList() {
-        var categoryList = categoryQueryService.getCategoryList();
+    public List<CategoryQuery.Main> fetchCategoryList() {
+        var categoryList = categoryQueryService.readCategoryList();
         return categoryList.stream()
-                .map(CategoryInfo.Main::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
+                .map(CategoryQuery.Main::new)
+                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
     }
 
     @Override
     @Transactional(readOnly = true)
-    public CategoryInfo.Main fetchCategory(String memberToken) {
-        var member = categoryQueryService.getCategory(memberToken);
-        return new CategoryInfo.Main(member);
+    public CategoryQuery.Main fetchCategory(String memberToken) {
+        var member = categoryQueryService.readCategory(memberToken);
+        return new CategoryQuery.Main(member);
     }
 
     @Override
     @Transactional
-    public String createCategory(CategoryCommand.CreateCategory createCategoryCommand) {
+    public String registerCategory(CategoryCommand.CreateCategory createCategoryCommand) {
         var member = createCategoryCommand.toEntity();
-        var createdCategory = categoryCommandService.save(member);
+        var createdCategory = categoryCommandService.create(member);
         return createdCategory.getToken();
     }
 
     @Override
     @Transactional
-    public void updateCategory(CategoryCommand.UpdateCategory updateCategoryCommand, String memberToken) {
-        var member = categoryQueryService.getCategory(memberToken);
+    public void modifyCategory(CategoryCommand.UpdateCategory updateCategoryCommand, String memberToken) {
+        var member = categoryQueryService.readCategory(memberToken);
         member.updateCategory(
                 updateCategoryCommand.getTitle(),
                 updateCategoryCommand.getOrdering()
@@ -51,8 +51,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void deleteCategory(String memberToken) {
-        var member = categoryQueryService.getCategory(memberToken);
+    public void removeCategory(String memberToken) {
+        var member = categoryQueryService.readCategory(memberToken);
         categoryCommandService.delete(member);
     }
 }

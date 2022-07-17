@@ -1,7 +1,7 @@
 package com.sss.category;
 
 import com.sss.domain.category.CategoryCommand;
-import com.sss.domain.category.CategoryInfo;
+import com.sss.domain.category.CategoryQuery;
 import com.sss.domain.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,26 +13,25 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CategoryFacade {
-
     private final CategoryService categoryService;
 
-    public List<CategoryInfo.Main> fetchCategoryList() {
+    public List<CategoryQuery.Main> fetchCategoryList() {
         return categoryService.fetchCategoryList();
     }
 
-    public CategoryInfo.Main fetchCategory(String categoryToken) {
+    public CategoryQuery.Main fetchCategory(String categoryToken) {
         return categoryService.fetchCategory(categoryToken);
     }
 
-    public String createCategory(CategoryCommand.CreateCategory createCategoryCommand) {
-        return categoryService.createCategory(createCategoryCommand);
+    public String registerCategory(CategoryCommand.CreateCategory createCategoryCommand) {
+        return categoryService.registerCategory(createCategoryCommand);
     }
 
-    public void updateCategory(CategoryCommand.UpdateCategory updateCategoryCommand, String categoryToken) {
-        categoryService.updateCategory(updateCategoryCommand, categoryToken);
+    public void modifyCategory(CategoryCommand.UpdateCategory updateCategoryCommand, String categoryToken) {
+        categoryService.modifyCategory(updateCategoryCommand, categoryToken);
     }
 
-    public void deleteCategory(String categoryToken) {
-        categoryService.deleteCategory(categoryToken);
+    public void removeCategory(String categoryToken) {
+        categoryService.removeCategory(categoryToken);
     }
 }

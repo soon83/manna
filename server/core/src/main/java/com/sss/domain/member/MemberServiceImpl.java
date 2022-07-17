@@ -20,41 +20,39 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberInfo.Main> fetchMemberList() {
-        return memberQueryService.getMemberList().stream()
-                .map(MemberInfo.Main::new)
+    public List<MemberQuery.Main> fetchMemberList() {
+        return memberQueryService.readMemberList().stream()
+                .map(MemberQuery.Main::new)
                 .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberInfo.Main fetchMember(String memberToken) {
-        var member = memberQueryService.getMember(memberToken);
-        return new MemberInfo.Main(member);
+    public MemberQuery.Main fetchMember(String memberToken) {
+        var member = memberQueryService.readMember(memberToken);
+        return new MemberQuery.Main(member);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberInfo.Main fetchLoginMember(String memberLoginId) {
-        var member = memberQueryService.getLoginMember(memberLoginId);
-        return new MemberInfo.Main(member);
+    public MemberQuery.Main fetchLoginMember(String memberLoginId) {
+        var member = memberQueryService.readLoginMember(memberLoginId);
+        return new MemberQuery.Main(member);
     }
 
     @Override
     @Transactional
-    public String createMember(MemberCommand.CreateMember createMemberCommand) {
-        String encodePassword = encodePassword(createMemberCommand.getLoginPassword());
-        createMemberCommand.setLoginPassword(encodePassword);
-
+    public String registerMember(MemberCommand.CreateMember createMemberCommand) {
+        createMemberCommand.setLoginPassword(encodePassword(createMemberCommand.getLoginPassword()));
         var member = createMemberCommand.toEntity();
-        var createdMember = memberCommandService.save(member);
+        var createdMember = memberCommandService.create(member);
         return createdMember.getToken();
     }
 
     @Override
     @Transactional
-    public void updateMember(MemberCommand.UpdateMember updateMemberCommand, String memberToken) {
-        var member = memberQueryService.getMember(memberToken);
+    public void modifyMember(MemberCommand.UpdateMember updateMemberCommand, String memberToken) {
+        var member = memberQueryService.readMember(memberToken);
         member.updateMember(
                 updateMemberCommand.getLoginId(),
                 updateMemberCommand.getName(),
@@ -69,30 +67,29 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void updateMemberPassword(MemberCommand.UpdateMemberPassword updateMemberPasswordCommand, String memberToken) {
-        var member = memberQueryService.getMember(memberToken);
-        String encodePassword = encodePassword(updateMemberPasswordCommand.getLoginPassword());
-        updateMemberPasswordCommand.setLoginPassword(encodePassword);
+    public void modifyMemberPassword(MemberCommand.UpdateMemberPassword updateMemberPasswordCommand, String memberToken) {
+        var member = memberQueryService.readMember(memberToken);
+        updateMemberPasswordCommand.setLoginPassword(encodePassword(updateMemberPasswordCommand.getLoginPassword()));
         member.updateMemberPassword(updateMemberPasswordCommand.getLoginPassword());
     }
 
     @Override
     @Transactional
     public void enableMember(String memberToken) {
-        var member = memberQueryService.getMember(memberToken);
+        var member = memberQueryService.readMember(memberToken);
         member.enable();
     }
 
     @Override
     @Transactional
     public void disableMember(String memberToken) {
-        var member = memberQueryService.getMember(memberToken);
+        var member = memberQueryService.readMember(memberToken);
         member.disable();
     }
 
     @Override
     @Transactional
-    public void deleteMember(String memberToken) {
+    public void removeMember(String memberToken) {
         disableMember(memberToken);
     }
 

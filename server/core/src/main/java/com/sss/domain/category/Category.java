@@ -35,10 +35,7 @@ public class Category extends BaseEntity {
     private List<CategoryItem> categoryItemList = new ArrayList<>();
 
     @Builder
-    public Category(
-            String title,
-            Integer ordering
-    ) {
+    public Category(String title, Integer ordering) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.title = title;
         this.ordering = ordering;

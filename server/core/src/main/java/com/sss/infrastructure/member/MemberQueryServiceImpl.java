@@ -16,18 +16,18 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     private final MemberRepository memberRepository;
 
     @Override
-    public List<Member> getMemberList() {
+    public List<Member> readMemberList() {
         return memberRepository.findAll();
     }
 
     @Override
-    public Member getMember(String memberToken) {
+    public Member readMember(String memberToken) {
         return memberRepository.findByToken(memberToken)
                 .orElseThrow(MemberNotFoundException::new);
     }
 
     @Override
-    public Member getLoginMember(String memberLoginId) {
+    public Member readLoginMember(String memberLoginId) {
         return memberRepository.findByLoginId(memberLoginId)
                 .orElseThrow(MemberNotFoundException::new);
     }

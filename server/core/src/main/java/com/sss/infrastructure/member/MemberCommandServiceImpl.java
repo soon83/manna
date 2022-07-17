@@ -13,7 +13,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Member save(Member member) {
+    public Member create(Member member) {
         return memberRepository.save(member);
     }
 

@@ -1,7 +1,7 @@
 package com.sss.category;
 
 import com.sss.domain.category.CategoryCommand;
-import com.sss.domain.category.CategoryInfo;
+import com.sss.domain.category.CategoryQuery;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -18,7 +18,7 @@ public class CategoryDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CreateRequest {
+    public static class RegisterRequest {
         @NotBlank(message = "categoryTitle 는 필수값입니다.")
         private String categoryTitle;
 
@@ -33,7 +33,7 @@ public class CategoryDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UpdateRequest {
+    public static class ModifyRequest {
         @NotBlank(message = "categoryTitle 는 필수값입니다.")
         private String categoryTitle;
         @NotNull(message = "categoryOrdering 는 필수값입니다.")
@@ -58,13 +58,13 @@ public class CategoryDto {
         private final Integer categoryOrdering;
         private final List<CategoryItemResponse> categoryItemList;
 
-        public MainResponse(CategoryInfo.Main categoryInfo) {
+        public MainResponse(CategoryQuery.Main categoryInfo) {
             this.categoryToken = categoryInfo.getToken();
             this.categoryTitle = categoryInfo.getTitle();
             this.categoryOrdering = categoryInfo.getOrdering();
             this.categoryItemList = categoryInfo.getCategoryItemInfoList().stream()
                     .map(CategoryItemResponse::new)
-                    .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
+                    .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
         }
     }
 
@@ -86,7 +86,7 @@ public class CategoryDto {
         private final String categoryItemTitle;
         private final Integer categoryItemOrdering;
 
-        public CategoryItemResponse(CategoryInfo.CategoryItemInfo categoryItemInfo) {
+        public CategoryItemResponse(CategoryQuery.CategoryItemInfo categoryItemInfo) {
             this.categoryItemToken = categoryItemInfo.getToken();
             this.categoryItemTitle = categoryItemInfo.getTitle();
             this.categoryItemOrdering = categoryItemInfo.getOrdering();

@@ -29,7 +29,7 @@ public class InitDB implements InitializingBean {
         try {
             memberService.fetchLoginMember("admin");
         } catch (Exception e) {
-            memberService.createMember(MemberCommand.CreateMember.builder()
+            memberService.registerMember(MemberCommand.CreateMember.builder()
                             .loginId("admin")
                             .loginPassword("1234")
                             .name("하츄핑")

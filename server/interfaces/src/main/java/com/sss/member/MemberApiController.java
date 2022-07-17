@@ -30,7 +30,7 @@ public class MemberApiController {
         var memberInfoList = memberFacade.fetchMemberList();
         var response = memberInfoList.stream()
                 .map(MemberDto.MainResponse::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
+                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
@@ -53,10 +53,10 @@ public class MemberApiController {
      * @throws URISyntaxException
      */
     @PostMapping
-    public ResponseEntity<Res> createMember(@RequestBody @Valid MemberDto.CreateRequest request) throws URISyntaxException {
+    public ResponseEntity<Res> registerMember(@RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
         var createMemberCommand = request.toCreateMemberCommand();
-        var memberToken = memberFacade.createMember(createMemberCommand);
-        var response = new MemberDto.CreateResponse(memberToken);
+        var memberToken = memberFacade.registerMember(createMemberCommand);
+        var response = new MemberDto.RegisterResponse(memberToken);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .location(UriGenerator.getLocation(response.getMemberToken()))
                 .body(Res.success(response));
@@ -69,10 +69,10 @@ public class MemberApiController {
      * @return
      */
     @PutMapping("/{memberToken}")
-    public ResponseEntity<Res> updateMember(@PathVariable String memberToken, @RequestBody @Valid MemberDto.UpdateRequest request) {
+    public ResponseEntity<Res> modifyMember(@PathVariable String memberToken, @RequestBody @Valid MemberDto.ModifyRequest request) {
         var updateMemberCommand = request.toUpdateMemberCommand();
-        memberFacade.updateMember(updateMemberCommand, memberToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+        memberFacade.modifyMember(updateMemberCommand, memberToken);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 
     /**
@@ -81,11 +81,11 @@ public class MemberApiController {
      * @return
      */
     @PatchMapping("/password")
-    public ResponseEntity<Res> updateMemberPassword(@RequestBody @Valid MemberDto.UpdateMemberPasswordRequest request) {
+    public ResponseEntity<Res> modifyMemberPassword(@RequestBody @Valid MemberDto.ModifyMemberPasswordRequest request) {
         var memberToken = request.getMemberToken();
         var updateMemberPasswordCommand = request.toUpdateMemberPasswordCommand();
-        memberFacade.updateMemberPassword(updateMemberPasswordCommand, memberToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+        memberFacade.modifyMemberPassword(updateMemberPasswordCommand, memberToken);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 
     /**
@@ -94,10 +94,10 @@ public class MemberApiController {
      * @return
      */
     @PatchMapping("/disable")
-    public ResponseEntity<Res> disableMember(@RequestBody @Valid MemberDto.UpdateMemberStatusRequest request) {
+    public ResponseEntity<Res> disableMember(@RequestBody @Valid MemberDto.ModifyMemberStatusRequest request) {
         var memberToken = request.getMemberToken();
         memberFacade.disableMember(memberToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 
     /**
@@ -106,10 +106,10 @@ public class MemberApiController {
      * @return
      */
     @PatchMapping("/enable")
-    public ResponseEntity<Res> enableMember(@RequestBody @Valid MemberDto.UpdateMemberStatusRequest request) {
+    public ResponseEntity<Res> enableMember(@RequestBody @Valid MemberDto.ModifyMemberStatusRequest request) {
         var memberToken = request.getMemberToken();
         memberFacade.enableMember(memberToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 
     /**
@@ -118,8 +118,8 @@ public class MemberApiController {
      * @return
      */
     @DeleteMapping("/{memberToken}")
-    public ResponseEntity<Res> deleteMember(@PathVariable String memberToken) {
-        memberFacade.deleteMember(memberToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+    public ResponseEntity<Res> removeMember(@PathVariable String memberToken) {
+        memberFacade.removeMember(memberToken);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 }

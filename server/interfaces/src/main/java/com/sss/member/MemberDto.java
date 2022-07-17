@@ -2,7 +2,7 @@ package com.sss.member;
 
 import com.sss.domain.member.Member;
 import com.sss.domain.member.MemberCommand;
-import com.sss.domain.member.MemberInfo;
+import com.sss.domain.member.MemberQuery;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -19,7 +19,7 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CreateRequest {
+    public static class RegisterRequest {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
@@ -59,7 +59,7 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UpdateRequest {
+    public static class ModifyRequest {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
         @NotBlank(message = "memberName 는 필수값입니다.")
@@ -94,7 +94,7 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UpdateMemberPasswordRequest {
+    public static class ModifyMemberPasswordRequest {
         @NotBlank(message = "memberToken 는 필수값입니다.")
         private String memberToken;
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
@@ -111,7 +111,7 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UpdateMemberStatusRequest {
+    public static class ModifyMemberStatusRequest {
         @NotBlank(message = "memberToken 는 필수값입니다.")
         private String memberToken;
     }
@@ -135,7 +135,7 @@ public class MemberDto {
         private final Member.Role memberRole;
         private final Member.Status memberStatus;
 
-        public MainResponse(MemberInfo.Main memberInfo) {
+        public MainResponse(MemberQuery.Main memberInfo) {
             this.memberToken = memberInfo.getToken();
             this.memberLoginId = memberInfo.getLoginId();
             this.memberName = memberInfo.getName();
@@ -152,10 +152,10 @@ public class MemberDto {
 
     @Getter
     @ToString
-    public static class CreateResponse {
+    public static class RegisterResponse {
         private final String memberToken;
 
-        public CreateResponse(String memberToken) {
+        public RegisterResponse(String memberToken) {
             this.memberToken = memberToken;
         }
     }

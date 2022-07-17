@@ -30,7 +30,7 @@ public class CategoryApiController {
         var categoryInfoList = categoryFacade.fetchCategoryList();
         var response = categoryInfoList.stream()
                 .map(CategoryDto.MainResponse::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
+                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
@@ -53,9 +53,9 @@ public class CategoryApiController {
      * @throws URISyntaxException
      */
     @PostMapping
-    public ResponseEntity<Res> createCategory(@RequestBody @Valid CategoryDto.CreateRequest request) throws URISyntaxException {
+    public ResponseEntity<Res> registerCategory(@RequestBody @Valid CategoryDto.RegisterRequest request) throws URISyntaxException {
         var createCategoryCommand = request.toCreateCategoryCommand();
-        var categoryToken = categoryFacade.createCategory(createCategoryCommand);
+        var categoryToken = categoryFacade.registerCategory(createCategoryCommand);
         var response = new CategoryDto.CreateResponse(categoryToken);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .location(UriGenerator.getLocation(response.getCategoryToken()))
@@ -69,10 +69,10 @@ public class CategoryApiController {
      * @return
      */
     @PutMapping("/{categoryToken}")
-    public ResponseEntity<Res> updateCategory(@PathVariable String categoryToken, @RequestBody @Valid CategoryDto.UpdateRequest request) {
+    public ResponseEntity<Res> modifyCategory(@PathVariable String categoryToken, @RequestBody @Valid CategoryDto.ModifyRequest request) {
         var updateCategoryCommand = request.toUpdateCategoryCommand();
-        categoryFacade.updateCategory(updateCategoryCommand, categoryToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+        categoryFacade.modifyCategory(updateCategoryCommand, categoryToken);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 
     /**
@@ -81,8 +81,8 @@ public class CategoryApiController {
      * @return
      */
     @DeleteMapping("/{categoryToken}")
-    public ResponseEntity<Res> deleteCategory(@PathVariable String categoryToken) {
-        categoryFacade.deleteCategory(categoryToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success());
+    public ResponseEntity<Res> removeCategory(@PathVariable String categoryToken) {
+        categoryFacade.removeCategory(categoryToken);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 }

@@ -16,12 +16,12 @@ public class CategoryQueryServiceImpl implements CategoryQueryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> getCategoryList() {
+    public List<Category> readCategoryList() {
         return categoryRepository.findAll();
     }
 
     @Override
-    public Category getCategory(String categoryToken) {
+    public Category readCategory(String categoryToken) {
         return categoryRepository.findByToken(categoryToken)
                 .orElseThrow(CategoryNotFoundException::new);
     }

@@ -3,7 +3,7 @@ package com.sss.member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sss.domain.member.Member;
 import com.sss.domain.member.MemberCommand;
-import com.sss.domain.member.MemberInfo;
+import com.sss.domain.member.MemberQuery;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -61,8 +61,8 @@ class UnitCreateMemberApiDocumentationTest {
     @DisplayName("[회원] 목록 조회")
     void fetchMemberList() throws Exception {
         // given
-        List<MemberInfo.Main> memberInfoList = Lists.newArrayList(
-                new MemberInfo.Main(
+        List<MemberQuery.Main> memberInfoList = Lists.newArrayList(
+                new MemberQuery.Main(
                         "mbr_Bk3GlYuJSFNWqkHw",
                         "tester",
                         "1234",
@@ -98,10 +98,10 @@ class UnitCreateMemberApiDocumentationTest {
                                 fieldWithPath("data.[0].memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                 fieldWithPath("data.[0].memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
                                 fieldWithPath("data.[0].memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개"),
-                                fieldWithPath("data.[0].memberCategoryList").type(JsonFieldType.STRING).description("회원 관심사 - 대분류"),
-                                fieldWithPath("data.[0].memberCategoryItemList").type(JsonFieldType.STRING).description("회원 관심사 - 소분류"),
-                                fieldWithPath("data.[0].memberRole").type(JsonFieldType.STRING).description("회원 권한 (MANAGER / MEMBER)"),
-                                fieldWithPath("data.[0].memberStatus").type(JsonFieldType.STRING).description("회원 활성화 상태 (ENABLE / DISABLE)")
+                                fieldWithPath("data.[0].memberCategoryList").type(JsonFieldType.STRING).description("회원 관심사-대분류"),
+                                fieldWithPath("data.[0].memberCategoryItemList").type(JsonFieldType.STRING).description("회원 관심사-소분류"),
+                                fieldWithPath("data.[0].memberRole").type(JsonFieldType.STRING).description("회원 권한 [MANAGER, MEMBER]"),
+                                fieldWithPath("data.[0].memberStatus").type(JsonFieldType.STRING).description("회원 활성화 상태 [ENABLE, DISABLE]")
                         )
                 ));
     }
@@ -111,7 +111,7 @@ class UnitCreateMemberApiDocumentationTest {
     void fetchMemberByToken() throws Exception {
         // given
         String memberToken = "mbr_Bk3GlYuJSFNWqkHw";
-        MemberInfo.Main memberInfo = new MemberInfo.Main(
+        MemberQuery.Main memberInfo = new MemberQuery.Main(
                 "mbr_Bk3GlYuJSFNWqkHw",
                 "tester",
                 "1234",
@@ -149,10 +149,10 @@ class UnitCreateMemberApiDocumentationTest {
                                 fieldWithPath("data.memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                 fieldWithPath("data.memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
                                 fieldWithPath("data.memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개"),
-                                fieldWithPath("data.memberCategoryList").type(JsonFieldType.STRING).description("회원 관심사 - 대분류"),
-                                fieldWithPath("data.memberCategoryItemList").type(JsonFieldType.STRING).description("회원 관심사 - 소분류"),
-                                fieldWithPath("data.memberRole").type(JsonFieldType.STRING).description("회원 권한 (MANAGER / MEMBER)"),
-                                fieldWithPath("data.memberStatus").type(JsonFieldType.STRING).description("회원 활성화 상태 (ENABLE / DISABLE)")
+                                fieldWithPath("data.memberCategoryList").type(JsonFieldType.STRING).description("회원 관심사-대분류"),
+                                fieldWithPath("data.memberCategoryItemList").type(JsonFieldType.STRING).description("회원 관심사-소분류"),
+                                fieldWithPath("data.memberRole").type(JsonFieldType.STRING).description("회원 권한 [MANAGER, MEMBER]"),
+                                fieldWithPath("data.memberStatus").type(JsonFieldType.STRING).description("회원 활성화 상태 [ENABLE, DISABLE]")
                         )
                 ));
     }
@@ -162,7 +162,7 @@ class UnitCreateMemberApiDocumentationTest {
     void createMember() throws Exception {
         // given
         String memberToken = "mbr_Bk3GlYuJSFNWqkHw";
-        MemberDto.CreateRequest memberCreateRequest = MemberDto.CreateRequest.builder()
+        MemberDto.RegisterRequest memberRegisterRequest = MemberDto.RegisterRequest.builder()
                 .memberLoginId("tester")
                 .memberLoginPassword("1234")
                 .memberName("테스터")
@@ -175,11 +175,11 @@ class UnitCreateMemberApiDocumentationTest {
                 .build();
 
         // when
-        when(memberFacade.createMember(any(MemberCommand.CreateMember.class))).thenReturn(memberToken);
+        when(memberFacade.registerMember(any(MemberCommand.CreateMember.class))).thenReturn(memberToken);
 
         // then
         this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/member-list")
-                        .content(objectMapper.writeValueAsString(memberCreateRequest))
+                        .content(objectMapper.writeValueAsString(memberRegisterRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -187,23 +187,23 @@ class UnitCreateMemberApiDocumentationTest {
                 .andDo(document("create-member",
                         requestFields(
                                 fieldWithPath("memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberLoginId"))),
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberLoginId"))),
                                 fieldWithPath("memberLoginPassword").type(JsonFieldType.STRING).description("회원 로그인 비밀번호")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberLoginPassword"))),
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberLoginPassword"))),
                                 fieldWithPath("memberName").type(JsonFieldType.STRING).description("회원 이름")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberName"))),
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberName"))),
                                 fieldWithPath("memberEmail").type(JsonFieldType.STRING).description("회원 이메일")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberEmail"))),
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberEmail"))),
                                 fieldWithPath("memberAvatar").type(JsonFieldType.STRING).description("회원 이미지").optional()
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberAvatar"))),
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberAvatar"))),
                                 fieldWithPath("memberNickName").type(JsonFieldType.STRING).description("회원 별명")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberNickName"))),
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberNickName"))),
                                 fieldWithPath("memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberSelfIntroduction"))),
-                                fieldWithPath("memberCategoryList").type(JsonFieldType.ARRAY).description("회원 관심사 - 대분류")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberCategoryList"))),
-                                fieldWithPath("memberCategoryItemList").type(JsonFieldType.ARRAY).description("회원 관심사 - 소분류")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.CreateRequest.class, "memberCategoryItemList")))
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberSelfIntroduction"))),
+                                fieldWithPath("memberCategoryList").type(JsonFieldType.ARRAY).description("회원 관심사-대분류")
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberCategoryList"))),
+                                fieldWithPath("memberCategoryItemList").type(JsonFieldType.ARRAY).description("회원 관심사-소분류")
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberCategoryItemList")))
                         ),
                         responseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),

@@ -15,12 +15,12 @@ public class CategoryCommandServiceImpl implements CategoryCommandService {
     private final CategoryItemRepository categoryItemRepository;
 
     @Override
-    public Category save(Category category) {
+    public Category create(Category category) {
         return categoryRepository.save(category);
     }
 
     @Override
-    public CategoryItem save(CategoryItem categoryItem) {
+    public CategoryItem create(CategoryItem categoryItem) {
         return categoryItemRepository.save(categoryItem);
     }
 

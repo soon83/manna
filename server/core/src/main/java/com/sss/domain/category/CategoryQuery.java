@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CategoryInfo {
+public class CategoryQuery {
 
     @Getter
     @ToString
@@ -23,7 +23,7 @@ public class CategoryInfo {
             this.ordering = entity.getOrdering();
             this.categoryItemInfoList = entity.getCategoryItemList().stream()
                     .map(CategoryItemInfo::new)
-                    .collect(Collectors.toList()); // TODO 이거 밖으로 빼야하나,,
+                    .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
         }
     }
 
