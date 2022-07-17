@@ -2,7 +2,6 @@ package com.sss.category;
 
 import com.sss.domain.category.CategoryCommand;
 import com.sss.domain.category.CategoryInfo;
-import com.sss.domain.category.item.CategoryItem;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -19,12 +18,12 @@ public class CategoryDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class RegisterRequest {
+    public static class CreateRequest {
         @NotBlank(message = "categoryTitle 는 필수값입니다.")
         private String categoryTitle;
 
-        public CategoryCommand.RegisterCategory toRegisterCategoryCommand() {
-            return CategoryCommand.RegisterCategory.builder()
+        public CategoryCommand.CreateCategory toCreateCategoryCommand() {
+            return CategoryCommand.CreateCategory.builder()
                     .title(categoryTitle)
                     .build();
         }
@@ -34,14 +33,14 @@ public class CategoryDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ChangeRequest {
+    public static class UpdateRequest {
         @NotBlank(message = "categoryTitle 는 필수값입니다.")
         private String categoryTitle;
         @NotNull(message = "categoryOrdering 는 필수값입니다.")
         private Integer categoryOrdering;
 
-        public CategoryCommand.ChangeCategory toChangeCategoryCommand() {
-            return CategoryCommand.ChangeCategory.builder()
+        public CategoryCommand.UpdateCategory toUpdateCategoryCommand() {
+            return CategoryCommand.UpdateCategory.builder()
                     .title(categoryTitle)
                     .ordering(categoryOrdering)
                     .build();
@@ -72,10 +71,10 @@ public class CategoryDto {
     @Getter
     @Builder
     @ToString
-    public static class RegisterResponse {
+    public static class CreateResponse {
         private final String categoryToken;
 
-        public RegisterResponse(String categoryToken) {
+        public CreateResponse(String categoryToken) {
             this.categoryToken = categoryToken;
         }
     }

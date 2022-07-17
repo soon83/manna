@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberInfo.Main> retrieveMemberList() {
+    public List<MemberInfo.Main> fetchMemberList() {
         return memberQueryService.getMemberList().stream()
                 .map(MemberInfo.Main::new)
                 .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
@@ -28,52 +28,52 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public MemberInfo.Main retrieveMember(String memberToken) {
+    public MemberInfo.Main fetchMember(String memberToken) {
         var member = memberQueryService.getMember(memberToken);
         return new MemberInfo.Main(member);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberInfo.Main retrieveLoginMember(String memberLoginId) {
+    public MemberInfo.Main fetchLoginMember(String memberLoginId) {
         var member = memberQueryService.getLoginMember(memberLoginId);
         return new MemberInfo.Main(member);
     }
 
     @Override
     @Transactional
-    public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
-        String encodePassword = encodePassword(registerMemberCommand.getLoginPassword());
-        registerMemberCommand.setLoginPassword(encodePassword);
+    public String createMember(MemberCommand.CreateMember createMemberCommand) {
+        String encodePassword = encodePassword(createMemberCommand.getLoginPassword());
+        createMemberCommand.setLoginPassword(encodePassword);
 
-        var member = registerMemberCommand.toEntity();
+        var member = createMemberCommand.toEntity();
         var createdMember = memberCommandService.save(member);
         return createdMember.getToken();
     }
 
     @Override
     @Transactional
-    public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
+    public void updateMember(MemberCommand.UpdateMember updateMemberCommand, String memberToken) {
         var member = memberQueryService.getMember(memberToken);
         member.updateMember(
-                changeMemberCommand.getLoginId(),
-                changeMemberCommand.getName(),
-                changeMemberCommand.getEmail(),
-                changeMemberCommand.getAvatar(),
-                changeMemberCommand.getNickName(),
-                changeMemberCommand.getSelfIntroduction(),
-                changeMemberCommand.getCategoryList(),
-                changeMemberCommand.getCategoryItemList()
+                updateMemberCommand.getLoginId(),
+                updateMemberCommand.getName(),
+                updateMemberCommand.getEmail(),
+                updateMemberCommand.getAvatar(),
+                updateMemberCommand.getNickName(),
+                updateMemberCommand.getSelfIntroduction(),
+                updateMemberCommand.getCategoryList(),
+                updateMemberCommand.getCategoryItemList()
         );
     }
 
     @Override
     @Transactional
-    public void changeMemberPassword(MemberCommand.ChangeMemberPassword changeMemberPasswordCommand, String memberToken) {
+    public void updateMemberPassword(MemberCommand.UpdateMemberPassword updateMemberPasswordCommand, String memberToken) {
         var member = memberQueryService.getMember(memberToken);
-        String encodePassword = encodePassword(changeMemberPasswordCommand.getLoginPassword());
-        changeMemberPasswordCommand.setLoginPassword(encodePassword);
-        member.updateMemberPassword(changeMemberPasswordCommand.getLoginPassword());
+        String encodePassword = encodePassword(updateMemberPasswordCommand.getLoginPassword());
+        updateMemberPasswordCommand.setLoginPassword(encodePassword);
+        member.updateMemberPassword(updateMemberPasswordCommand.getLoginPassword());
     }
 
     @Override
@@ -93,8 +93,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void deleteMember(String memberToken) {
-        var member = memberQueryService.getMember(memberToken);
-        memberCommandService.delete(member);
+        disableMember(memberToken);
     }
 
     private String encodePassword(String password) {

@@ -1,5 +1,6 @@
 package com.sss.domain.member;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -7,6 +8,7 @@ public class MemberInfo {
 
     @Getter
     @ToString
+    @AllArgsConstructor
     public static class Main {
         private final String token;
         private final String loginId;

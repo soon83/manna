@@ -16,20 +16,20 @@ public class CategoryFacade {
 
     private final CategoryService categoryService;
 
-    public List<CategoryInfo.Main> retrieveCategoryList() {
-        return categoryService.retrieveCategoryList();
+    public List<CategoryInfo.Main> fetchCategoryList() {
+        return categoryService.fetchCategoryList();
     }
 
-    public CategoryInfo.Main retrieveCategory(String categoryToken) {
-        return categoryService.retrieveCategory(categoryToken);
+    public CategoryInfo.Main fetchCategory(String categoryToken) {
+        return categoryService.fetchCategory(categoryToken);
     }
 
-    public String registerCategory(CategoryCommand.RegisterCategory registerCategoryCommand) {
-        return categoryService.registerCategory(registerCategoryCommand);
+    public String createCategory(CategoryCommand.CreateCategory createCategoryCommand) {
+        return categoryService.createCategory(createCategoryCommand);
     }
 
-    public void changeCategory(CategoryCommand.ChangeCategory changeCategoryCommand, String categoryToken) {
-        categoryService.changeCategory(changeCategoryCommand, categoryToken);
+    public void updateCategory(CategoryCommand.UpdateCategory updateCategoryCommand, String categoryToken) {
+        categoryService.updateCategory(updateCategoryCommand, categoryToken);
     }
 
     public void deleteCategory(String categoryToken) {

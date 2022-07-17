@@ -1,16 +1,23 @@
 buildscript {
     ext {
         springBootVersion = '2.7.1'
+        asciidoctorVersion = '3.3.2'
+        restdocsVersion = '2.0.6.RELEASE'
         boot = 'org.springframework.boot'
         lombok = 'org.projectlombok:lombok'
+        snippetsDir = file('build/generated-snippets')
     }
 
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
         classpath "$boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "org.asciidoctor:asciidoctor-gradle-jvm:$asciidoctorVersion"
     }
 }
 
@@ -22,10 +29,12 @@ allprojects {
 subprojects {
     apply plugin: boot
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.asciidoctor.jvm.convert'
     apply plugin: 'java'
     apply plugin: 'idea'
 
     configurations {
+        asciidoctorExt
         compileOnly {
             extendsFrom annotationProcessor
         }
@@ -39,10 +48,29 @@ subprojects {
         compileOnly lombok
         annotationProcessor lombok
         testImplementation "$boot:spring-boot-starter-test"
+        testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:$restdocsVersion"
+        asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:$restdocsVersion"
     }
 
-    tasks.named('test') {
+    test {
+        outputs.dir snippetsDir
         useJUnitPlatform()
+    }
+
+    asciidoctor {
+        dependsOn test
+        inputs.dir snippetsDir
+        configurations 'asciidoctorExt'
+    }
+
+    task copyDocument(type: Copy) {
+        dependsOn asciidoctor
+        from file(asciidoctor.outputDir)
+        into file("${sourceSets.main.output.resourcesDir}/static/docs")
+    }
+
+    bootJar {
+        dependsOn copyDocument
     }
 }
 

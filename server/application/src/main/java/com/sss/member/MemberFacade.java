@@ -16,28 +16,24 @@ public class MemberFacade {
 
     private final MemberService memberService;
 
-    public List<MemberInfo.Main> retrieveMemberList() {
-        return memberService.retrieveMemberList();
+    public List<MemberInfo.Main> fetchMemberList() {
+        return memberService.fetchMemberList();
     }
 
-    public MemberInfo.Main retrieveMember(String memberToken) {
-        return memberService.retrieveMember(memberToken);
+    public MemberInfo.Main fetchMember(String memberToken) {
+        return memberService.fetchMember(memberToken);
     }
 
-    public MemberInfo.Main retrieveLoginMember(String memberLoginId) {
-        return memberService.retrieveLoginMember(memberLoginId);
+    public String createMember(MemberCommand.CreateMember createMemberCommand) {
+        return memberService.createMember(createMemberCommand);
     }
 
-    public String registerMember(MemberCommand.RegisterMember registerMemberCommand) {
-        return memberService.registerMember(registerMemberCommand);
+    public void updateMember(MemberCommand.UpdateMember updateMemberCommand, String memberToken) {
+        memberService.updateMember(updateMemberCommand, memberToken);
     }
 
-    public void changeMember(MemberCommand.ChangeMember changeMemberCommand, String memberToken) {
-        memberService.changeMember(changeMemberCommand, memberToken);
-    }
-
-    public void changeMemberPassword(MemberCommand.ChangeMemberPassword changeMemberPasswordCommand, String memberToken) {
-        memberService.changeMemberPassword(changeMemberPasswordCommand, memberToken);
+    public void updateMemberPassword(MemberCommand.UpdateMemberPassword updateMemberPasswordCommand, String memberToken) {
+        memberService.updateMemberPassword(updateMemberPasswordCommand, memberToken);
     }
 
     public void enableMember(String memberToken) {

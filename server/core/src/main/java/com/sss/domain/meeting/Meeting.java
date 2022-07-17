@@ -74,7 +74,6 @@ public class Meeting extends BaseEntity {
     @Getter
     @RequiredArgsConstructor
     public enum RecruitmentMethod {
-
         FIRST_COME("선착순"),
         APPROVAL("승인제");
 

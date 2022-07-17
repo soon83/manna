@@ -19,7 +19,7 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class RegisterRequest {
+    public static class CreateRequest {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
@@ -40,8 +40,8 @@ public class MemberDto {
         @Size(min = 1, message = "memberCategoryItemList 는 최소 1개 이상이어야 합니다.")
         private List<Integer> memberCategoryItemList;
 
-        public MemberCommand.RegisterMember toRegisterMemberCommand() {
-            return MemberCommand.RegisterMember.builder()
+        public MemberCommand.CreateMember toCreateMemberCommand() {
+            return MemberCommand.CreateMember.builder()
                     .loginId(memberLoginId)
                     .loginPassword(memberLoginPassword)
                     .name(memberName)
@@ -59,7 +59,7 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ChangeRequest {
+    public static class UpdateRequest {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
         @NotBlank(message = "memberName 는 필수값입니다.")
@@ -76,8 +76,8 @@ public class MemberDto {
         @NotNull(message = "memberCategoryItemList 는 필수값입니다.")
         private List<Integer> memberCategoryItemList;
 
-        public MemberCommand.ChangeMember toChangeMemberCommand() {
-            return MemberCommand.ChangeMember.builder()
+        public MemberCommand.UpdateMember toUpdateMemberCommand() {
+            return MemberCommand.UpdateMember.builder()
                     .loginId(memberLoginId)
                     .name(memberName)
                     .email(memberEmail)
@@ -94,14 +94,14 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ChangeMemberPasswordRequest {
+    public static class UpdateMemberPasswordRequest {
         @NotBlank(message = "memberToken 는 필수값입니다.")
         private String memberToken;
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
         private String memberLoginPassword;
 
-        public MemberCommand.ChangeMemberPassword toChangeMemberPasswordCommand() {
-            return MemberCommand.ChangeMemberPassword.builder()
+        public MemberCommand.UpdateMemberPassword toUpdateMemberPasswordCommand() {
+            return MemberCommand.UpdateMemberPassword.builder()
                     .loginPassword(memberLoginPassword)
                     .build();
         }
@@ -111,7 +111,7 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ChangeMemberStatusRequest {
+    public static class UpdateMemberStatusRequest {
         @NotBlank(message = "memberToken 는 필수값입니다.")
         private String memberToken;
     }
@@ -121,6 +121,7 @@ public class MemberDto {
      */
     @Getter
     @ToString
+    @AllArgsConstructor
     public static class MainResponse {
         private final String memberToken;
         private final String memberLoginId;
@@ -150,12 +151,11 @@ public class MemberDto {
     }
 
     @Getter
-    @Builder
     @ToString
-    public static class RegisterResponse {
+    public static class CreateResponse {
         private final String memberToken;
 
-        public RegisterResponse(String memberToken) {
+        public CreateResponse(String memberToken) {
             this.memberToken = memberToken;
         }
     }

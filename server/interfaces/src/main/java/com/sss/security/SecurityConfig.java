@@ -48,6 +48,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests(auth -> auth
                         .mvcMatchers(HttpMethod.POST, LOGIN).permitAll()
+                        .mvcMatchers(HttpMethod.GET, "/docs/index.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

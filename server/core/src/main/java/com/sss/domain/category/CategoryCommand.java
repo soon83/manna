@@ -9,7 +9,7 @@ public class CategoryCommand {
     @Getter
     @Builder
     @ToString
-    public static class RegisterCategory {
+    public static class CreateCategory {
         private String title;
         private Integer ordering;
 
@@ -24,7 +24,7 @@ public class CategoryCommand {
     @Getter
     @Builder
     @ToString
-    public static class ChangeCategory {
+    public static class UpdateCategory {
         private String title;
         private Integer ordering;
     }

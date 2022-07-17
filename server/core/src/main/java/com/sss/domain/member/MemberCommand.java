@@ -12,7 +12,7 @@ public class MemberCommand {
     @Getter
     @Builder
     @ToString
-    public static class RegisterMember {
+    public static class CreateMember {
         private String loginId;
         @Setter
         private String loginPassword;
@@ -42,7 +42,7 @@ public class MemberCommand {
     @Getter
     @Builder
     @ToString
-    public static class ChangeMember {
+    public static class UpdateMember {
         private String loginId;
         @Setter
         private String loginPassword;
@@ -59,7 +59,7 @@ public class MemberCommand {
     @Getter
     @Builder
     @ToString
-    public static class ChangeMemberPassword {
+    public static class UpdateMemberPassword {
         @Setter
         private String loginPassword;
     }

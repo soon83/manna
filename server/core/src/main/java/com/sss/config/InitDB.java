@@ -27,9 +27,9 @@ public class InitDB implements InitializingBean {
 
     private void makeAdmin() {
         try {
-            memberService.retrieveLoginMember("admin");
+            memberService.fetchLoginMember("admin");
         } catch (Exception e) {
-            memberService.registerMember(MemberCommand.RegisterMember.builder()
+            memberService.createMember(MemberCommand.CreateMember.builder()
                             .loginId("admin")
                             .loginPassword("1234")
                             .name("하츄핑")

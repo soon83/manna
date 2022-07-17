@@ -15,7 +15,7 @@ public class LoginDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class AuthRequest {
+    public static class LoginRequest {
         @NotBlank(message = "memberLoginId 는 필수값입니다.")
         private String memberLoginId;
         @NotBlank(message = "memberLoginPassword 는 필수값입니다.")

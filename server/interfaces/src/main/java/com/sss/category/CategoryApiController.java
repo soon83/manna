@@ -26,11 +26,23 @@ public class CategoryApiController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<Res> retrieveCategoryList() {
-        var categoryInfoList = categoryFacade.retrieveCategoryList();
+    public ResponseEntity<Res> fetchCategoryList() {
+        var categoryInfoList = categoryFacade.fetchCategoryList();
         var response = categoryInfoList.stream()
                 .map(CategoryDto.MainResponse::new)
                 .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
+    }
+
+    /**
+     * 카테고리 단건 조회
+     * @param categoryToken
+     * @return
+     */
+    @GetMapping("/{categoryToken}")
+    public ResponseEntity<Res> fetchCategory(@PathVariable String categoryToken) {
+        var categoryInfo = categoryFacade.fetchCategory(categoryToken);
+        var response = new CategoryDto.MainResponse(categoryInfo);
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
@@ -41,25 +53,13 @@ public class CategoryApiController {
      * @throws URISyntaxException
      */
     @PostMapping
-    public ResponseEntity<Res> registerCategory(@RequestBody @Valid CategoryDto.RegisterRequest request) throws URISyntaxException {
-        var registerCategoryCommand = request.toRegisterCategoryCommand();
-        var categoryToken = categoryFacade.registerCategory(registerCategoryCommand);
-        var response = new CategoryDto.RegisterResponse(categoryToken);
+    public ResponseEntity<Res> createCategory(@RequestBody @Valid CategoryDto.CreateRequest request) throws URISyntaxException {
+        var createCategoryCommand = request.toCreateCategoryCommand();
+        var categoryToken = categoryFacade.createCategory(createCategoryCommand);
+        var response = new CategoryDto.CreateResponse(categoryToken);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .location(UriGenerator.getLocation(response.getCategoryToken()))
                 .body(Res.success(response));
-    }
-
-    /**
-     * 카테고리 단건 조회
-     * @param categoryToken
-     * @return
-     */
-    @GetMapping("/{categoryToken}")
-    public ResponseEntity<Res> retrieveCategory(@PathVariable String categoryToken) {
-        var categoryInfo = categoryFacade.retrieveCategory(categoryToken);
-        var response = new CategoryDto.MainResponse(categoryInfo);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
     /**
@@ -69,9 +69,9 @@ public class CategoryApiController {
      * @return
      */
     @PutMapping("/{categoryToken}")
-    public ResponseEntity<Res> changeCategory(@PathVariable String categoryToken, @RequestBody @Valid CategoryDto.ChangeRequest request) {
-        var changeCategoryCommand = request.toChangeCategoryCommand();
-        categoryFacade.changeCategory(changeCategoryCommand, categoryToken);
+    public ResponseEntity<Res> updateCategory(@PathVariable String categoryToken, @RequestBody @Valid CategoryDto.UpdateRequest request) {
+        var updateCategoryCommand = request.toUpdateCategoryCommand();
+        categoryFacade.updateCategory(updateCategoryCommand, categoryToken);
         return ResponseEntity.status(HttpStatus.OK).body(Res.success());
     }
 

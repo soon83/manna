@@ -39,7 +39,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     @SneakyThrows
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        var authRequest = objectMapper.readValue(request.getInputStream(), LoginDto.AuthRequest.class);
+        var authRequest = objectMapper.readValue(request.getInputStream(), LoginDto.LoginRequest.class);
         var token = new UsernamePasswordAuthenticationToken(authRequest.getMemberLoginId(), authRequest.getMemberLoginPassword(), null);
         return getAuthenticationManager().authenticate(token);
     }
