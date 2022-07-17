@@ -79,7 +79,7 @@ manna.com
 
 API 에 관계없이 아래 사항을 지켜주세요.
 
-=== Domain
+=== 도메인
 
 |===
 | environment | domain
@@ -150,7 +150,7 @@ include::{snippets}/register-member/response-fields.adoc[]
 include::{snippets}/register-member/http-response.adoc[]
 
 [[modify-member]]
-=== 단건 수정
+=== 단건 수정 - 회원 정보
 Example
 include::{snippets}/modify-member/curl-request.adoc[]
 include::{snippets}/modify-member/httpie-request.adoc[]
