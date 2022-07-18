@@ -1,0 +1,8 @@
+
+dependencies {
+    implementation(
+            "$boot:spring-boot-starter-web",
+            "$boot:spring-boot-starter-validation",
+            "$boot:spring-boot-starter-security"
+    )
+}

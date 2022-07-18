@@ -1,0 +1,5 @@
+apply from: '../core-build.gradle'
+
+dependencies {
+    implementation project(':core-domain')
+}
