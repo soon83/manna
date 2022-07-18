@@ -30,7 +30,7 @@ public class MemberApiController {
         var memberInfoList = memberFacade.fetchMemberList();
         var response = memberInfoList.stream()
                 .map(MemberDto.MainResponse::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
+                .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 

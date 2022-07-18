@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -20,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryApiController {
     private final CategoryFacade categoryFacade;
+    private final CategorySeriesMapper categorySeriesMapper;
 
     /**
      * 카테고리 목록 조회
@@ -28,9 +28,7 @@ public class CategoryApiController {
     @GetMapping
     public ResponseEntity<Res> fetchCategoryList() {
         var categoryInfoList = categoryFacade.fetchCategoryList();
-        var response = categoryInfoList.stream()
-                .map(CategoryDto.MainResponse::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
+        var response = categorySeriesMapper.categoryListSeriesMapper(categoryInfoList); // TODO 이렇게 하는게 맞나 싶다,,
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
@@ -42,7 +40,8 @@ public class CategoryApiController {
     @GetMapping("/{categoryToken}")
     public ResponseEntity<Res> fetchCategory(@PathVariable String categoryToken) {
         var categoryInfo = categoryFacade.fetchCategory(categoryToken);
-        var response = new CategoryDto.MainResponse(categoryInfo);
+        var categoryItemInfoList = categoryInfo.getCategoryItemInfoList();
+        var response = categorySeriesMapper.categoryItemListSeriesMapper(categoryItemInfoList); // TODO 이렇게 하는게 맞나 싶다,,
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 

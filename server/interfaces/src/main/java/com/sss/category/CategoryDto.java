@@ -56,15 +56,13 @@ public class CategoryDto {
         private final String categoryToken;
         private final String categoryTitle;
         private final Integer categoryOrdering;
-        private final List<CategoryItemResponse> categoryItemList;
+        private final List<CategoryItemResponse> categoryItemResponseList;
 
-        public MainResponse(CategoryQuery.Main categoryInfo) {
+        public MainResponse(CategoryQuery.Main categoryInfo, List<CategoryItemResponse> categoryItemResponseList) {
             this.categoryToken = categoryInfo.getToken();
             this.categoryTitle = categoryInfo.getTitle();
             this.categoryOrdering = categoryInfo.getOrdering();
-            this.categoryItemList = categoryInfo.getCategoryItemInfoList().stream()
-                    .map(CategoryItemResponse::new)
-                    .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
+            this.categoryItemResponseList = categoryItemResponseList;
         }
     }
 

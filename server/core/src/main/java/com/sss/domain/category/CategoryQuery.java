@@ -17,13 +17,11 @@ public class CategoryQuery {
         private final Integer ordering;
         private final List<CategoryItemInfo> categoryItemInfoList;
 
-        public Main(Category entity) {
+        public Main(Category entity, List<CategoryItemInfo> categoryItemInfoList) {
             this.token = entity.getToken();
             this.title = entity.getTitle();
             this.ordering = entity.getOrdering();
-            this.categoryItemInfoList = entity.getCategoryItemList().stream()
-                    .map(CategoryItemInfo::new)
-                    .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
+            this.categoryItemInfoList = categoryItemInfoList;
         }
     }
 

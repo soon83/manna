@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -19,16 +18,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryQuery.Main> fetchCategoryList() {
         var categoryList = categoryQueryService.readCategoryList();
-        return categoryList.stream()
-                .map(CategoryQuery.Main::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화,,
+        return categoryQueryService.categorySeriesMapper(categoryList);
     }
 
     @Override
     @Transactional(readOnly = true)
     public CategoryQuery.Main fetchCategory(String memberToken) {
         var member = categoryQueryService.readCategory(memberToken);
-        return new CategoryQuery.Main(member);
+        var categoryItemList = member.getCategoryItemList();
+        var categoryItemInfoList = categoryQueryService.categoryItemSeriesMapper(categoryItemList);
+        return new CategoryQuery.Main(member, categoryItemInfoList);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberQuery.Main> fetchMemberList() {
         return memberQueryService.readMemberList().stream()
                 .map(MemberQuery.Main::new)
-                .collect(Collectors.toList()); // TODO 이거 infrastructure 로 빼야함,, 구현코드는 모두 추상화하자
+                .collect(Collectors.toList());
     }
 
     @Override
