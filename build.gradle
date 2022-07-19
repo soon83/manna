@@ -48,8 +48,9 @@ subprojects {
         compileOnly lombok
         annotationProcessor lombok
         testImplementation "$boot:spring-boot-starter-test"
-        //testImplementation "$boot:spring-boot-starter-webflux"
-        //testImplementation "org.springframework.restdocs:spring-restdocs-webtestclient:$restdocsVersion"
+        testImplementation 'com.h2database:h2'
+        testImplementation "$boot:spring-boot-starter-webflux"
+        testImplementation "org.springframework.restdocs:spring-restdocs-webtestclient:$restdocsVersion"
         testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:$restdocsVersion"
         asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:$restdocsVersion"
     }
