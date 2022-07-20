@@ -18,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryQuery.Main> fetchCategoryList() {
         var categoryList = categoryQueryService.readCategoryList();
-        return categoryQueryService.categorySeriesMapper(categoryList);
+        return categoryQueryService.categoryListMapper(categoryList);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryQuery.Main fetchCategory(String memberToken) {
         var member = categoryQueryService.readCategory(memberToken);
         var categoryItemList = member.getCategoryItemList();
-        var categoryItemInfoList = categoryQueryService.categoryItemSeriesMapper(categoryItemList);
+        var categoryItemInfoList = categoryQueryService.categoryItemListMapper(categoryItemList);
         return new CategoryQuery.Main(member, categoryItemInfoList);
     }
 

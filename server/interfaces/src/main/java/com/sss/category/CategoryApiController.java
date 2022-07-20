@@ -28,7 +28,7 @@ public class CategoryApiController {
     @GetMapping
     public ResponseEntity<Res> fetchCategoryList() {
         var categoryInfoList = categoryFacade.fetchCategoryList();
-        var response = categoryMapper.categoryListSeriesMapper(categoryInfoList); // TODO 이렇게 하는게 맞나 싶다,,
+        var response = categoryMapper.categoryListInfoMapper(categoryInfoList); // TODO 이렇게 하는게 맞나 싶다,,
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
@@ -41,7 +41,7 @@ public class CategoryApiController {
     public ResponseEntity<Res> fetchCategory(@PathVariable String categoryToken) {
         var categoryInfo = categoryFacade.fetchCategory(categoryToken);
         var categoryItemInfoList = categoryInfo.getCategoryItemInfoList();
-        var response = categoryMapper.categoryItemListSeriesMapper(categoryItemInfoList); // TODO 이렇게 하는게 맞나 싶다,,
+        var response = categoryMapper.categoryItemInfoListMapper(categoryItemInfoList); // TODO 이렇게 하는게 맞나 싶다,,
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 

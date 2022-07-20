@@ -30,18 +30,18 @@ public class CategoryQueryServiceImpl implements CategoryQueryService {
     }
 
     @Override
-    public List<CategoryQuery.Main> categorySeriesMapper(List<Category> categoryList) {
+    public List<CategoryQuery.Main> categoryListMapper(List<Category> categoryList) {
         return categoryList.stream()
                 .map(category -> {
                     var categoryItemList = category.getCategoryItemList();
-                    var categoryItemInfoList = categoryItemSeriesMapper(categoryItemList);
+                    var categoryItemInfoList = categoryItemListMapper(categoryItemList);
                     return new CategoryQuery.Main(category, categoryItemInfoList);
                 })
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<CategoryQuery.CategoryItemInfo> categoryItemSeriesMapper(List<CategoryItem> categoryItemList) {
+    public List<CategoryQuery.CategoryItemInfo> categoryItemListMapper(List<CategoryItem> categoryItemList) {
         return categoryItemList.stream()
                 .map(CategoryQuery.CategoryItemInfo::new)
                 .collect(Collectors.toList());
