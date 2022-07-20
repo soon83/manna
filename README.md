@@ -3,11 +3,11 @@
 - 이 코드를 따라하시면 이직 불가,,
 
 ## Spec
-- gradle multi module (ㅈㄴ 이상하게 나눠놓음,,)
+- gradle multi module (ㅈㄴ 이상하게 나눠놓음,, 이건 따라하셈,,)
 - Springboot 2.7.X
 - JPA, QueryDsl
 - Spring Rest Docs
-  - 경로: /docs/index.html
+  - 문서경로: /docs/index.html
 - mariadb
 - Docker, Elastic Beanstalk 할거임,,
 
