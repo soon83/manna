@@ -54,8 +54,8 @@ public class MemberApiController {
      */
     @PostMapping
     public ResponseEntity<Res> registerMember(@RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
-        var createMemberCommand = request.toCreateMemberCommand();
-        var memberToken = memberFacade.registerMember(createMemberCommand);
+        var command = request.toCreateMemberCommand();
+        var memberToken = memberFacade.registerMember(command);
         var response = new MemberDto.RegisterResponse(memberToken);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .location(UriGenerator.getLocation(response.getMemberToken()))
@@ -70,8 +70,8 @@ public class MemberApiController {
      */
     @PutMapping("/{memberToken}")
     public ResponseEntity<Res> modifyMember(@PathVariable String memberToken, @RequestBody @Valid MemberDto.ModifyRequest request) {
-        var updateMemberCommand = request.toUpdateMemberCommand();
-        memberFacade.modifyMember(updateMemberCommand, memberToken);
+        var command = request.toUpdateMemberCommand();
+        memberFacade.modifyMember(command, memberToken);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success()); // TODO HTTP 상태코드 200 or 204 고민
     }
 
@@ -83,8 +83,8 @@ public class MemberApiController {
     @PatchMapping("/password")
     public ResponseEntity<Res> modifyMemberPassword(@RequestBody @Valid MemberDto.ModifyMemberPasswordRequest request) {
         var memberToken = request.getMemberToken();
-        var updateMemberPasswordCommand = request.toUpdateMemberPasswordCommand();
-        memberFacade.modifyMemberPassword(updateMemberPasswordCommand, memberToken);
+        var command = request.toUpdateMemberPasswordCommand();
+        memberFacade.modifyMemberPassword(command, memberToken);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 

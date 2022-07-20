@@ -53,8 +53,8 @@ public class CategoryApiController {
      */
     @PostMapping
     public ResponseEntity<Res> registerCategory(@RequestBody @Valid CategoryDto.RegisterRequest request) throws URISyntaxException {
-        var createCategoryCommand = request.toCreateCategoryCommand();
-        var categoryToken = categoryFacade.registerCategory(createCategoryCommand);
+        var command = request.toCreateCategoryCommand();
+        var categoryToken = categoryFacade.registerCategory(command);
         var response = new CategoryDto.CreateResponse(categoryToken);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .location(UriGenerator.getLocation(response.getCategoryToken()))
@@ -69,8 +69,8 @@ public class CategoryApiController {
      */
     @PutMapping("/{categoryToken}")
     public ResponseEntity<Res> modifyCategory(@PathVariable String categoryToken, @RequestBody @Valid CategoryDto.ModifyRequest request) {
-        var updateCategoryCommand = request.toUpdateCategoryCommand();
-        categoryFacade.modifyCategory(updateCategoryCommand, categoryToken);
+        var command = request.toUpdateCategoryCommand();
+        categoryFacade.modifyCategory(command, categoryToken);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 

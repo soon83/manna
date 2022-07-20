@@ -51,25 +51,25 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void modifyMember(MemberCommand.UpdateMember updateMemberCommand, String memberToken) {
+    public void modifyMember(MemberCommand.UpdateMember command, String memberToken) {
         var member = memberQueryService.readMember(memberToken);
         member.updateMember(
-                updateMemberCommand.getName(),
-                updateMemberCommand.getEmail(),
-                updateMemberCommand.getAvatar(),
-                updateMemberCommand.getNickName(),
-                updateMemberCommand.getSelfIntroduction(),
-                updateMemberCommand.getCategoryList(),
-                updateMemberCommand.getCategoryItemList()
+                command.getName(),
+                command.getEmail(),
+                command.getAvatar(),
+                command.getNickName(),
+                command.getSelfIntroduction(),
+                command.getCategoryList(),
+                command.getCategoryItemList()
         );
     }
 
     @Override
     @Transactional
-    public void modifyMemberPassword(MemberCommand.UpdateMemberPassword updateMemberPasswordCommand, String memberToken) {
+    public void modifyMemberPassword(MemberCommand.UpdateMemberPassword command, String memberToken) {
         var member = memberQueryService.readMember(memberToken);
-        updateMemberPasswordCommand.setLoginPassword(encodePassword(updateMemberPasswordCommand.getLoginPassword()));
-        member.updateMemberPassword(updateMemberPasswordCommand.getLoginPassword());
+        command.setLoginPassword(encodePassword(command.getLoginPassword()));
+        member.updateMemberPassword(command.getLoginPassword());
     }
 
     @Override

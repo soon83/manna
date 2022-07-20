@@ -32,19 +32,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public String registerCategory(CategoryCommand.CreateCategory createCategoryCommand) {
-        var member = createCategoryCommand.toEntity();
+    public String registerCategory(CategoryCommand.CreateCategory command) {
+        var member = command.toEntity();
         var createdCategory = categoryCommandService.create(member);
         return createdCategory.getToken();
     }
 
     @Override
     @Transactional
-    public void modifyCategory(CategoryCommand.UpdateCategory updateCategoryCommand, String memberToken) {
+    public void modifyCategory(CategoryCommand.UpdateCategory command, String memberToken) {
         var member = categoryQueryService.readCategory(memberToken);
         member.updateCategory(
-                updateCategoryCommand.getTitle(),
-                updateCategoryCommand.getOrdering()
+                command.getTitle(),
+                command.getOrdering()
         );
     }
 
