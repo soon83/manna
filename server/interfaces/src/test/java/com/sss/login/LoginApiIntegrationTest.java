@@ -1,6 +1,5 @@
 package com.sss.login;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import static com.sss.restdocs.ApiDocumentUtils.uriModifyingOperationPreprocessor;
@@ -28,9 +26,7 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginApiIntegrationTest {
-    private MockMvc mockMvc;
     private WebTestClient webTestClient;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @LocalServerPort
     private Integer port;
@@ -38,7 +34,7 @@ public class LoginApiIntegrationTest {
     @BeforeEach
     public void setUpRestdocs(RestDocumentationContextProvider restDocumentation) {
         this.webTestClient = WebTestClient.bindToServer()
-                .baseUrl("http://localhost:" + port)
+                .baseUrl("http://127.0.0.1:" + port)
                 .filter(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()
                         .withRequestDefaults(uriModifyingOperationPreprocessor(), prettyPrint())

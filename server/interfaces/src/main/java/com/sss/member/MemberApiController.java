@@ -72,7 +72,7 @@ public class MemberApiController {
     public ResponseEntity<Res> modifyMember(@PathVariable String memberToken, @RequestBody @Valid MemberDto.ModifyRequest request) {
         var updateMemberCommand = request.toUpdateMemberCommand();
         memberFacade.modifyMember(updateMemberCommand, memberToken);
-        return ResponseEntity.status(HttpStatus.OK).body(Res.success()); // TODO HTTP 상태코드 200 or 204 고민
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success()); // TODO HTTP 상태코드 200 or 204 고민
     }
 
     /**

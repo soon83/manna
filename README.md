@@ -1,6 +1,15 @@
 # manna
 ## 아무나 만나는 서비스
-- 이 코드를 따라하지 마세요.
+- 이 코드를 따라하시면 이직 불가,,
+
+## Spec
+- gradle multi module (ㅈㄴ 이상하게 나눠놓음,,)
+- Springboot 2.7.X
+- JPA, QueryDsl
+- Spring Rest Docs
+  - 경로: /docs/index.html
+- mariadb
+- Docker, Elastic Beanstalk 할거임,,
 
 ## 사용방법
 - 서버를 구동하시고,,
