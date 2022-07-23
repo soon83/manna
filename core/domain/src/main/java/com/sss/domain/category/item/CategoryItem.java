@@ -32,6 +32,7 @@ public class CategoryItem extends BaseEntity {
     @Column(length = 15)
     private String title;
     private Integer ordering;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "FK_categoryItem_category"))
     private Category category;

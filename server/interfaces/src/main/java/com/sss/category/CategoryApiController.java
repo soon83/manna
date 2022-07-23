@@ -28,7 +28,7 @@ public class CategoryApiController {
     @GetMapping
     public ResponseEntity<Res> fetchCategoryList() {
         var categoryInfoList = categoryFacade.fetchCategoryList();
-        var response = categoryMapper.categoryListInfoMapper(categoryInfoList); // TODO 이렇게 하는게 맞나 싶다,,
+        var response = categoryMapper.categoryInfoListMapper(categoryInfoList); // TODO 이렇게 하는게 맞나 싶다,,
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 

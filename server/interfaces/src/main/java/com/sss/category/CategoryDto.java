@@ -77,16 +77,20 @@ public class CategoryDto {
     }
 
     @Getter
+    @Builder
     @ToString
+    @AllArgsConstructor
     public static class CategoryItemResponse {
         private final String categoryItemToken;
         private final String categoryItemTitle;
         private final Integer categoryItemOrdering;
+        private final String categoryToken;
 
-        public CategoryItemResponse(CategoryQuery.CategoryItemInfo categoryItemInfo) {
-            this.categoryItemToken = categoryItemInfo.getToken();
-            this.categoryItemTitle = categoryItemInfo.getTitle();
-            this.categoryItemOrdering = categoryItemInfo.getOrdering();
+        public CategoryItemResponse(CategoryQuery.CategoryItemInfo info) {
+            this.categoryItemToken = info.getToken();
+            this.categoryItemTitle = info.getTitle();
+            this.categoryItemOrdering = info.getOrdering();
+            this.categoryToken = info.getCategoryToken();
         }
     }
 }

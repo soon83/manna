@@ -19,8 +19,11 @@ public enum ErrorCode {
     // 100. 회원 에러코드
     MEMBER_NOT_FOUND("M101", "존재하지 않는 회원입니다."),
 
-    // 200. 카테고리 에러코드
-    CATEGORY_NOT_FOUND("M201", "존재하지 않는 카테고리입니다."),
+    // 200. 관심주제 에러코드
+    CATEGORY_NOT_FOUND("M201", "존재하지 않는 관심주제 입니다."),
+
+    // 300. 관심항목 에러코드
+    CATEGORY_ITEM_NOT_FOUND("M301", "존재하지 않는 관심항목 입니다."),
     ;
 
     private final String code;

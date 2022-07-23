@@ -5,6 +5,8 @@ import com.sss.domain.member.MemberQuery;
 import com.sss.domain.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +18,15 @@ public class MemberFacade {
 
     private final MemberService memberService;
 
-    public List<MemberQuery.Main> fetchMemberList() {
-        return memberService.fetchMemberList();
+    public Page<MemberQuery.Main> fetchMemberList(MemberQuery.SearchConditionInfo condition, Pageable pageable) {
+        return memberService.fetchMemberList(condition, pageable);
     }
 
-    public MemberQuery.Main fetchMember(String memberToken) {
+    public List<MemberQuery.WithInterestInfo> fetchMemberWithInterestList() {
+        return memberService.fetchMemberWithInterestList();
+    }
+
+    public MemberQuery.WithInterestInfo fetchMember(String memberToken) {
         return memberService.fetchMember(memberToken);
     }
 

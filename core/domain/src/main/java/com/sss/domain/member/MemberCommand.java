@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 public class MemberCommand {
 
     @Getter
@@ -21,8 +19,6 @@ public class MemberCommand {
         private String avatar;
         private String nickName;
         private String selfIntroduction;
-        private List<Integer> categoryList;
-        private List<Integer> categoryItemList;
 
         public Member toEntity() {
             return Member.builder()
@@ -33,8 +29,6 @@ public class MemberCommand {
                     .avatar(avatar)
                     .nickName(nickName)
                     .selfIntroduction(selfIntroduction)
-                    .categoryList(categoryList)
-                    .categoryItemList(categoryItemList)
                     .build();
         }
     }
@@ -48,8 +42,6 @@ public class MemberCommand {
         private String avatar;
         private String nickName;
         private String selfIntroduction;
-        private List<Integer> categoryList;
-        private List<Integer> categoryItemList;
         private Member.Role role;
     }
 

@@ -2,13 +2,14 @@ package com.sss.domain.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,17 +21,25 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberQuery.Main> fetchMemberList() {
-        return memberQueryService.readMemberList().stream()
-                .map(MemberQuery.Main::new)
-                .collect(Collectors.toList());
+    public Page<MemberQuery.Main> fetchMemberList(MemberQuery.SearchConditionInfo condition, Pageable pageable) {
+        return memberQueryService.readMemberList(condition, pageable)
+                .map(MemberQuery.Main::new);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberQuery.Main fetchMember(String memberToken) {
+    public List<MemberQuery.WithInterestInfo> fetchMemberWithInterestList() {
+        var memberList = memberQueryService.fetchMemberWithInterestList();
+        return memberQueryService.memberListMapper(memberList);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MemberQuery.WithInterestInfo fetchMember(String memberToken) {
         var member = memberQueryService.readMember(memberToken);
-        return new MemberQuery.Main(member);
+        var interestList = member.getInterestList();
+        var interestInfoList = memberQueryService.memberInterestListMapper(interestList);
+        return new MemberQuery.WithInterestInfo(member, interestInfoList);
     }
 
     @Override
@@ -58,9 +67,7 @@ public class MemberServiceImpl implements MemberService {
                 command.getEmail(),
                 command.getAvatar(),
                 command.getNickName(),
-                command.getSelfIntroduction(),
-                command.getCategoryList(),
-                command.getCategoryItemList()
+                command.getSelfIntroduction()
         );
     }
 

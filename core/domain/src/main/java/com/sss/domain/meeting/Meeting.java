@@ -64,12 +64,15 @@ public class Meeting extends BaseEntity {
     private Boolean opened;
     @Column(length = 511)
     private String pageLink;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "makeMemberId", nullable = false, foreignKey = @ForeignKey(name = "FK_meeting_makeMember"))
     private Member makeMember;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId", nullable = false, foreignKey = @ForeignKey(name = "FK_meeting_category"))
     private Category category;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryItemId", foreignKey = @ForeignKey(name = "FK_meeting_categoryItem"))
     private CategoryItem categoryItem;

@@ -35,8 +35,6 @@ public class LoginDto {
         private final String memberAvatar;
         private final String memberNickName;
         private final String memberSelfIntroduction;
-        private final String memberCategoryList;
-        private final String memberCategoryItemList;
         private final Member.Role memberRole;
         private final Member.Status memberStatus;
 
@@ -48,8 +46,6 @@ public class LoginDto {
             this.memberAvatar = memberLoginInfo.getMemberAvatar();
             this.memberNickName = memberLoginInfo.getMemberNickName();
             this.memberSelfIntroduction = memberLoginInfo.getMemberSelfIntroduction();
-            this.memberCategoryList = memberLoginInfo.getMemberCategoryList();
-            this.memberCategoryItemList = memberLoginInfo.getMemberCategoryItemList();
             this.memberRole = memberLoginInfo.getMemberRole();
             this.memberStatus = memberLoginInfo.getMemberStatus();
         }

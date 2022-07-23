@@ -1,6 +1,7 @@
 package com.sss.domain.login;
 
 import com.sss.domain.member.Member;
+import com.sss.domain.member.interest.Interest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -76,8 +77,6 @@ public class LoginInfo {
         private final String memberAvatar;
         private final String memberNickName;
         private final String memberSelfIntroduction;
-        private final String memberCategoryList;
-        private final String memberCategoryItemList;
         private final Member.Role memberRole;
         private final Member.Status memberStatus;
 
@@ -90,8 +89,6 @@ public class LoginInfo {
             this.memberAvatar = member.getAvatar();
             this.memberNickName = member.getNickName();
             this.memberSelfIntroduction = member.getSelfIntroduction();
-            this.memberCategoryList = member.getCategoryList();
-            this.memberCategoryItemList = member.getCategoryItemList();
             this.memberRole = member.getRole();
             this.memberStatus = member.getStatus();
         }

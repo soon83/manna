@@ -2,4 +2,8 @@ apply from: '../core-build.gradle'
 
 dependencies {
     implementation project(':core-domain')
+
+    implementation(
+            "$boot:spring-boot-starter-data-jpa"
+    )
 }

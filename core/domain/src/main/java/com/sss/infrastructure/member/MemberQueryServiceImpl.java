@@ -1,13 +1,18 @@
 package com.sss.infrastructure.member;
 
 import com.sss.domain.member.Member;
+import com.sss.domain.member.MemberQuery;
 import com.sss.domain.member.MemberQueryService;
+import com.sss.domain.member.interest.Interest;
 import com.sss.exception.member.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -16,7 +21,12 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     private final MemberRepository memberRepository;
 
     @Override
-    public List<Member> readMemberList() {
+    public Page<Member> readMemberList(MemberQuery.SearchConditionInfo condition, Pageable pageable) {
+        return memberRepository.findAllMemberList(condition, pageable);
+    }
+
+    @Override
+    public List<Member> fetchMemberWithInterestList() {
         return memberRepository.findAll();
     }
 
@@ -30,5 +40,23 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     public Member readLoginMember(String memberLoginId) {
         return memberRepository.findByLoginId(memberLoginId)
                 .orElseThrow(MemberNotFoundException::new);
+    }
+
+    @Override
+    public List<MemberQuery.WithInterestInfo> memberListMapper(List<Member> memberList) {
+        return memberList.stream()
+                .map(member -> {
+                    var memberInterestList = member.getInterestList();
+                    var memberInterestInfoList = memberInterestListMapper(memberInterestList);
+                    return new MemberQuery.WithInterestInfo(member, memberInterestInfoList);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MemberQuery.InterestInfo> memberInterestListMapper(List<Interest> interestList) {
+        return interestList.stream()
+                .map(MemberQuery.InterestInfo::new)
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.sss.login;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,8 +71,6 @@ public class LoginApiIntegrationTest {
                                         fieldWithPath("data.memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                         fieldWithPath("data.memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
                                         fieldWithPath("data.memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개"),
-                                        fieldWithPath("data.memberCategoryList").type(JsonFieldType.STRING).description("회원 관심사-대분류"),
-                                        fieldWithPath("data.memberCategoryItemList").type(JsonFieldType.STRING).description("회원 관심사-소분류"),
                                         fieldWithPath("data.memberRole").type(JsonFieldType.STRING).description("회원 권한 [MANAGER, MEMBER]"),
                                         fieldWithPath("data.memberStatus").type(JsonFieldType.STRING).description("회원 활성화 상태 [ENABLE, DISABLE]")
                                 )

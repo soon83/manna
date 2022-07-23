@@ -2,6 +2,7 @@ package com.sss.domain.member;
 
 import com.sss.TokenGenerator;
 import com.sss.domain.BaseEntity;
+import com.sss.domain.member.interest.Interest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,16 +48,15 @@ public class Member extends BaseEntity {
     private String nickName;
     @Column(length = 1023)
     private String selfIntroduction;
-    @Column(length = 255)
-    private String categoryList;
-    @Column(length = 255)
-    private String categoryItemList;
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
     private Role role;
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
     private Status status;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
+    private final List<Interest> interestList = new ArrayList<>();
 
     @Getter
     @RequiredArgsConstructor
@@ -100,9 +97,7 @@ public class Member extends BaseEntity {
             String email,
             String avatar,
             String nickName,
-            String selfIntroduction,
-            List<Integer> categoryList,
-            List<Integer> categoryItemList
+            String selfIntroduction
     ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.loginId = loginId;
@@ -112,8 +107,6 @@ public class Member extends BaseEntity {
         this.avatar = avatar;
         this.nickName = nickName;
         this.selfIntroduction = selfIntroduction;
-        this.categoryList = categoryList.toString();
-        this.categoryItemList = categoryItemList.toString();
         this.role = Role.MEMBER;
         this.status = Status.ENABLE;
     }
@@ -123,17 +116,13 @@ public class Member extends BaseEntity {
             String email,
             String avatar,
             String nickName,
-            String selfIntroduction,
-            List<Integer> categoryList,
-            List<Integer> categoryItemList
+            String selfIntroduction
     ) {
         this.name = name;
         this.email = email;
         this.avatar = avatar;
         this.nickName = nickName;
         this.selfIntroduction = selfIntroduction;
-        this.categoryList = categoryList.toString();
-        this.categoryItemList = categoryItemList.toString();
     }
 
     public void updateMemberPassword(String loginPassword) {

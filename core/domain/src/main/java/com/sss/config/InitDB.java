@@ -2,44 +2,66 @@ package com.sss.config;
 
 import com.sss.domain.category.Category;
 import com.sss.domain.category.item.CategoryItem;
+import com.sss.domain.member.Member;
 import com.sss.domain.member.MemberCommand;
 import com.sss.domain.member.MemberService;
+import com.sss.domain.member.interest.Interest;
+import com.sss.exception.category.CategoryItemNotFoundException;
+import com.sss.exception.member.MemberNotFoundException;
+import com.sss.infrastructure.category.CategoryItemRepository;
 import com.sss.infrastructure.category.CategoryRepository;
+import com.sss.infrastructure.member.MemberInterestRepository;
+import com.sss.infrastructure.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
 @RequiredArgsConstructor
 public class InitDB implements InitializingBean {
-    private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
+    private final MemberInterestRepository memberInterestRepository;
     private final CategoryRepository categoryRepository;
+    private final CategoryItemRepository categoryItemRepository;
 
     @Override
     public void afterPropertiesSet() {
-        makeAdmin();
-        makeCategoryList();
+        makeCategoryList(); // 관심사 만들기
+        makeMember(); // 회원 만들기
     }
 
-    private void makeAdmin() {
+    private void makeMember() {
         try {
-            memberService.fetchLoginMember("admin");
+            memberRepository.findByLoginId("admin")
+                    .orElseThrow(MemberNotFoundException::new);
         } catch (Exception e) {
-            memberService.registerMember(MemberCommand.CreateMember.builder()
-                            .loginId("admin")
-                            .loginPassword("1234")
-                            .name("하츄핑")
-                            .email("admin@email.com")
-                            .avatar("/avatar/file/path")
-                            .nickName("사랑의하츄핑")
-                            .selfIntroduction("나는 하츄핑이야 츄")
-                            .categoryList(List.of(1,2,3,4))
-                            .categoryItemList(List.of(5,6,7,8))
+            var admin = memberRepository.save(Member.builder()
+                    .loginId("admin")
+                    .loginPassword(passwordEncoder.encode("1234"))
+                    .name("하츄핑")
+                    .email("admin@email.com")
+                    .avatar("/avatar/file/path")
+                    .nickName("사랑의하츄핑")
+                    .selfIntroduction("나는 하츄핑이야 츄")
                     .build());
+
+            var categoryItemIdList = Arrays.asList(1L, 2L, 4L, 8L, 10L, 12L, 14L, 16L, 18L, 20L);
+            var categoryItemList = categoryItemRepository.findAllById(categoryItemIdList);
+            categoryItemList.forEach(categoryItem -> {
+                memberInterestRepository.save(Interest.builder()
+                        .categoryItem(categoryItem)
+                        .member(admin)
+                        .build());
+            });
+
+
         }
     }
 

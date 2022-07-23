@@ -22,7 +22,7 @@ spring:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     hibernate:
 #      ddl-auto: update
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         default_batch_fetch_size: 100

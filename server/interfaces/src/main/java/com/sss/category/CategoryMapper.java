@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 @Component
 public class CategoryMapper {
 
-    public List<CategoryDto.MainResponse> categoryListInfoMapper(List<CategoryQuery.Main> categoryInfoList) {
-        return categoryInfoList.stream()
+    public List<CategoryDto.MainResponse> categoryInfoListMapper(List<CategoryQuery.Main> infoList) {
+        return infoList.stream()
                 .map(categoryInfo -> {
                     var categoryItemInfoList = categoryInfo.getCategoryItemInfoList();
                     var categoryItemResponseList = categoryItemInfoListMapper(categoryItemInfoList);
@@ -19,8 +19,8 @@ public class CategoryMapper {
                 .collect(Collectors.toList());
     }
 
-    public List<CategoryDto.CategoryItemResponse> categoryItemInfoListMapper(List<CategoryQuery.CategoryItemInfo> categoryItemInfoList) {
-         return categoryItemInfoList.stream()
+    public List<CategoryDto.CategoryItemResponse> categoryItemInfoListMapper(List<CategoryQuery.CategoryItemInfo> infoList) {
+         return infoList.stream()
                 .map(CategoryDto.CategoryItemResponse::new)
                 .collect(Collectors.toList());
     }

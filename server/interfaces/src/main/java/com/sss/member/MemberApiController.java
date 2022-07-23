@@ -4,6 +4,9 @@ import com.sss.response.Res;
 import com.sss.util.UriGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -20,17 +22,30 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberApiController {
     private final MemberFacade memberFacade;
+    private final MemberMapper memberMapper;
 
     /**
      * 회원 목록 조회
      * @return
      */
     @GetMapping
-    public ResponseEntity<Res> fetchMemberList() {
-        var memberInfoList = memberFacade.fetchMemberList();
-        var response = memberInfoList.stream()
-                .map(MemberDto.MainResponse::new)
-                .collect(Collectors.toList());
+    public ResponseEntity<Res> fetchMemberList(
+            @Valid @ModelAttribute MemberDto.SearchCondition request,
+            @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        var condition = request.toSearchConditionInfo();
+        var memberInfoList = memberFacade.fetchMemberList(condition, pageable);
+        var response = memberMapper.memberInfoListMapper(memberInfoList);
+        return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
+    }
+
+    /**
+     * 회원 목록 조회 (with 관심사 목록)
+     * @return
+     */
+    @GetMapping("/with-interest")
+    public ResponseEntity<Res> fetchMemberWithInterestList() {
+        var memberWithInterestInfoList = memberFacade.fetchMemberWithInterestList();
+        var response = memberMapper.memberWithInterestInfoListMapper(memberWithInterestInfoList);
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
@@ -41,8 +56,10 @@ public class MemberApiController {
      */
     @GetMapping("/{memberToken}")
     public ResponseEntity<Res> fetchMember(@PathVariable String memberToken) {
-        var memberInfo = memberFacade.fetchMember(memberToken);
-        var response = new MemberDto.MainResponse(memberInfo);
+        var memberWithInterestInfo = memberFacade.fetchMember(memberToken);
+        var interestInfoList = memberWithInterestInfo.getInterestInfoList();
+        var interestResponseList = memberMapper.memberInterestInfoListMapper(interestInfoList);
+        var response = new MemberDto.WithInterestListResponse(memberWithInterestInfo, interestResponseList);
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 
@@ -72,7 +89,7 @@ public class MemberApiController {
     public ResponseEntity<Res> modifyMember(@PathVariable String memberToken, @RequestBody @Valid MemberDto.ModifyRequest request) {
         var command = request.toUpdateMemberCommand();
         memberFacade.modifyMember(command, memberToken);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success()); // TODO HTTP 상태코드 200 or 204 고민
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Res.success());
     }
 
     /**
