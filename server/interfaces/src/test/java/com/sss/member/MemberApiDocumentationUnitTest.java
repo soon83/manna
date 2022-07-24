@@ -113,7 +113,7 @@ class MemberApiDocumentationUnitTest {
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
                                 fieldWithPath("result").type(JsonFieldType.STRING).description("결과코드"),
 
-                                // list content
+                                // data.content[]
                                 fieldWithPath("data.content[].memberToken").type(JsonFieldType.STRING).description("회원 토큰"),
                                 fieldWithPath("data.content[].memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
                                 fieldWithPath("data.content[].memberName").type(JsonFieldType.STRING).description("회원 이름"),
@@ -124,7 +124,7 @@ class MemberApiDocumentationUnitTest {
                                 fieldWithPath("data.content[].memberRole").type(JsonFieldType.STRING).description("회원 권한 [MANAGER, MEMBER]"),
                                 fieldWithPath("data.content[].memberStatus").type(JsonFieldType.STRING).description("회원 활성화 상태 [ENABLE, DISABLE]"),
 
-                                // pageable
+                                // data.pageable
                                 fieldWithPath("data.pageable.sort.sorted").type(JsonFieldType.BOOLEAN).description("is sorted"),
                                 fieldWithPath("data.pageable.sort.unsorted").type(JsonFieldType.BOOLEAN).description("is unsorted"),
                                 fieldWithPath("data.pageable.sort.empty").type(JsonFieldType.BOOLEAN).description("is empty"),
@@ -203,8 +203,11 @@ class MemberApiDocumentationUnitTest {
                                 parameterWithName("memberToken").description("회원 토큰")
                         ),
                         responseFields(
+                                // common
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
                                 fieldWithPath("result").type(JsonFieldType.STRING).description("결과코드"),
+
+                                // data
                                 fieldWithPath("data.memberToken").type(JsonFieldType.STRING).description("회원 토큰"),
                                 fieldWithPath("data.memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
                                 fieldWithPath("data.memberName").type(JsonFieldType.STRING).description("회원 이름"),
@@ -267,8 +270,11 @@ class MemberApiDocumentationUnitTest {
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberSelfIntroduction")))
                         ),
                         responseFields(
+                                // common
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
                                 fieldWithPath("result").type(JsonFieldType.STRING).description("결과코드"),
+
+                                // data
                                 fieldWithPath("data.memberToken").type(JsonFieldType.STRING).description("회원 토큰")
                         )
                 ));
@@ -315,6 +321,7 @@ class MemberApiDocumentationUnitTest {
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyRequest.class, "memberSelfIntroduction")))
                         ),
                         responseFields(
+                                // common
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
                                 fieldWithPath("result").type(JsonFieldType.STRING).description("결과코드")
                         )
@@ -349,6 +356,7 @@ class MemberApiDocumentationUnitTest {
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyMemberPasswordRequest.class, "memberLoginPassword")))
                         ),
                         responseFields(
+                                // common
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
                                 fieldWithPath("result").type(JsonFieldType.STRING).description("결과코드")
                         )
@@ -380,6 +388,7 @@ class MemberApiDocumentationUnitTest {
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyMemberPasswordRequest.class, "memberToken")))
                         ),
                         responseFields(
+                                // common
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
                                 fieldWithPath("result").type(JsonFieldType.STRING).description("결과코드")
                         )
@@ -411,6 +420,7 @@ class MemberApiDocumentationUnitTest {
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyMemberPasswordRequest.class, "memberToken")))
                         ),
                         responseFields(
+                                // common
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
                                 fieldWithPath("result").type(JsonFieldType.STRING).description("결과코드")
                         )
