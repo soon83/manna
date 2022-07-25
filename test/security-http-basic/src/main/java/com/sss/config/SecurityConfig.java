@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -51,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests(auth -> auth
                 .mvcMatchers(HttpMethod.GET, "/all").hasAnyRole("ADMIN", "USER", "DS")
                 .anyRequest().authenticated());
-        http.formLogin();
+        http.csrf().disable(); // post 요청 시 csrf 토큰을 발행해줘야 하는데 어떻게 발행해야할지 모르니 일단 그냥 disable 함,,
+        http.httpBasic();
     }
 }
