@@ -4,7 +4,6 @@ import com.sss.domain.login.LoginService;
 import com.sss.jwt.JwtCheckFilter;
 import com.sss.jwt.JwtLoginFilter;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,11 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-@Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-    public static final String LOGIN = "/login";
+    public static final String LOGIN = "/api/v1/login";
     private final LoginService loginService;
 
     public SecurityConfig(LoginService loginService) {

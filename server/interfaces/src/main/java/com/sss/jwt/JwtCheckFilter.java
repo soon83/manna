@@ -8,12 +8,15 @@ import com.sss.exception.member.MemberNotFoundException;
 import com.sss.response.ErrorCode;
 import com.sss.response.ErrorRes;
 import com.sss.response.Res;
+import org.springframework.core.log.LogMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -38,6 +41,7 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
         String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (bearer == null || !bearer.startsWith(JwtUtil.BEARER_TOKEN_PREFIX)) {
             chain.doFilter(request, response);
+            // TODO 하 여기서 exception 먹어버리네 controller advice 에서 catch 가 안됨,, ㅈㄴ 삽질,, ㅅㅂ ExceptionHandlerFilter 추가 해야 함,,
             return;
         }
         String token = bearer.substring(JwtUtil.BEARER_TOKEN_PREFIX.length());
@@ -53,17 +57,5 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
             ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_TOKEN);
             response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
         }
-    }
-
-    @Override
-    protected void onUnsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
-        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_SYSTEM_ERROR);
-
-        if (failed.getCause() instanceof MemberNotFoundException || failed instanceof BadCredentialsException) {
-            errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
-        }
-
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
     }
 }
