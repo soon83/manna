@@ -1,0 +1,617 @@
+{
+	"info": {
+		"_postman_id": "4f8732f9-5bad-484e-a4a7-8fdbb655ea82",
+		"name": "[MANNA] API Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4819278"
+	},
+	"item": [
+		{
+			"name": "[공통코드] code",
+			"item": [
+				{
+					"name": "코드 목록 조회",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/code-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"code-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "코드 단건 조회",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/code-list/member-role",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"code-list",
+								"member-role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "[로그인] login",
+			"item": [
+				{
+					"name": "인증",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (!responseHeaders.Authorization) {",
+									"    pm.collectionVariables.set(\"authToken\", \"\");",
+									"} else {",
+									"    pm.collectionVariables.set(\"authToken\", responseHeaders.Authorization.substring(7, responseHeaders.Authorization.length));",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberLoginId\": \"admin\",\n    \"memberLoginPassword\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "[회원] member",
+			"item": [
+				{
+					"name": "목록 조회",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/member-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "목록 조회 (with 관심사 목록) - ADMIN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/member-list/with-interest",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list",
+								"with-interest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "단건 조회",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/member-list/{{memberToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list",
+								"{{memberToken}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "단건 등록 - 수정중,,",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = JSON.parse(responseBody)",
+									"if (response.success) {",
+									"    pm.collectionVariables.set(\"memberToken\", response.data.memberToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberLoginId\": \"{{$randomFirstName}}\",\n    \"memberLoginPassword\": \"1234\",\n    \"memberName\": \"{{$randomUserName}}\",\n    \"memberEmail\": \"{{$randomEmail}}\",\n    \"memberAvatar\": \"/avatar/file/path\",\n    \"memberNickName\": \"{{$randomJobDescriptor}}\",\n    \"memberSelfIntroduction\": \"{{$randomJobTitle}}\",\n    \"memberCategoryList\": [1,2,3,4],\n    \"memberCategoryItemList\": [5,6,7,8]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/member-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "단건 수정 - 회원 정보 - 수정중,,",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberName\": \"하츄핑\",\n    \"memberEmail\": \"chu@email.com\",\n    \"memberAvatar\": \"/avatar/file/path/크으\",\n    \"memberNickName\": \"사랑의하츄핑\",\n    \"memberSelfIntroduction\": \"사랑을 하면 행복하단 말, 그 말,, 내겐 왜 틀린 말 같죠?\",\n    \"memberCategoryList\": [1,2,3,4],\n    \"memberCategoryItemList\": [5,6,7,8]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/member-list/{{memberToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list",
+								"{{memberToken}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "단건 수정 - 회원 비밀번호 변경",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberToken\": \"{{memberToken}}\",\n    \"memberLoginPassword\": \"1111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/member-list/password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "단건 수정 - 회원 비활성화",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberToken\": \"{{memberToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/member-list/disable",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "단건 수정 - 회원 활성화",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberToken\": \"{{memberToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/member-list/enable",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "단건 삭제",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberToken\": \"{{memberToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/member-list/{{memberToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"member-list",
+								"{{memberToken}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "[관심사] category",
+			"item": [
+				{
+					"name": "대분류 목록 조회",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/category-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "대분류 단건 조회",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/category-list/{{categoryToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category-list",
+								"{{categoryToken}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "대분류 단건 등록",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = JSON.parse(responseBody)",
+									"if (response.success) {",
+									"    pm.collectionVariables.set(\"categoryToken\", response.data.categoryToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryTitle\": \"{{$randomCity}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/category-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "대분류 단건 수정",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryTitle\": \"사랑의선율\",\n    \"categoryOrdering\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/category-list/{{categoryToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category-list",
+								"{{categoryToken}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "대분류 단건 삭제",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryToken\": \"{{categoryToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/category-list/{{categoryToken}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category-list",
+								"{{categoryToken}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "memberToken",
+			"value": ""
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		},
+		{
+			"key": "categoryToken",
+			"value": ""
+		}
+	]
+}

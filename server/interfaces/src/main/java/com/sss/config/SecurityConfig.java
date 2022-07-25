@@ -35,7 +35,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain jwtFilterChain(HttpSecurity http) throws Exception {
         var authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(loginService).passwordEncoder(passwordEncoder());
         var authenticationManager = authenticationManagerBuilder.build();
@@ -46,9 +46,9 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .headers(AbstractHttpConfigurer::disable)
                 .csrf().disable()
-                .authorizeRequests(auth -> auth
-                        .mvcMatchers(HttpMethod.POST, LOGIN).permitAll()
+                .authorizeRequests(auth -> auth.mvcMatchers(HttpMethod.POST, LOGIN).permitAll()
                         .mvcMatchers(HttpMethod.GET, "/docs/index.html").permitAll()
+                        .mvcMatchers(HttpMethod.GET, "/api/*/code-list", "/api/*/code-list/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

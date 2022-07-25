@@ -6,6 +6,7 @@ import com.sss.domain.category.Category;
 import com.sss.domain.category.item.CategoryItem;
 import com.sss.domain.meeting.fragment.MeetLocation;
 import com.sss.domain.member.Member;
+import com.sss.enumcode.EnumMapperType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -79,16 +80,21 @@ public class Meeting extends BaseEntity {
 
     @Getter
     @RequiredArgsConstructor
-    public enum RecruitmentMethod {
+    public enum RecruitmentMethod implements EnumMapperType {
         FIRST_COME("선착순"),
         APPROVAL("승인제");
 
-        private final String title;
+        private final String text;
 
         private static final Map<String, RecruitmentMethod> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
-                .collect(Collectors.toMap(RecruitmentMethod::getTitle, Function.identity())));
+                .collect(Collectors.toMap(RecruitmentMethod::getText, Function.identity())));
         public static Optional<RecruitmentMethod> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
+        }
+
+        @Override
+        public String getCode() {
+            return name();
         }
     }
 

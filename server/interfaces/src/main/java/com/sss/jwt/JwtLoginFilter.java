@@ -71,7 +71,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         if (failed.getCause() instanceof MemberNotFoundException || failed instanceof BadCredentialsException) {
             errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
         }
-        
+
         response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
     }
 }

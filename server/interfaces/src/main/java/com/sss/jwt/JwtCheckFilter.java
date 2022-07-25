@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sss.domain.login.LoginInfo;
 import com.sss.domain.login.LoginService;
+import com.sss.exception.member.MemberNotFoundException;
 import com.sss.response.ErrorCode;
 import com.sss.response.ErrorRes;
 import com.sss.response.Res;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -50,5 +53,17 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
             ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_TOKEN);
             response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
         }
+    }
+
+    @Override
+    protected void onUnsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
+        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_SYSTEM_ERROR);
+
+        if (failed.getCause() instanceof MemberNotFoundException || failed instanceof BadCredentialsException) {
+            errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
     }
 }

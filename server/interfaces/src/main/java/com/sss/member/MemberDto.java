@@ -7,6 +7,7 @@ import com.sss.domain.member.MemberQuery;
 import com.sss.domain.member.interest.Interest;
 import lombok.*;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -45,6 +46,7 @@ public class MemberDto {
         private String memberLoginPassword;
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
+        @Email
         @NotBlank(message = "memberEmail 는 필수값입니다.")
         private String memberEmail;
         private String memberAvatar;

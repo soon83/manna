@@ -3,6 +3,7 @@ package com.sss.domain.member;
 import com.sss.TokenGenerator;
 import com.sss.domain.BaseEntity;
 import com.sss.domain.member.interest.Interest;
+import com.sss.enumcode.EnumMapperType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,32 +61,42 @@ public class Member extends BaseEntity {
 
     @Getter
     @RequiredArgsConstructor
-    public enum Role {
+    public enum Role implements EnumMapperType {
         ADMIN("관리자"),
         MANAGER("운영자"),
         MEMBER("회원");
 
-        private final String title;
+        private final String text;
 
         private static final Map<String, Role> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
-                .collect(Collectors.toMap(Role::getTitle, Function.identity())));
+                .collect(Collectors.toMap(Role::getText, Function.identity())));
         public static Optional<Role> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
+        }
+
+        @Override
+        public String getCode() {
+            return name();
         }
     }
 
     @Getter
     @RequiredArgsConstructor
-    public enum Status {
+    public enum Status implements EnumMapperType {
         ENABLE("활성화"),
         DISABLE("비활성화");
 
-        private final String title;
+        private final String text;
 
         private static final Map<String, Status> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
-                .collect(Collectors.toMap(Status::getTitle, Function.identity())));
+                .collect(Collectors.toMap(Status::getText, Function.identity())));
         public static Optional<Status> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
+        }
+
+        @Override
+        public String getCode() {
+            return name();
         }
     }
 
