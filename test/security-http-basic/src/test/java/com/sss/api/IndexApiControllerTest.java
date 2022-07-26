@@ -25,7 +25,7 @@ public class IndexApiControllerTest {
     private Integer port;
 
     @BeforeEach
-    public void setUpRestdocs(RestDocumentationContextProvider restDocumentation) {
+    public void setUpRestdocs() {
         this.webTestClient = WebTestClient.bindToServer()
                 .baseUrl("http://localhost:" + port)
                 .build();
