@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IndexApiControllerTest {
     private WebTestClient webTestClient;
+    private static String BASIC_TOKEN = "Basic" + Base64.encodeBase64String("user:1234".getBytes(StandardCharsets.UTF_8));
 
     @LocalServerPort
     private Integer port;
@@ -33,11 +34,9 @@ public class IndexApiControllerTest {
     @Test
     @DisplayName("[http-basic] user 가 user API 를 호출")
     public void callUserApiByUser() {
-        String header = Base64.encodeBase64String("user:1234".getBytes(StandardCharsets.UTF_8));
-
         this.webTestClient.get().uri("/api/user")
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Basic " + header)
+                .header("Authorization", BASIC_TOKEN)
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -49,7 +48,7 @@ public class IndexApiControllerTest {
 
         this.webTestClient.get().uri("/api/admin")
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Basic " + basicToken)
+                .header("Authorization", BASIC_TOKEN)
                 .exchange()
                 .expectStatus().isForbidden();
     }
