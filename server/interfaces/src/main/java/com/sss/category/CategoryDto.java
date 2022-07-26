@@ -55,13 +55,13 @@ public class CategoryDto {
         private final String categoryToken;
         private final String categoryTitle;
         private final Integer categoryOrdering;
-        private final List<CategoryItemResponse> categoryItemResponseList;
+        private final List<CategoryItemResponse> categoryItemList;
 
-        public MainResponse(CategoryQuery.Main categoryInfo, List<CategoryItemResponse> categoryItemResponseList) {
+        public MainResponse(CategoryQuery.Main categoryInfo, List<CategoryItemResponse> categoryItemList) {
             this.categoryToken = categoryInfo.getToken();
             this.categoryTitle = categoryInfo.getTitle();
             this.categoryOrdering = categoryInfo.getOrdering();
-            this.categoryItemResponseList = categoryItemResponseList;
+            this.categoryItemList = categoryItemList;
         }
     }
 

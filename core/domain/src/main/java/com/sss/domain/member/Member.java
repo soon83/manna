@@ -57,7 +57,7 @@ public class Member extends BaseEntity {
     private Status status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
-    private final List<Interest> interestList = new ArrayList<>();
+    private List<Interest> interestList = new ArrayList<>();
 
     @Getter
     @RequiredArgsConstructor

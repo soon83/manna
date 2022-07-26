@@ -1,9 +1,12 @@
 package com.sss.domain.member;
 
+import com.sss.domain.member.interest.Interest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 public class MemberCommand {
 
@@ -19,6 +22,7 @@ public class MemberCommand {
         private String avatar;
         private String nickName;
         private String selfIntroduction;
+        private List<CreateInterest> interestList;
 
         public Member toEntity() {
             return Member.builder()
@@ -31,6 +35,26 @@ public class MemberCommand {
                     .selfIntroduction(selfIntroduction)
                     .build();
         }
+
+        public Member toEntity(List<Interest> interestList) {
+            return Member.builder()
+                    .loginId(loginId)
+                    .loginPassword(loginPassword)
+                    .name(name)
+                    .email(email)
+                    .avatar(avatar)
+                    .nickName(nickName)
+                    .selfIntroduction(selfIntroduction)
+                    .interestList(interestList)
+                    .build();
+        }
+    }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class CreateInterest {
+        private String categoryItemToken;
     }
 
     @Getter

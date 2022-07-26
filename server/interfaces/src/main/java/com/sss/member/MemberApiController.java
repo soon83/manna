@@ -71,6 +71,7 @@ public class MemberApiController {
      */
     @PostMapping
     public ResponseEntity<Res> registerMember(@RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
+        log.debug("### request: {}", request);
         var command = request.toCreateMemberCommand();
         var memberToken = memberFacade.registerMember(command);
         var response = new MemberDto.RegisterResponse(memberToken);

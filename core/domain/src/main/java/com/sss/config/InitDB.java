@@ -3,10 +3,7 @@ package com.sss.config;
 import com.sss.domain.category.Category;
 import com.sss.domain.category.item.CategoryItem;
 import com.sss.domain.member.Member;
-import com.sss.domain.member.MemberCommand;
-import com.sss.domain.member.MemberService;
 import com.sss.domain.member.interest.Interest;
-import com.sss.exception.category.CategoryItemNotFoundException;
 import com.sss.exception.member.MemberNotFoundException;
 import com.sss.infrastructure.category.CategoryItemRepository;
 import com.sss.infrastructure.category.CategoryRepository;
@@ -19,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration

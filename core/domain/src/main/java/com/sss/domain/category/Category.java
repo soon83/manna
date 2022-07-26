@@ -36,7 +36,7 @@ public class Category extends BaseEntity {
     private Integer ordering;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.PERSIST)
-    private final List<CategoryItem> categoryItemList = new ArrayList<>();
+    private List<CategoryItem> categoryItemList = new ArrayList<>();
 
     @Builder
     public Category(String title, Integer ordering) {

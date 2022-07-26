@@ -56,7 +56,7 @@ public class MemberDto {
         private String memberSelfIntroduction;
         @NotNull(message = "memberInterestList 는 필수값입니다.")
         @Size(min = 1, message = "memberInterestList 는 최소 1개 이상이어야 합니다.")
-        private List<Interest> memberInterestList;
+        private List<CreateInterestRequest> memberInterestList;
 
         public MemberCommand.CreateMember toCreateMemberCommand() {
             return MemberCommand.CreateMember.builder()
@@ -69,6 +69,11 @@ public class MemberDto {
                     .selfIntroduction(memberSelfIntroduction)
                     .build();
         }
+    }
+
+    @Data
+    public static class CreateInterestRequest {
+        private String categoryItemToken;
     }
 
     @Data
@@ -185,26 +190,26 @@ public class MemberDto {
     }
 
     @Getter
-    @Builder
-    @ToString
-    @AllArgsConstructor
-    public static class InterestResponse {
-        private final String interestToken;
-        private final CategoryDto.CategoryItemResponse interestCategoryItem;
-
-        public InterestResponse(MemberQuery.InterestInfo info) {
-            this.interestToken = info.getToken();
-            this.interestCategoryItem = new CategoryDto.CategoryItemResponse(info.getCategoryItemInfo());
-        }
-    }
-
-    @Getter
     @ToString
     public static class RegisterResponse {
         private final String memberToken;
 
         public RegisterResponse(String memberToken) {
             this.memberToken = memberToken;
+        }
+    }
+
+    @Getter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    public static class InterestResponse {
+        private final String interestToken;
+        private final CategoryDto.CategoryItemResponse categoryItem;
+
+        public InterestResponse(MemberQuery.InterestInfo info) {
+            this.interestToken = info.getToken();
+            this.categoryItem = new CategoryDto.CategoryItemResponse(info.getCategoryItemInfo());
         }
     }
 }

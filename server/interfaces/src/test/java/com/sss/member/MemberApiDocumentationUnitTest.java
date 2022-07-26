@@ -165,7 +165,7 @@ class MemberApiDocumentationUnitTest {
         List<MemberDto.InterestResponse> response = Lists.newArrayList(
                 MemberDto.InterestResponse.builder()
                         .interestToken("itrt_eaea1DrYvJw1KHJ")
-                        .interestCategoryItem(CategoryDto.CategoryItemResponse.builder()
+                        .categoryItem(CategoryDto.CategoryItemResponse.builder()
                                 .categoryItemOrdering(0)
                                 .categoryItemToken("ctgItm_TDL1vTlJ1mSIb")
                                 .categoryItemTitle("전시")
@@ -216,10 +216,10 @@ class MemberApiDocumentationUnitTest {
                                 fieldWithPath("data.memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
                                 fieldWithPath("data.memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개"),
                                 fieldWithPath("data.memberInterestList[].interestToken").type(JsonFieldType.STRING).description("interestToken"),
-                                fieldWithPath("data.memberInterestList[].interestCategoryItem.categoryItemToken").type(JsonFieldType.STRING).description("categoryItemToken"),
-                                fieldWithPath("data.memberInterestList[].interestCategoryItem.categoryItemTitle").type(JsonFieldType.STRING).description("categoryItemTitle"),
-                                fieldWithPath("data.memberInterestList[].interestCategoryItem.categoryItemOrdering").type(JsonFieldType.NUMBER).description("categoryItemOrdering"),
-                                fieldWithPath("data.memberInterestList[].interestCategoryItem.categoryToken").type(JsonFieldType.STRING).description("categoryToken"),
+                                fieldWithPath("data.memberInterestList[].categoryItem.categoryItemToken").type(JsonFieldType.STRING).description("categoryItemToken"),
+                                fieldWithPath("data.memberInterestList[].categoryItem.categoryItemTitle").type(JsonFieldType.STRING).description("categoryItemTitle"),
+                                fieldWithPath("data.memberInterestList[].categoryItem.categoryItemOrdering").type(JsonFieldType.NUMBER).description("categoryItemOrdering"),
+                                fieldWithPath("data.memberInterestList[].categoryItem.categoryToken").type(JsonFieldType.STRING).description("categoryToken"),
                                 fieldWithPath("data.memberRole").type(JsonFieldType.STRING).description("회원 권한 [MANAGER, MEMBER]"),
                                 fieldWithPath("data.memberStatus").type(JsonFieldType.STRING).description("회원 활성화 상태 [ENABLE, DISABLE]")
                         )
