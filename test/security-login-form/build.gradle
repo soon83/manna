@@ -1,4 +1,4 @@
-apply from: '../security-test-build.gradle'
+apply from: '../test-security-build.gradle'
 
 dependencies {
 
