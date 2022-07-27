@@ -1,6 +1,5 @@
 package com.sss.domain.member;
 
-import com.sss.domain.member.interest.Interest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,19 +32,6 @@ public class MemberCommand {
                     .avatar(avatar)
                     .nickName(nickName)
                     .selfIntroduction(selfIntroduction)
-                    .build();
-        }
-
-        public Member toEntity(List<Interest> interestList) {
-            return Member.builder()
-                    .loginId(loginId)
-                    .loginPassword(loginPassword)
-                    .name(name)
-                    .email(email)
-                    .avatar(avatar)
-                    .nickName(nickName)
-                    .selfIntroduction(selfIntroduction)
-                    .interestList(interestList)
                     .build();
         }
     }
