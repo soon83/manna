@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/code-list")
+@RequestMapping("/api/v1/code")
 @RequiredArgsConstructor
 public class CodeApiController {
 

@@ -22,6 +22,15 @@ public class LoginDto {
         private String memberLoginPassword;
     }
 
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CheckLoginIdRequest {
+        @NotBlank(message = "memberLoginId 는 필수값입니다.")
+        private String memberLoginId;
+    }
+
     /**
      * response
      */

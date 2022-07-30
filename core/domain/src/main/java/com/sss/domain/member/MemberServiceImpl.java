@@ -44,8 +44,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public MemberQuery.Main fetchLoginMember(String memberLoginId) {
-        var member = memberQueryService.readLoginMember(memberLoginId);
+    public MemberQuery.Main fetchMemberByLoginId(String memberLoginId) {
+        var member = memberQueryService.readMemberByLoginId(memberLoginId);
         return new MemberQuery.Main(member);
     }
 

@@ -24,6 +24,7 @@ public class MemberDto {
         private String memberName;
         private String memberEmail;
         private String memberNickName;
+        private Member.Status memberStatus;
 
         public MemberQuery.SearchConditionInfo toSearchConditionInfo() {
             return MemberQuery.SearchConditionInfo.builder()
@@ -31,6 +32,7 @@ public class MemberDto {
                     .name(memberName)
                     .email(memberEmail)
                     .nickName(memberNickName)
+                    .status(memberStatus)
                     .build();
         }
     }

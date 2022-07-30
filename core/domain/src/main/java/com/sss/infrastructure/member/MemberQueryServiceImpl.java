@@ -33,12 +33,14 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     @Override
     public Member readMember(String memberToken) {
         return memberRepository.findByToken(memberToken)
+                .filter(member -> member.getStatus() == Member.Status.ENABLE)
                 .orElseThrow(MemberNotFoundException::new);
     }
 
     @Override
-    public Member readLoginMember(String memberLoginId) {
+    public Member readMemberByLoginId(String memberLoginId) {
         return memberRepository.findByLoginId(memberLoginId)
+                .filter(member -> member.getStatus() == Member.Status.ENABLE)
                 .orElseThrow(MemberNotFoundException::new);
     }
 

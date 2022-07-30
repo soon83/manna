@@ -10,7 +10,7 @@ public interface MemberQueryService {
     Page<Member> readMemberList(MemberQuery.SearchConditionInfo condition, Pageable pageable);
     List<Member> fetchMemberWithInterestList();
     Member readMember(String memberToken);
-    Member readLoginMember(String memberLoginId);
+    Member readMemberByLoginId(String memberLoginId);
     List<MemberQuery.WithInterestInfo> memberListMapper(List<Member> memberList);
     List<MemberQuery.InterestInfo> memberInterestListMapper(List<Interest> interestList);
 }

@@ -16,7 +16,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     @Transactional(readOnly = true)
     public LoginInfo.AccountAdaptor loadUserByUsername(String memberLoginId) throws UsernameNotFoundException {
-        var member = memberQueryService.readLoginMember(memberLoginId);
+        var member = memberQueryService.readMemberByLoginId(memberLoginId);
         var loginInfo = new LoginInfo.Main(member);
         return new LoginInfo.AccountAdaptor(loginInfo);
     }

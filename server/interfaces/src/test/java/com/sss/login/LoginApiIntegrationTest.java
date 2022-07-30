@@ -52,7 +52,7 @@ public class LoginApiIntegrationTest {
                 .memberLoginPassword("1234")
                 .build();
 
-        this.webTestClient.post().uri("/login")
+        this.webTestClient.post().uri("/api/v1/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(request))

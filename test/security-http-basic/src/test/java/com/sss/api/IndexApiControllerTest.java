@@ -18,8 +18,8 @@ import java.nio.charset.StandardCharsets;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IndexApiControllerTest {
     private WebTestClient webTestClient;
-    private static String VALID_BASIC_TOKEN = "Basic" + Base64.encodeBase64String("user:1234".getBytes(StandardCharsets.UTF_8));
-    private static String INVALID_BASIC_TOKEN = "Basic" + Base64.encodeBase64String("user:0000".getBytes(StandardCharsets.UTF_8));
+    private static String VALID_BASIC_TOKEN = "Basic " + Base64.encodeBase64String("user:1234".getBytes(StandardCharsets.UTF_8));
+    private static String INVALID_BASIC_TOKEN = "Basic " + Base64.encodeBase64String("user:0000".getBytes(StandardCharsets.UTF_8));
 
     @LocalServerPort
     private Integer port;

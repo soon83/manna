@@ -30,6 +30,10 @@ public class MemberFacade {
         return memberService.fetchMember(memberToken);
     }
 
+    public MemberQuery.Main fetchMemberByLoginId(String memberLoginId) {
+        return memberService.fetchMemberByLoginId(memberLoginId);
+    }
+
     public String registerMember(MemberCommand.CreateMember command) {
         return memberService.registerMember(command);
     }

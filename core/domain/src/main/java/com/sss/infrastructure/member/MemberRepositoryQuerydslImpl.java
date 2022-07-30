@@ -1,6 +1,7 @@
 package com.sss.infrastructure.member;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sss.domain.member.Member;
@@ -29,7 +30,8 @@ public class MemberRepositoryQuerydslImpl extends CustomRepositoryQuerydslSuppor
                         eq(member.loginId, condition.getLoginId()),
                         eq(member.name, condition.getName()),
                         eq(member.email, condition.getEmail()),
-                        eq(member.nickName, condition.getNickName())
+                        eq(member.nickName, condition.getNickName()),
+                        eq(member.status, condition.getStatus())
                 )
         );
     }
@@ -38,4 +40,10 @@ public class MemberRepositoryQuerydslImpl extends CustomRepositoryQuerydslSuppor
         if (ObjectUtils.isEmpty(value)) return null;
         return domainValue.eq(value);
     }
+
+    private static <T extends Enum<T>> BooleanExpression eq(EnumPath<T> domainValue, T value) {
+        if (ObjectUtils.isEmpty(value)) return null;
+        return domainValue.eq(value);
+    }
+
 }

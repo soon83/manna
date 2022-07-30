@@ -44,9 +44,11 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .headers(AbstractHttpConfigurer::disable)
                 .csrf().disable()
-                .authorizeRequests(auth -> auth.mvcMatchers(HttpMethod.POST, LOGIN).permitAll()
+                .authorizeRequests(auth -> auth
+                        .mvcMatchers(HttpMethod.POST, LOGIN).permitAll()
+                        .mvcMatchers(HttpMethod.GET, LOGIN + "/**").permitAll()
                         .mvcMatchers(HttpMethod.GET, "/docs/index.html").permitAll()
-                        .mvcMatchers(HttpMethod.GET, "/api/*/code-list", "/api/*/code-list/*").permitAll()
+                        .mvcMatchers(HttpMethod.GET, "/api/*/code", "/api/*/code/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -101,7 +101,7 @@ class MemberApiDocumentationUnitTest {
         when(memberMapper.memberInfoListMapper(pageResponse)).thenReturn(pageResponse.map(MemberDto.MainResponse::new));
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/member-list")
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/member")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header("Authorization", AUTH_TOKEN))
@@ -192,7 +192,7 @@ class MemberApiDocumentationUnitTest {
         when(memberMapper.memberInterestInfoListMapper(interestInfoList)).thenReturn(response);
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/member-list/{memberToken}", MEMBER_TOKEN)
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/member/{memberToken}", MEMBER_TOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header("Authorization", AUTH_TOKEN))
@@ -245,7 +245,7 @@ class MemberApiDocumentationUnitTest {
         when(memberFacade.registerMember(any(MemberCommand.CreateMember.class))).thenReturn(MEMBER_TOKEN);
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/member-list")
+        this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/member")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -297,7 +297,7 @@ class MemberApiDocumentationUnitTest {
         doNothing().when(memberFacade).modifyMember(isA(MemberCommand.UpdateMember.class), isA(String.class));
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/member-list/{memberToken}", MEMBER_TOKEN)
+        this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/member/{memberToken}", MEMBER_TOKEN)
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -341,7 +341,7 @@ class MemberApiDocumentationUnitTest {
         doNothing().when(memberFacade).modifyMemberPassword(isA(MemberCommand.UpdateMemberPassword.class), isA(String.class));
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/member-list/password")
+        this.mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/member/password")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -375,7 +375,7 @@ class MemberApiDocumentationUnitTest {
         doNothing().when(memberFacade).disableMember(MEMBER_TOKEN);
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/member-list/disable")
+        this.mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/member/disable")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -407,7 +407,7 @@ class MemberApiDocumentationUnitTest {
         doNothing().when(memberFacade).enableMember(MEMBER_TOKEN);
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/member-list/enable")
+        this.mockMvc.perform(RestDocumentationRequestBuilders.patch("/api/v1/member/enable")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -439,7 +439,7 @@ class MemberApiDocumentationUnitTest {
         doNothing().when(memberFacade).removeMember(MEMBER_TOKEN);
 
         // then
-        this.mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/member-list/{memberToken}", MEMBER_TOKEN)
+        this.mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/member/{memberToken}", MEMBER_TOKEN)
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)

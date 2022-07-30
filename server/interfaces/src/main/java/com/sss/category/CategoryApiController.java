@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 @Slf4j
 @RestController
 @PreAuthorize("isAuthenticated()")
-@RequestMapping("/api/v1/category-list")
+@RequestMapping("/api/v1/category")
 @RequiredArgsConstructor
 public class CategoryApiController {
     private final CategoryFacade categoryFacade;

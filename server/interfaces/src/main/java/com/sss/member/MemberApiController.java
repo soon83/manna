@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 @Slf4j
 @RestController
 @PreAuthorize("isAuthenticated()")
-@RequestMapping("/api/v1/member-list")
+@RequestMapping("/api/v1/member")
 @RequiredArgsConstructor
 public class MemberApiController {
     private final MemberFacade memberFacade;
@@ -42,12 +42,12 @@ public class MemberApiController {
      * 회원 목록 조회 (with 관심사 목록)
      * @return
      */
-    @GetMapping("/with-interest")
+    /*@GetMapping("/with-interest")
     public ResponseEntity<Res> fetchMemberWithInterestList() {
         var memberWithInterestInfoList = memberFacade.fetchMemberWithInterestList();
         var response = memberMapper.memberWithInterestInfoListMapper(memberWithInterestInfoList);
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
-    }
+    }*/
 
     /**
      * 회원 단건 조회

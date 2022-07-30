@@ -17,6 +17,7 @@ public class MemberQuery {
         private String name;
         private String email;
         private String nickName;
+        private Member.Status status;
     }
 
     @Getter
