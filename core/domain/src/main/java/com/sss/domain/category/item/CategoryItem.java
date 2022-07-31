@@ -38,6 +38,11 @@ public class CategoryItem extends BaseEntity {
     private Category category;
 
     @Builder
+    public CategoryItem(Long id) {
+        this.id = id;
+    }
+
+    @Builder
     public CategoryItem(
             String title,
             Integer ordering,

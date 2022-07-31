@@ -108,7 +108,8 @@ public class Member extends BaseEntity {
             String email,
             String avatar,
             String nickName,
-            String selfIntroduction
+            String selfIntroduction,
+            List<Interest> interestList
     ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
         this.loginId = loginId;
@@ -118,6 +119,7 @@ public class Member extends BaseEntity {
         this.avatar = avatar;
         this.nickName = nickName;
         this.selfIntroduction = selfIntroduction;
+        this.interestList = interestList;
         this.role = Role.MEMBER;
         this.status = Status.ENABLE;
     }

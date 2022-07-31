@@ -17,10 +17,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryQueryServiceImpl implements CategoryQueryService {
     private final CategoryRepository categoryRepository;
+    private final CategoryItemRepository categoryItemRepository;
 
     @Override
     public List<Category> readCategoryList() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<CategoryItem> readCategoryItemListById(List<Long> categoryItemIdList) {
+        return categoryItemRepository.findAllById(categoryItemIdList);
     }
 
     @Override

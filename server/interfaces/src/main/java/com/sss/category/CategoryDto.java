@@ -81,12 +81,14 @@ public class CategoryDto {
     @ToString
     @AllArgsConstructor
     public static class CategoryItemResponse {
+        private final Long categoryItemId;
         private final String categoryItemToken;
         private final String categoryItemTitle;
         private final Integer categoryItemOrdering;
         private final String categoryToken;
 
         public CategoryItemResponse(CategoryQuery.CategoryItemInfo info) {
+            this.categoryItemId = info.getId();
             this.categoryItemToken = info.getToken();
             this.categoryItemTitle = info.getTitle();
             this.categoryItemOrdering = info.getOrdering();

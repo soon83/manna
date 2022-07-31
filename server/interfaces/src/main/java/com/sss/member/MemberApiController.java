@@ -1,5 +1,6 @@
 package com.sss.member;
 
+import com.sss.domain.member.MemberCommand;
 import com.sss.response.Res;
 import com.sss.util.UriGenerator;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -71,8 +74,12 @@ public class MemberApiController {
      */
     @PostMapping
     public ResponseEntity<Res> registerMember(@RequestBody @Valid MemberDto.RegisterRequest request) throws URISyntaxException {
-        log.debug("### request: {}", request);
-        var command = request.toCreateMemberCommand();
+        var memberInterestList = request.getMemberInterestList();
+        List<MemberCommand.CreateInterest> createInterestList = memberInterestList.stream()
+                .map(MemberDto.CreateInterestRequest::getCategoryItemId)
+                .map(MemberCommand.CreateInterest::new)
+                .collect(Collectors.toList()); // TODO 추상화 하기
+        var command = request.toCreateMemberCommand(createInterestList);
         var memberToken = memberFacade.registerMember(command);
         var response = new MemberDto.RegisterResponse(memberToken);
         return ResponseEntity.status(HttpStatus.CREATED)

@@ -22,8 +22,8 @@ import java.util.Collections;
 public class LoginApiController {
     private final MemberFacade memberFacade;
 
-    @GetMapping("/verify-login-id-exists")
-    public ResponseEntity<Res> verifyMemberLoginIdExists(@ModelAttribute @Valid LoginDto.CheckLoginIdRequest request) {
+    @GetMapping("/find-member-login-id")
+    public ResponseEntity<Res> findMemberLoginId(@ModelAttribute @Valid LoginDto.CheckLoginIdRequest request) {
         String memberLoginId = request.getMemberLoginId();
         var memberByLoginId = memberFacade.fetchMemberByLoginId(memberLoginId);
         var response = new MemberDto.MainResponse(memberByLoginId);

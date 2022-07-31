@@ -60,7 +60,7 @@ public class MemberDto {
         @Size(min = 1, message = "memberInterestList 는 최소 1개 이상이어야 합니다.")
         private List<CreateInterestRequest> memberInterestList;
 
-        public MemberCommand.CreateMember toCreateMemberCommand() {
+        public MemberCommand.CreateMember toCreateMemberCommand(List<MemberCommand.CreateInterest> interestList) {
             return MemberCommand.CreateMember.builder()
                     .loginId(memberLoginId)
                     .loginPassword(memberLoginPassword)
@@ -69,13 +69,14 @@ public class MemberDto {
                     .avatar(memberAvatar)
                     .nickName(memberNickName)
                     .selfIntroduction(memberSelfIntroduction)
+                    .interestList(interestList)
                     .build();
         }
     }
 
     @Data
     public static class CreateInterestRequest {
-        private String categoryItemToken;
+        private Long categoryItemId;
     }
 
     @Data
