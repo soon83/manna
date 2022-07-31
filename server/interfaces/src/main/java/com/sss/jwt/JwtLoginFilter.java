@@ -44,12 +44,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain,
-            Authentication authResult
-    ) throws IOException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         var accountAdaptor = (LoginInfo.AccountAdaptor) authResult.getPrincipal();
         var memberLoginInfo = accountAdaptor.getMemberLoginInfo();
         var authResponse = new LoginDto.MainResponse(memberLoginInfo);
@@ -60,20 +55,15 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void unsuccessfulAuthentication(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            AuthenticationException failed
-    ) throws IOException {
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_SYSTEM_ERROR);
 
         if (failed.getCause() instanceof MemberNotFoundException || failed instanceof BadCredentialsException) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.setStatus(HttpServletResponse.SC_OK);
             errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
     }
 }
