@@ -1,8 +1,12 @@
 package com.sss.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sss.domain.login.LoginService;
+import com.sss.exception.CustomAuthenticationEntryPoint;
 import com.sss.jwt.JwtCheckFilter;
 import com.sss.jwt.JwtLoginFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,13 +23,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
     public static final String LOGIN = "/api/v1/login";
     private final LoginService loginService;
-
-    public SecurityConfig(LoginService loginService) {
-        this.loginService = loginService;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,8 +39,11 @@ public class SecurityConfig {
         authenticationManagerBuilder.userDetailsService(loginService).passwordEncoder(passwordEncoder());
         var authenticationManager = authenticationManagerBuilder.build();
 
-        var loginFilter = new JwtLoginFilter(authenticationManager);
-        var checkFilter = new JwtCheckFilter(authenticationManager, loginService);
+        var objectMapper = new ObjectMapper().setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+        var loginFilter = new JwtLoginFilter(authenticationManager, objectMapper);
+        var checkFilter = new JwtCheckFilter(authenticationManager, loginService, objectMapper);
+        var authenticationEntryPoint = new CustomAuthenticationEntryPoint(objectMapper);
+
         http
                 .authenticationManager(authenticationManager)
                 .headers(AbstractHttpConfigurer::disable)
@@ -51,6 +55,7 @@ public class SecurityConfig {
                         .mvcMatchers(HttpMethod.GET, "/api/*/code", "/api/*/code/*").permitAll()
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(handler -> handler.authenticationEntryPoint(authenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class)

@@ -1,4 +1,4 @@
-package com.sss.response;
+package com.sss.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ public enum ErrorCode {
     COMMON_NOT_FOUND("C003", "요청한 주소가 올바르지 않습니다."),
     COMMON_METHOD_NOT_ALLOWED("C004", "지원하지 않는 메서드입니다."),
     COMMON_ILLEGAL_STATUS("C005", "잘못된 상태값입니다."),
-    COMMON_UNAUTHORIZED("C006", "접근권한이 없습니다."), // 401
+    COMMON_UNAUTHORIZED("C006", "유효한 자격증명이 없습니다."), // 401
     COMMON_FORBIDDEN("C007", "접근권한이 없습니다."), // 403
     COMMON_INVALID_TOKEN("C008", "유효하지 않은 토큰입니다."),
 

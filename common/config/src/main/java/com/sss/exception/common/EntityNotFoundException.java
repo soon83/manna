@@ -1,6 +1,6 @@
 package com.sss.exception.common;
 
-import com.sss.response.ErrorCode;
+import com.sss.exception.ErrorCode;
 
 public class EntityNotFoundException extends BaseException {
 

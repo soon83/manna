@@ -1,4 +1,4 @@
-package com.sss.response;
+package com.sss.exception;
 
 import lombok.Builder;
 import lombok.Getter;
