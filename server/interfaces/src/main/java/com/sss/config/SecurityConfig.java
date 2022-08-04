@@ -47,7 +47,7 @@ public class SecurityConfig {
         http
                 .authenticationManager(authenticationManager)
                 .headers(AbstractHttpConfigurer::disable)
-                .csrf().disable()
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
                         .mvcMatchers(HttpMethod.POST, LOGIN).permitAll()
                         .mvcMatchers(HttpMethod.GET, LOGIN + "/**").permitAll()
