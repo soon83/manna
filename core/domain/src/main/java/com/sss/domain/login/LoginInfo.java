@@ -72,7 +72,6 @@ public class LoginInfo {
         private final String memberLoginId;
         private final String memberLoginPassword;
         private final String memberName;
-        private final String memberEmail;
         private final String memberAvatar;
         private final String memberNickName;
         private final String memberSelfIntroduction;
@@ -84,7 +83,6 @@ public class LoginInfo {
             this.memberLoginId = member.getLoginId();
             this.memberLoginPassword = member.getLoginPassword();
             this.memberName = member.getName();
-            this.memberEmail = member.getEmail();
             this.memberAvatar = member.getAvatar();
             this.memberNickName = member.getNickName();
             this.memberSelfIntroduction = member.getSelfIntroduction();

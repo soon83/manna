@@ -85,7 +85,6 @@ class MemberApiDocumentationUnitTest {
                         .loginId("tester")
                         .loginPassword("1234")
                         .name("테스터")
-                        .email("tester@email.com")
                         .avatar("/tester/avatar/path")
                         .nickName("하츄핑")
                         .selfIntroduction("저는 테스터입니다.")
@@ -117,7 +116,6 @@ class MemberApiDocumentationUnitTest {
                                 fieldWithPath("data.content[].memberToken").type(JsonFieldType.STRING).description("회원 토큰"),
                                 fieldWithPath("data.content[].memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
                                 fieldWithPath("data.content[].memberName").type(JsonFieldType.STRING).description("회원 이름"),
-                                fieldWithPath("data.content[].memberEmail").type(JsonFieldType.STRING).description("회원 이메일"),
                                 fieldWithPath("data.content[].memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                 fieldWithPath("data.content[].memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
                                 fieldWithPath("data.content[].memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개"),
@@ -178,7 +176,6 @@ class MemberApiDocumentationUnitTest {
                 .loginId("tester")
                 .loginPassword("1234")
                 .name("테스터")
-                .email("tester@email.com")
                 .avatar("/tester/avatar/path")
                 .nickName("하츄핑")
                 .selfIntroduction("저는 테스터입니다.")
@@ -211,7 +208,6 @@ class MemberApiDocumentationUnitTest {
                                 fieldWithPath("data.memberToken").type(JsonFieldType.STRING).description("회원 토큰"),
                                 fieldWithPath("data.memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
                                 fieldWithPath("data.memberName").type(JsonFieldType.STRING).description("회원 이름"),
-                                fieldWithPath("data.memberEmail").type(JsonFieldType.STRING).description("회원 이메일"),
                                 fieldWithPath("data.memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                 fieldWithPath("data.memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
                                 fieldWithPath("data.memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개"),
@@ -235,7 +231,6 @@ class MemberApiDocumentationUnitTest {
                 .memberLoginId("tester")
                 .memberLoginPassword("1234")
                 .memberName("테스터")
-                .memberEmail("tester@email.com")
                 .memberAvatar("/tester/avatar/path")
                 .memberNickName("하츄핑")
                 .memberSelfIntroduction("저는 테스터입니다.")
@@ -260,8 +255,6 @@ class MemberApiDocumentationUnitTest {
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberLoginPassword"))),
                                 fieldWithPath("memberName").type(JsonFieldType.STRING).description("회원 이름")
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberName"))),
-                                fieldWithPath("memberEmail").type(JsonFieldType.STRING).description("회원 이메일")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberEmail"))),
                                 fieldWithPath("memberAvatar").type(JsonFieldType.STRING).description("회원 이미지").optional()
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberAvatar"))),
                                 fieldWithPath("memberNickName").type(JsonFieldType.STRING).description("회원 별명")
@@ -287,7 +280,6 @@ class MemberApiDocumentationUnitTest {
         // given
         MemberDto.ModifyRequest request = MemberDto.ModifyRequest.builder()
                 .memberName("테스터")
-                .memberEmail("tester@email.com")
                 .memberAvatar("/tester/avatar/path")
                 .memberNickName("하츄핑")
                 .memberSelfIntroduction("저는 테스터입니다.")
@@ -311,8 +303,6 @@ class MemberApiDocumentationUnitTest {
                         requestFields(
                                 fieldWithPath("memberName").type(JsonFieldType.STRING).description("회원 이름")
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyRequest.class, "memberName"))),
-                                fieldWithPath("memberEmail").type(JsonFieldType.STRING).description("회원 이메일")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyRequest.class, "memberEmail"))),
                                 fieldWithPath("memberAvatar").type(JsonFieldType.STRING).description("회원 이미지").optional()
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyRequest.class, "memberAvatar"))),
                                 fieldWithPath("memberNickName").type(JsonFieldType.STRING).description("회원 별명")

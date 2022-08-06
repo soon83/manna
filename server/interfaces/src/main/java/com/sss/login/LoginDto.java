@@ -40,7 +40,6 @@ public class LoginDto {
         private final String memberToken;
         private final String memberLoginId;
         private final String memberName;
-        private final String memberEmail;
         private final String memberAvatar;
         private final String memberNickName;
         private final String memberSelfIntroduction;
@@ -51,7 +50,6 @@ public class LoginDto {
             this.memberToken = memberLoginInfo.getMemberToken();
             this.memberLoginId = memberLoginInfo.getMemberLoginId();
             this.memberName = memberLoginInfo.getMemberName();
-            this.memberEmail = memberLoginInfo.getMemberEmail();
             this.memberAvatar = memberLoginInfo.getMemberAvatar();
             this.memberNickName = memberLoginInfo.getMemberNickName();
             this.memberSelfIntroduction = memberLoginInfo.getMemberSelfIntroduction();

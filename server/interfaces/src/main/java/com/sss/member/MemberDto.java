@@ -22,7 +22,6 @@ public class MemberDto {
     public static class SearchCondition {
         private String memberLoginId;
         private String memberName;
-        private String memberEmail;
         private String memberNickName;
         private Member.Status memberStatus;
 
@@ -30,7 +29,6 @@ public class MemberDto {
             return MemberQuery.SearchConditionInfo.builder()
                     .loginId(memberLoginId)
                     .name(memberName)
-                    .email(memberEmail)
                     .nickName(memberNickName)
                     .status(memberStatus)
                     .build();
@@ -48,9 +46,6 @@ public class MemberDto {
         private String memberLoginPassword;
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
-        @Email
-        @NotBlank(message = "memberEmail 는 필수값입니다.")
-        private String memberEmail;
         private String memberAvatar;
         @NotBlank(message = "memberNickName 는 필수값입니다.")
         private String memberNickName;
@@ -65,7 +60,6 @@ public class MemberDto {
                     .loginId(memberLoginId)
                     .loginPassword(memberLoginPassword)
                     .name(memberName)
-                    .email(memberEmail)
                     .avatar(memberAvatar)
                     .nickName(memberNickName)
                     .selfIntroduction(memberSelfIntroduction)
@@ -86,8 +80,6 @@ public class MemberDto {
     public static class ModifyRequest {
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
-        @NotBlank(message = "memberEmail 는 필수값입니다.")
-        private String memberEmail;
         private String memberAvatar;
         @NotBlank(message = "memberNickName 는 필수값입니다.")
         private String memberNickName;
@@ -99,7 +91,6 @@ public class MemberDto {
         public MemberCommand.UpdateMember toUpdateMemberCommand() {
             return MemberCommand.UpdateMember.builder()
                     .name(memberName)
-                    .email(memberEmail)
                     .avatar(memberAvatar)
                     .nickName(memberNickName)
                     .selfIntroduction(memberSelfIntroduction)
@@ -143,7 +134,6 @@ public class MemberDto {
         private final String memberToken;
         private final String memberLoginId;
         private final String memberName;
-        private final String memberEmail;
         private final String memberAvatar;
         private final String memberNickName;
         private final String memberSelfIntroduction;
@@ -154,7 +144,6 @@ public class MemberDto {
             this.memberToken = memberInfo.getToken();
             this.memberLoginId = memberInfo.getLoginId();
             this.memberName = memberInfo.getName();
-            this.memberEmail = memberInfo.getEmail();
             this.memberAvatar = memberInfo.getAvatar();
             this.memberNickName = memberInfo.getNickName();
             this.memberSelfIntroduction = memberInfo.getSelfIntroduction();
@@ -170,7 +159,6 @@ public class MemberDto {
         private final String memberToken;
         private final String memberLoginId;
         private final String memberName;
-        private final String memberEmail;
         private final String memberAvatar;
         private final String memberNickName;
         private final String memberSelfIntroduction;
@@ -182,7 +170,6 @@ public class MemberDto {
             this.memberToken = info.getToken();
             this.memberLoginId = info.getLoginId();
             this.memberName = info.getName();
-            this.memberEmail = info.getEmail();
             this.memberAvatar = info.getAvatar();
             this.memberNickName = info.getNickName();
             this.memberSelfIntroduction = info.getSelfIntroduction();

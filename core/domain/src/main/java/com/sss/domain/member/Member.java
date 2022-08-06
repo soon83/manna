@@ -41,8 +41,6 @@ public class Member extends BaseEntity {
     private String loginPassword;
     @Column(length = 31)
     private String name;
-    @Column(length = 31)
-    private String email;
     @Column(length = 255)
     private String avatar;
     @Column(length = 31)
@@ -105,7 +103,6 @@ public class Member extends BaseEntity {
             String loginId,
             String loginPassword,
             String name,
-            String email,
             String avatar,
             String nickName,
             String selfIntroduction,
@@ -115,7 +112,6 @@ public class Member extends BaseEntity {
         this.loginId = loginId;
         this.loginPassword = loginPassword;
         this.name = name;
-        this.email = email;
         this.avatar = avatar;
         this.nickName = nickName;
         this.selfIntroduction = selfIntroduction;
@@ -126,13 +122,11 @@ public class Member extends BaseEntity {
 
     public void updateMember(
             String name,
-            String email,
             String avatar,
             String nickName,
             String selfIntroduction
     ) {
         this.name = name;
-        this.email = email;
         this.avatar = avatar;
         this.nickName = nickName;
         this.selfIntroduction = selfIntroduction;

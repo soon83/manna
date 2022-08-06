@@ -1,6 +1,5 @@
 package com.sss.domain.member;
 
-import com.sss.domain.category.CategoryQueryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,6 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
     private final MemberQueryService memberQueryService;
     private final MemberCommandService memberCommandService;
-    private final CategoryQueryService categoryQueryService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -71,7 +69,6 @@ public class MemberServiceImpl implements MemberService {
         var member = memberQueryService.readMember(memberToken);
         member.updateMember(
                 command.getName(),
-                command.getEmail(),
                 command.getAvatar(),
                 command.getNickName(),
                 command.getSelfIntroduction()

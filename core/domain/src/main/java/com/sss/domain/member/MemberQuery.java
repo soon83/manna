@@ -14,7 +14,6 @@ public class MemberQuery {
     public static class SearchConditionInfo {
         private String loginId;
         private String name;
-        private String email;
         private String nickName;
         private Member.Status status;
     }
@@ -29,7 +28,6 @@ public class MemberQuery {
         private final String loginId;
         private final String loginPassword;
         private final String name;
-        private final String email;
         private final String avatar;
         private final String nickName;
         private final String selfIntroduction;
@@ -41,7 +39,6 @@ public class MemberQuery {
             this.loginId = entity.getLoginId();
             this.loginPassword = entity.getLoginPassword();
             this.name = entity.getName();
-            this.email = entity.getEmail();
             this.avatar = entity.getAvatar();
             this.nickName = entity.getNickName();
             this.selfIntroduction = entity.getSelfIntroduction();
@@ -60,7 +57,6 @@ public class MemberQuery {
         private final String loginId;
         private final String loginPassword;
         private final String name;
-        private final String email;
         private final String avatar;
         private final String nickName;
         private final String selfIntroduction;
@@ -74,7 +70,6 @@ public class MemberQuery {
             this.loginId = entity.getLoginId();
             this.loginPassword = entity.getLoginPassword();
             this.name = entity.getName();
-            this.email = entity.getEmail();
             this.avatar = entity.getAvatar();
             this.nickName = entity.getNickName();
             this.selfIntroduction = entity.getSelfIntroduction();

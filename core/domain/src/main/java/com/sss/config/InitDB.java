@@ -42,7 +42,6 @@ public class InitDB implements InitializingBean {
                     .loginId("admin")
                     .loginPassword(passwordEncoder.encode("1234"))
                     .name("하츄핑")
-                    .email("admin@email.com")
                     .avatar("/avatar/file/path")
                     .nickName("사랑의하츄핑")
                     .selfIntroduction("나는 하츄핑이야 츄")

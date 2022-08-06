@@ -29,7 +29,6 @@ public class MemberRepositoryQuerydslImpl extends CustomRepositoryQuerydslSuppor
                 .where(
                         eq(member.loginId, condition.getLoginId()),
                         eq(member.name, condition.getName()),
-                        eq(member.email, condition.getEmail()),
                         eq(member.nickName, condition.getNickName()),
                         eq(member.status, condition.getStatus())
                 )

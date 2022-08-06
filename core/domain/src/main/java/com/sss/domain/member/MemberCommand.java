@@ -18,7 +18,6 @@ public class MemberCommand {
         @Setter
         private String loginPassword;
         private String name;
-        private String email;
         private String avatar;
         private String nickName;
         private String selfIntroduction;
@@ -29,7 +28,6 @@ public class MemberCommand {
                     .loginId(loginId)
                     .loginPassword(loginPassword)
                     .name(name)
-                    .email(email)
                     .avatar(avatar)
                     .nickName(nickName)
                     .selfIntroduction(selfIntroduction)
@@ -41,7 +39,6 @@ public class MemberCommand {
                     .loginId(loginId)
                     .loginPassword(loginPassword)
                     .name(name)
-                    .email(email)
                     .avatar(avatar)
                     .nickName(nickName)
                     .selfIntroduction(selfIntroduction)
@@ -66,7 +63,6 @@ public class MemberCommand {
     @ToString
     public static class UpdateMember {
         private String name;
-        private String email;
         private String avatar;
         private String nickName;
         private String selfIntroduction;

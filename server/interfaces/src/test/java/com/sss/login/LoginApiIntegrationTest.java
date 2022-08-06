@@ -67,7 +67,6 @@ public class LoginApiIntegrationTest {
                                         fieldWithPath("data.memberToken").type(JsonFieldType.STRING).description("회원 토큰"),
                                         fieldWithPath("data.memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
                                         fieldWithPath("data.memberName").type(JsonFieldType.STRING).description("회원 이름"),
-                                        fieldWithPath("data.memberEmail").type(JsonFieldType.STRING).description("회원 이메일"),
                                         fieldWithPath("data.memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                         fieldWithPath("data.memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
                                         fieldWithPath("data.memberSelfIntroduction").type(JsonFieldType.STRING).description("회원 자기소개"),
