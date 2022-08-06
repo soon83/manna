@@ -5,7 +5,7 @@ dependencies {
     implementation project(':core-application')
     implementation project(':core-domain')
 
-    implementation 'com.auth0:java-jwt:3.19.2'
+    implementation 'com.auth0:java-jwt:4.0.0'
 
     developmentOnly 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
 }

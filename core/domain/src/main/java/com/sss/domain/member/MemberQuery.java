@@ -5,7 +5,6 @@ import com.sss.domain.member.interest.Interest;
 import lombok.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MemberQuery {
 

@@ -1,7 +1,6 @@
 package com.sss.domain.login;
 
 import com.sss.domain.member.Member;
-import com.sss.domain.member.interest.Interest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
