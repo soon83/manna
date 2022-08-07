@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -53,13 +54,15 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public String registerMember(MemberCommand.CreateMember command) {
         command.setPassword(encodePassword(command.getPassword()));
+        var member = command.toEntity();
+        var createdMember = memberCommandService.create(member);
+
         /*var interestList = command.getInterestList();
         var categoryItemIdList = interestList.stream()
                 .map(MemberCommand.CreateInterest::getCategoryItemId)
                 .collect(Collectors.toList());// TODO 추상화 하기
         var categoryItemList = categoryQueryService.readCategoryItemListById(categoryItemIdList);*/
-        var member = command.toEntity();
-        var createdMember = memberCommandService.create(member);
+
         return createdMember.getToken();
     }
 
