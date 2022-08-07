@@ -9,7 +9,7 @@ public interface MemberService {
     Page<MemberQuery.Main> fetchMemberList(MemberQuery.SearchConditionInfo condition, Pageable pageable);
     List<MemberQuery.WithInterestInfo> fetchMemberWithInterestList();
     MemberQuery.WithInterestInfo fetchMember(String memberToken);
-    MemberQuery.Main fetchMemberByLoginId(String memberLoginId);
+    MemberQuery.Main fetchMemberByEmail(String memberEmail);
     String registerMember(MemberCommand.CreateMember command);
     void modifyMember(MemberCommand.UpdateMember command, String memberToken);
     void modifyMemberPassword(MemberCommand.UpdateMemberPassword command, String memberToken);

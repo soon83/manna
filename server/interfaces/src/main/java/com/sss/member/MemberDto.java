@@ -20,14 +20,14 @@ public class MemberDto {
      */
     @Data
     public static class SearchCondition {
-        private String memberLoginId;
+        private String memberEmail;
         private String memberName;
         private String memberNickName;
         private Member.Status memberStatus;
 
         public MemberQuery.SearchConditionInfo toSearchConditionInfo() {
             return MemberQuery.SearchConditionInfo.builder()
-                    .loginId(memberLoginId)
+                    .email(memberEmail)
                     .name(memberName)
                     .nickName(memberNickName)
                     .status(memberStatus)
@@ -40,10 +40,11 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RegisterRequest {
-        @NotBlank(message = "memberLoginId 는 필수값입니다.")
-        private String memberLoginId;
-        @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
-        private String memberLoginPassword;
+        @Email
+        @NotBlank(message = "memberEmail 는 필수값입니다.")
+        private String memberEmail;
+        @NotBlank(message = "memberPassword 는 필수값입니다.")
+        private String memberPassword;
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
         private String memberAvatar;
@@ -57,8 +58,8 @@ public class MemberDto {
 
         public MemberCommand.CreateMember toCreateMemberCommand(List<MemberCommand.CreateInterest> interestList) {
             return MemberCommand.CreateMember.builder()
-                    .loginId(memberLoginId)
-                    .loginPassword(memberLoginPassword)
+                    .email(memberEmail)
+                    .password(memberPassword)
                     .name(memberName)
                     .avatar(memberAvatar)
                     .nickName(memberNickName)
@@ -78,6 +79,7 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ModifyRequest {
+        @Email
         @NotBlank(message = "memberName 는 필수값입니다.")
         private String memberName;
         private String memberAvatar;
@@ -105,12 +107,12 @@ public class MemberDto {
     public static class ModifyMemberPasswordRequest {
         @NotBlank(message = "memberToken 는 필수값입니다.")
         private String memberToken;
-        @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
-        private String memberLoginPassword;
+        @NotBlank(message = "memberPassword 는 필수값입니다.")
+        private String memberPassword;
 
         public MemberCommand.UpdateMemberPassword toUpdateMemberPasswordCommand() {
             return MemberCommand.UpdateMemberPassword.builder()
-                    .loginPassword(memberLoginPassword)
+                    .password(memberPassword)
                     .build();
         }
     }
@@ -132,7 +134,7 @@ public class MemberDto {
     @AllArgsConstructor
     public static class MainResponse {
         private final String memberToken;
-        private final String memberLoginId;
+        private final String memberEmail;
         private final String memberName;
         private final String memberAvatar;
         private final String memberNickName;
@@ -142,7 +144,7 @@ public class MemberDto {
 
         public MainResponse(MemberQuery.Main memberInfo) {
             this.memberToken = memberInfo.getToken();
-            this.memberLoginId = memberInfo.getLoginId();
+            this.memberEmail = memberInfo.getEmail();
             this.memberName = memberInfo.getName();
             this.memberAvatar = memberInfo.getAvatar();
             this.memberNickName = memberInfo.getNickName();
@@ -157,7 +159,7 @@ public class MemberDto {
     @AllArgsConstructor
     public static class WithInterestListResponse {
         private final String memberToken;
-        private final String memberLoginId;
+        private final String memberEmail;
         private final String memberName;
         private final String memberAvatar;
         private final String memberNickName;
@@ -168,7 +170,7 @@ public class MemberDto {
 
         public WithInterestListResponse(MemberQuery.WithInterestInfo info, List<InterestResponse> memberInterestList) {
             this.memberToken = info.getToken();
-            this.memberLoginId = info.getLoginId();
+            this.memberEmail = info.getEmail();
             this.memberName = info.getName();
             this.memberAvatar = info.getAvatar();
             this.memberNickName = info.getNickName();

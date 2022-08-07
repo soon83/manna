@@ -14,9 +14,9 @@ public class MemberCommand {
     @Builder
     @ToString
     public static class CreateMember {
-        private String loginId;
+        private String email;
         @Setter
-        private String loginPassword;
+        private String password;
         private String name;
         private String avatar;
         private String nickName;
@@ -25,8 +25,8 @@ public class MemberCommand {
 
         public Member toEntity() {
             return Member.builder()
-                    .loginId(loginId)
-                    .loginPassword(loginPassword)
+                    .email(email)
+                    .password(password)
                     .name(name)
                     .avatar(avatar)
                     .nickName(nickName)
@@ -36,8 +36,8 @@ public class MemberCommand {
 
         public Member toEntity(List<Interest> interestList) {
             return Member.builder()
-                    .loginId(loginId)
-                    .loginPassword(loginPassword)
+                    .email(email)
+                    .password(password)
                     .name(name)
                     .avatar(avatar)
                     .nickName(nickName)
@@ -74,6 +74,6 @@ public class MemberCommand {
     @ToString
     public static class UpdateMemberPassword {
         @Setter
-        private String loginPassword;
+        private String password;
     }
 }

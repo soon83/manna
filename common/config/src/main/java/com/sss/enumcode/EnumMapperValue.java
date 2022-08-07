@@ -6,10 +6,10 @@ import lombok.Getter;
 public class EnumMapperValue {
 
     private String code;
-    private String text;
+    private String title;
 
     public EnumMapperValue(EnumMapperType enumMapperType) {
         this.code = enumMapperType.getCode();
-        this.text = enumMapperType.getText();
+        this.title = enumMapperType.getTitle();
     }
 }

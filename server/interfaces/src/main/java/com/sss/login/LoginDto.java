@@ -16,19 +16,19 @@ public class LoginDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class LoginRequest {
-        @NotBlank(message = "memberLoginId 는 필수값입니다.")
-        private String memberLoginId;
-        @NotBlank(message = "memberLoginPassword 는 필수값입니다.")
-        private String memberLoginPassword;
+        @NotBlank(message = "memberEmail 는 필수값입니다.")
+        private String memberEmail;
+        @NotBlank(message = "memberPassword 는 필수값입니다.")
+        private String memberPassword;
     }
 
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CheckLoginIdRequest {
-        @NotBlank(message = "memberLoginId 는 필수값입니다.")
-        private String memberLoginId;
+    public static class CheckEmailRequest {
+        @NotBlank(message = "memberEmail 는 필수값입니다.")
+        private String memberEmail;
     }
 
     /**
@@ -38,7 +38,7 @@ public class LoginDto {
     @ToString
     public static class MainResponse {
         private final String memberToken;
-        private final String memberLoginId;
+        private final String memberEmail;
         private final String memberName;
         private final String memberAvatar;
         private final String memberNickName;
@@ -48,7 +48,7 @@ public class LoginDto {
 
         public MainResponse(LoginInfo.Main memberLoginInfo) {
             this.memberToken = memberLoginInfo.getMemberToken();
-            this.memberLoginId = memberLoginInfo.getMemberLoginId();
+            this.memberEmail = memberLoginInfo.getMemberEmail();
             this.memberName = memberLoginInfo.getMemberName();
             this.memberAvatar = memberLoginInfo.getMemberAvatar();
             this.memberNickName = memberLoginInfo.getMemberNickName();

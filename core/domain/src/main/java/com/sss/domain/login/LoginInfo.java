@@ -24,8 +24,8 @@ public class LoginInfo {
 
         public AccountAdaptor(LoginInfo.Main memberLoginInfo) {
             super(
-                    memberLoginInfo.getMemberLoginId(),
-                    memberLoginInfo.getMemberLoginPassword(),
+                    memberLoginInfo.getMemberEmail(),
+                    memberLoginInfo.getMemberPassword(),
                     authorities(memberLoginInfo.getMemberRole().name())
             );
             this.memberLoginInfo = memberLoginInfo;
@@ -69,8 +69,8 @@ public class LoginInfo {
     @AllArgsConstructor
     public static class Main {
         private final String memberToken;
-        private final String memberLoginId;
-        private final String memberLoginPassword;
+        private final String memberEmail;
+        private final String memberPassword;
         private final String memberName;
         private final String memberAvatar;
         private final String memberNickName;
@@ -80,8 +80,8 @@ public class LoginInfo {
 
         public Main(Member member) {
             this.memberToken = member.getToken();
-            this.memberLoginId = member.getLoginId();
-            this.memberLoginPassword = member.getLoginPassword();
+            this.memberEmail = member.getEmail();
+            this.memberPassword = member.getPassword();
             this.memberName = member.getName();
             this.memberAvatar = member.getAvatar();
             this.memberNickName = member.getNickName();

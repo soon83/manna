@@ -12,7 +12,7 @@ public class MemberQuery {
     @Builder
     @AllArgsConstructor
     public static class SearchConditionInfo {
-        private String loginId;
+        private String email;
         private String name;
         private String nickName;
         private Member.Status status;
@@ -25,8 +25,8 @@ public class MemberQuery {
     public static class Main {
         private final Long id;
         private final String token;
-        private final String loginId;
-        private final String loginPassword;
+        private final String email;
+        private final String password;
         private final String name;
         private final String avatar;
         private final String nickName;
@@ -36,8 +36,8 @@ public class MemberQuery {
         public Main(Member entity) {
             this.id = entity.getId();
             this.token = entity.getToken();
-            this.loginId = entity.getLoginId();
-            this.loginPassword = entity.getLoginPassword();
+            this.email = entity.getEmail();
+            this.password = entity.getPassword();
             this.name = entity.getName();
             this.avatar = entity.getAvatar();
             this.nickName = entity.getNickName();
@@ -54,8 +54,8 @@ public class MemberQuery {
     public static class WithInterestInfo {
         private final Long id;
         private final String token;
-        private final String loginId;
-        private final String loginPassword;
+        private final String email;
+        private final String password;
         private final String name;
         private final String avatar;
         private final String nickName;
@@ -67,8 +67,8 @@ public class MemberQuery {
         public WithInterestInfo(Member entity, List<InterestInfo> interestInfoList) {
             this.id = entity.getId();
             this.token = entity.getToken();
-            this.loginId = entity.getLoginId();
-            this.loginPassword = entity.getLoginPassword();
+            this.email = entity.getEmail();
+            this.password = entity.getPassword();
             this.name = entity.getName();
             this.avatar = entity.getAvatar();
             this.nickName = entity.getNickName();

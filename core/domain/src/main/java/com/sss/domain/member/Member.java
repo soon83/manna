@@ -24,7 +24,7 @@ import java.util.stream.Stream;
         indexes = @Index(columnList = "token", name = "IDX_memberToken"),
         uniqueConstraints = {
                 @UniqueConstraint(name = "UK_memberToken", columnNames = {"token"}),
-                @UniqueConstraint(name = "UK_memberLoginId", columnNames = {"loginId"})
+                @UniqueConstraint(name = "UK_memberEmail", columnNames = {"email"})
         }
 )
 public class Member extends BaseEntity {
@@ -36,9 +36,9 @@ public class Member extends BaseEntity {
     @Column(length = 31)
     private String token;
     @Column(length = 31)
-    private String loginId;
+    private String email;
     @Column(length = 127)
-    private String loginPassword;
+    private String password;
     @Column(length = 31)
     private String name;
     @Column(length = 255)
@@ -64,10 +64,10 @@ public class Member extends BaseEntity {
         MANAGER("운영자"),
         MEMBER("회원");
 
-        private final String text;
+        private final String title;
 
         private static final Map<String, Role> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
-                .collect(Collectors.toMap(Role::getText, Function.identity())));
+                .collect(Collectors.toMap(Role::getTitle, Function.identity())));
         public static Optional<Role> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }
@@ -84,10 +84,10 @@ public class Member extends BaseEntity {
         ENABLE("활성화"),
         DISABLE("비활성화");
 
-        private final String text;
+        private final String title;
 
         private static final Map<String, Status> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
-                .collect(Collectors.toMap(Status::getText, Function.identity())));
+                .collect(Collectors.toMap(Status::getTitle, Function.identity())));
         public static Optional<Status> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }
@@ -100,8 +100,8 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(
-            String loginId,
-            String loginPassword,
+            String email,
+            String password,
             String name,
             String avatar,
             String nickName,
@@ -109,8 +109,8 @@ public class Member extends BaseEntity {
             List<Interest> interestList
     ) {
         this.token = TokenGenerator.randomCharacterWithPrefix(TOKEN_PREFIX);
-        this.loginId = loginId;
-        this.loginPassword = loginPassword;
+        this.email = email;
+        this.password = password;
         this.name = name;
         this.avatar = avatar;
         this.nickName = nickName;
@@ -132,8 +132,8 @@ public class Member extends BaseEntity {
         this.selfIntroduction = selfIntroduction;
     }
 
-    public void updateMemberPassword(String loginPassword) {
-        this.loginPassword = loginPassword;
+    public void updateMemberPassword(String password) {
+        this.password = password;
     }
 
     public void enable() {

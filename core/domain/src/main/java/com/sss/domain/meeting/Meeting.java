@@ -84,10 +84,10 @@ public class Meeting extends BaseEntity {
         FIRST_COME("선착순"),
         APPROVAL("승인제");
 
-        private final String text;
+        private final String title;
 
         private static final Map<String, RecruitmentMethod> descriptionMap = Collections.unmodifiableMap(Stream.of(values())
-                .collect(Collectors.toMap(RecruitmentMethod::getText, Function.identity())));
+                .collect(Collectors.toMap(RecruitmentMethod::getTitle, Function.identity())));
         public static Optional<RecruitmentMethod> of(String description) {
             return Optional.ofNullable(descriptionMap.get(description));
         }

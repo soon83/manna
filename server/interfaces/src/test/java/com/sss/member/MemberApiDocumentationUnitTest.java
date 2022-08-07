@@ -59,8 +59,8 @@ class MemberApiDocumentationUnitTest {
     @BeforeAll
     public static void login() {
         String token = JwtUtil.makeAuthToken(LoginInfo.Main.builder()
-                .memberLoginId("admin")
-                .memberLoginPassword(passwordEncoder.encode("1234"))
+                .memberEmail("admin@email.com")
+                .memberPassword(passwordEncoder.encode("1234"))
                 .build());
         AUTH_TOKEN = "Bearer " + token;
     }
@@ -82,8 +82,8 @@ class MemberApiDocumentationUnitTest {
         List<MemberQuery.Main> response = Lists.newArrayList(
                 MemberQuery.Main.builder()
                         .token(MEMBER_TOKEN)
-                        .loginId("tester")
-                        .loginPassword("1234")
+                        .email("tester@email.com")
+                        .password("1234")
                         .name("테스터")
                         .avatar("/tester/avatar/path")
                         .nickName("하츄핑")
@@ -114,7 +114,7 @@ class MemberApiDocumentationUnitTest {
 
                                 // data.content[]
                                 fieldWithPath("data.content[].memberToken").type(JsonFieldType.STRING).description("회원 토큰"),
-                                fieldWithPath("data.content[].memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
+                                fieldWithPath("data.content[].memberEmail").type(JsonFieldType.STRING).description("회원 이메일"),
                                 fieldWithPath("data.content[].memberName").type(JsonFieldType.STRING).description("회원 이름"),
                                 fieldWithPath("data.content[].memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                 fieldWithPath("data.content[].memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
@@ -173,8 +173,8 @@ class MemberApiDocumentationUnitTest {
         );
         MemberQuery.WithInterestInfo info = MemberQuery.WithInterestInfo.builder()
                 .token(MEMBER_TOKEN)
-                .loginId("tester")
-                .loginPassword("1234")
+                .email("tester@email.com")
+                .password("1234")
                 .name("테스터")
                 .avatar("/tester/avatar/path")
                 .nickName("하츄핑")
@@ -206,7 +206,7 @@ class MemberApiDocumentationUnitTest {
 
                                 // data
                                 fieldWithPath("data.memberToken").type(JsonFieldType.STRING).description("회원 토큰"),
-                                fieldWithPath("data.memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
+                                fieldWithPath("data.memberEmail").type(JsonFieldType.STRING).description("회원 이메일"),
                                 fieldWithPath("data.memberName").type(JsonFieldType.STRING).description("회원 이름"),
                                 fieldWithPath("data.memberAvatar").type(JsonFieldType.STRING).description("회원 이미지"),
                                 fieldWithPath("data.memberNickName").type(JsonFieldType.STRING).description("회원 별명"),
@@ -228,8 +228,8 @@ class MemberApiDocumentationUnitTest {
     void registerMember() throws Exception {
         // given
         MemberDto.RegisterRequest request = MemberDto.RegisterRequest.builder()
-                .memberLoginId("tester")
-                .memberLoginPassword("1234")
+                .memberEmail("tester@email.com")
+                .memberPassword("1234")
                 .memberName("테스터")
                 .memberAvatar("/tester/avatar/path")
                 .memberNickName("하츄핑")
@@ -249,10 +249,10 @@ class MemberApiDocumentationUnitTest {
                 .andDo(print())
                 .andDo(document("register-member",
                         requestFields(
-                                fieldWithPath("memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberLoginId"))),
-                                fieldWithPath("memberLoginPassword").type(JsonFieldType.STRING).description("회원 로그인 비밀번호")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberLoginPassword"))),
+                                fieldWithPath("memberEmail").type(JsonFieldType.STRING).description("회원 이메일")
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberEmail"))),
+                                fieldWithPath("memberPassword").type(JsonFieldType.STRING).description("회원 로그인 비밀번호")
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberPassword"))),
                                 fieldWithPath("memberName").type(JsonFieldType.STRING).description("회원 이름")
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.RegisterRequest.class, "memberName"))),
                                 fieldWithPath("memberAvatar").type(JsonFieldType.STRING).description("회원 이미지").optional()
@@ -324,7 +324,7 @@ class MemberApiDocumentationUnitTest {
         // given
         MemberDto.ModifyMemberPasswordRequest request = MemberDto.ModifyMemberPasswordRequest.builder()
                 .memberToken(MEMBER_TOKEN)
-                .memberLoginPassword("1234")
+                .memberPassword("1234")
                 .build();
 
         // when
@@ -342,8 +342,8 @@ class MemberApiDocumentationUnitTest {
                         requestFields(
                                 fieldWithPath("memberToken").type(JsonFieldType.STRING).description("회원 토큰")
                                         .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyMemberPasswordRequest.class, "memberToken"))),
-                                fieldWithPath("memberLoginPassword").type(JsonFieldType.STRING).description("회원 비밀번호")
-                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyMemberPasswordRequest.class, "memberLoginPassword")))
+                                fieldWithPath("memberPassword").type(JsonFieldType.STRING).description("회원 비밀번호")
+                                        .attributes(key("constraints").value(descriptionsForNameProperty(MemberDto.ModifyMemberPasswordRequest.class, "memberPassword")))
                         ),
                         responseFields(
                                 // common

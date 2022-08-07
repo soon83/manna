@@ -21,11 +21,11 @@ import javax.validation.Valid;
 public class LoginApiController {
     private final MemberFacade memberFacade;
 
-    @GetMapping("/find-member-login-id")
-    public ResponseEntity<Res> findMemberLoginId(@ModelAttribute @Valid LoginDto.CheckLoginIdRequest request) {
-        String memberLoginId = request.getMemberLoginId();
-        var memberByLoginId = memberFacade.fetchMemberByLoginId(memberLoginId);
-        var response = new MemberDto.MainResponse(memberByLoginId);
+    @GetMapping("/find-member-email")
+    public ResponseEntity<Res> findMemberLoginId(@ModelAttribute @Valid LoginDto.CheckEmailRequest request) {
+        String memberEmail = request.getMemberEmail();
+        var memberByEmail = memberFacade.fetchMemberByEmail(memberEmail);
+        var response = new MemberDto.MainResponse(memberByEmail);
         return ResponseEntity.status(HttpStatus.OK).body(Res.success(response));
     }
 }

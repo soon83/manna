@@ -44,15 +44,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public MemberQuery.Main fetchMemberByLoginId(String memberLoginId) {
-        var member = memberQueryService.readMemberByLoginId(memberLoginId);
+    public MemberQuery.Main fetchMemberByEmail(String memberEmail) {
+        var member = memberQueryService.readMemberByEmail(memberEmail);
         return new MemberQuery.Main(member);
     }
 
     @Override
     @Transactional
     public String registerMember(MemberCommand.CreateMember command) {
-        command.setLoginPassword(encodePassword(command.getLoginPassword()));
+        command.setPassword(encodePassword(command.getPassword()));
         /*var interestList = command.getInterestList();
         var categoryItemIdList = interestList.stream()
                 .map(MemberCommand.CreateInterest::getCategoryItemId)
@@ -79,8 +79,8 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void modifyMemberPassword(MemberCommand.UpdateMemberPassword command, String memberToken) {
         var member = memberQueryService.readMember(memberToken);
-        command.setLoginPassword(encodePassword(command.getLoginPassword()));
-        member.updateMemberPassword(command.getLoginPassword());
+        command.setPassword(encodePassword(command.getPassword()));
+        member.updateMemberPassword(command.getPassword());
     }
 
     @Override

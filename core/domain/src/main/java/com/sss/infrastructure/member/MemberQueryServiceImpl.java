@@ -38,8 +38,8 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     }
 
     @Override
-    public Member readMemberByLoginId(String memberLoginId) {
-        return memberRepository.findByLoginId(memberLoginId)
+    public Member readMemberByEmail(String memberEmail) {
+        return memberRepository.findByEmail(memberEmail)
                 .filter(member -> member.getStatus() == Member.Status.ENABLE)
                 .orElseThrow(MemberNotFoundException::new);
     }

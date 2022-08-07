@@ -35,12 +35,12 @@ public class InitDB implements InitializingBean {
 
     private void makeMember() {
         try {
-            memberRepository.findByLoginId("admin")
+            memberRepository.findByEmail("admin@email.com")
                     .orElseThrow(MemberNotFoundException::new);
         } catch (Exception e) {
             var admin = memberRepository.save(Member.builder()
-                    .loginId("admin")
-                    .loginPassword(passwordEncoder.encode("1234"))
+                    .email("admin@email.com")
+                    .password(passwordEncoder.encode("1234"))
                     .name("하츄핑")
                     .avatar("/avatar/file/path")
                     .nickName("사랑의하츄핑")

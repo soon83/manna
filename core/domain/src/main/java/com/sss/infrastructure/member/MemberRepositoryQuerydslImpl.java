@@ -27,7 +27,7 @@ public class MemberRepositoryQuerydslImpl extends CustomRepositoryQuerydslSuppor
         return applyPagination(pageable, query -> query
                 .selectFrom(member)
                 .where(
-                        eq(member.loginId, condition.getLoginId()),
+                        eq(member.email, condition.getEmail()),
                         eq(member.name, condition.getName()),
                         eq(member.nickName, condition.getNickName()),
                         eq(member.status, condition.getStatus())

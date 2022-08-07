@@ -22,6 +22,6 @@ public class SecurityAuditorAware implements AuditorAware<String> {
         }
 
         var loginInfo = (LoginInfo.Main) authentication.getPrincipal();
-        return Optional.ofNullable(loginInfo.getMemberLoginId());
+        return Optional.ofNullable(loginInfo.getMemberEmail());
     }
 }

@@ -15,14 +15,14 @@ public class JwtUtil {
 
     public static String makeAuthToken(LoginInfo.Main user) {
         return JWT.create()
-                .withSubject(user.getMemberLoginId())
+                .withSubject(user.getMemberEmail())
                 .withClaim("exp", Instant.now().getEpochSecond() + AUTH_TIME)
                 .sign(ALGORITHM);
     }
 
     public static String makeRefreshToken(LoginInfo.Main user) {
         return JWT.create()
-                .withSubject(user.getMemberLoginPassword())
+                .withSubject(user.getMemberPassword())
                 .withClaim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
                 .sign(ALGORITHM);
     }
