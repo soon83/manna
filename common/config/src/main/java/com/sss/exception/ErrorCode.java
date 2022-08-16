@@ -19,11 +19,14 @@ public enum ErrorCode {
     // 100. 회원 에러코드
     MEMBER_NOT_FOUND("M101", "존재하지 않는 회원입니다."),
 
-    // 200. 관심주제 에러코드
-    CATEGORY_NOT_FOUND("M201", "존재하지 않는 관심주제 입니다."),
+    // 200. 회원 관심사 에러코드
+    MEMBER_INTEREST_NOT_FOUND("M201", "존재하지 않는 관심사 항목 입니다."),
 
-    // 300. 관심항목 에러코드
-    CATEGORY_ITEM_NOT_FOUND("M301", "존재하지 않는 관심항목 입니다."),
+    // 300. 관심주제 에러코드
+    CATEGORY_NOT_FOUND("M301", "존재하지 않는 관심사 주제 입니다."),
+
+    // 400. 관심항목 에러코드
+    CATEGORY_ITEM_NOT_FOUND("M401", "존재하지 않는 관심사 항목 입니다."),
     ;
 
     private final String code;

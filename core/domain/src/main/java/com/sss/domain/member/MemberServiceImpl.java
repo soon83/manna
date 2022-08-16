@@ -2,6 +2,7 @@ package com.sss.domain.member;
 
 import com.sss.domain.category.CategoryQueryService;
 import com.sss.domain.member.interest.Interest;
+import com.sss.exception.member.MemberInterestNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -65,6 +66,10 @@ public class MemberServiceImpl implements MemberService {
                 .map(MemberCommand.CreateInterest::getCategoryItemId)
                 .collect(Collectors.toList()); // TODO 추상화 하기
         var categoryItemList = categoryQueryService.readCategoryItemListById(categoryItemIdList);
+        if (categoryItemList.size() == 0) {
+            throw new MemberInterestNotFoundException();
+        }
+
         categoryItemList.forEach(categoryItem -> {
             memberCommandService.create(Interest.builder()
                     .categoryItem(categoryItem)
