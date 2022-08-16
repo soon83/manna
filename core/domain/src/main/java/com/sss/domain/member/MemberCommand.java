@@ -67,6 +67,15 @@ public class MemberCommand {
         private String nickName;
         private String selfIntroduction;
         private Member.Role role;
+
+        public void updateMember(Member entity) {
+            entity.updateMember(
+                    this.name,
+                    this.avatar,
+                    this.nickName,
+                    this.selfIntroduction
+            );
+        }
     }
 
     @Getter

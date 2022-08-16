@@ -1,5 +1,7 @@
 package com.sss.domain.member;
 
+import com.sss.domain.category.CategoryQueryService;
+import com.sss.domain.member.interest.Interest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberQueryService memberQueryService;
+    private final CategoryQueryService categoryQueryService;
     private final MemberCommandService memberCommandService;
     private final PasswordEncoder passwordEncoder;
 
@@ -57,11 +60,17 @@ public class MemberServiceImpl implements MemberService {
         var member = command.toEntity();
         var createdMember = memberCommandService.create(member);
 
-        /*var interestList = command.getInterestList();
+        var interestList = command.getInterestList();
         var categoryItemIdList = interestList.stream()
                 .map(MemberCommand.CreateInterest::getCategoryItemId)
-                .collect(Collectors.toList());// TODO 추상화 하기
-        var categoryItemList = categoryQueryService.readCategoryItemListById(categoryItemIdList);*/
+                .collect(Collectors.toList()); // TODO 추상화 하기
+        var categoryItemList = categoryQueryService.readCategoryItemListById(categoryItemIdList);
+        categoryItemList.forEach(categoryItem -> {
+            memberCommandService.create(Interest.builder()
+                    .categoryItem(categoryItem)
+                    .member(createdMember)
+                    .build());
+        }); // TODO 추상화 하기
 
         return createdMember.getToken();
     }
@@ -70,12 +79,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void modifyMember(MemberCommand.UpdateMember command, String memberToken) {
         var member = memberQueryService.readMember(memberToken);
-        member.updateMember(
-                command.getName(),
-                command.getAvatar(),
-                command.getNickName(),
-                command.getSelfIntroduction()
-        );
+        command.updateMember(member);
     }
 
     @Override
