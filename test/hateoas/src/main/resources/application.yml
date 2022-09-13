@@ -1,0 +1,29 @@
+server:
+  port: 10002
+
+spring:
+
+  jackson:
+    default-property-inclusion: non_null
+
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:~/Study/h2/hateoas/test;mode=mysql
+      username: sa
+      password:
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    hibernate:
+      #      ddl-auto: update
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
