@@ -1,6 +1,5 @@
 # manna
 ## 아무나 만나는 서비스
-- 이 코드를 따라하시면 이직 불가,,
 
 ## Spec
 - gradle multi module (ㅈㄴ 이상하게 나눠놓음,, 이런건 따라하셈,,)
@@ -62,5 +61,4 @@ GRANT ALL PRIVILEGES ON `manna`.* TO 'manna'@'%' IDENTIFIED BY 'manna!@34';
 REVOKE GRANT OPTION, LOCK TABLES ON `manna`.* FROM 'manna'@'%';
 SHOW GRANTS FOR 'manna'@'%';
 ```
-- 권한옵션이 ㅈㄴ게 많아서 그냥 GRANT ALL PRIVILEGES 주고 REVOKE 로 옵션 2개 뺐음,,
-- 권한을 일일이 하나씩 주든지 아님 나처럼 하든지 알아서 하시길,, ㅅㄱ
+- 권한옵션이 많아서 GRANT ALL PRIVILEGES 주고 REVOKE 로 옵션 2개 뺌,,
