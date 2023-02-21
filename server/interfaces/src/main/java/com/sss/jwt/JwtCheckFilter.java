@@ -7,6 +7,7 @@ import com.sss.exception.ErrorCode;
 import com.sss.exception.ErrorRes;
 import com.sss.response.Res;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.buf.Utf8Encoder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class JwtCheckFilter extends BasicAuthenticationFilter {
@@ -48,9 +50,12 @@ public class JwtCheckFilter extends BasicAuthenticationFilter {
         } else {
             //throw new AuthenticationException("유효하지 않은 토큰입니다.");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
             ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_INVALID_TOKEN);
-            response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
+            objectMapper.writeValue(response.getWriter(), Res.fail(errorResponse));
+            //response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
         }
     }
 }

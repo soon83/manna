@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -23,8 +24,11 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_UNAUTHORIZED);
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
+        objectMapper.writeValue(response.getWriter(), Res.fail(errorResponse));
+        //response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
     }
 }

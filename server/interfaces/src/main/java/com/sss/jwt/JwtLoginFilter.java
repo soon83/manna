@@ -22,6 +22,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import static com.sss.config.SecurityConfig.LOGIN;
 
@@ -48,22 +49,31 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         var accountAdaptor = (LoginInfo.AccountAdaptor) authResult.getPrincipal();
         var memberLoginInfo = accountAdaptor.getMemberLoginInfo();
         var authResponse = new LoginDto.MainResponse(memberLoginInfo);
+
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setHeader(HttpHeaders.AUTHORIZATION, JwtUtil.BEARER_TOKEN_PREFIX + JwtUtil.makeAuthToken(memberLoginInfo));
-        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.success(authResponse)));
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+        response.setHeader("access_token", JwtUtil.makeAuthToken(memberLoginInfo));
+        response.setHeader("refresh_token", JwtUtil.makeRefreshToken(memberLoginInfo));
+
+        objectMapper.writeValue(response.getWriter(), Res.success(authResponse));
+//        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.success(authResponse)));
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         ErrorRes errorResponse = ErrorRes.of(ErrorCode.COMMON_SYSTEM_ERROR);
+
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         if (failed.getCause() instanceof MemberNotFoundException || failed instanceof BadCredentialsException) {
             response.setStatus(HttpServletResponse.SC_OK);
             errorResponse = ErrorRes.of(ErrorCode.MEMBER_NOT_FOUND);
         }
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
+        objectMapper.writeValue(response.getWriter(), Res.fail(errorResponse));
+        //response.getOutputStream().write(objectMapper.writeValueAsBytes(Res.fail(errorResponse)));
     }
 }
